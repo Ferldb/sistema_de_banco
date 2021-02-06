@@ -4,13 +4,6 @@
  * and open the template in the editor.
  */
 
-create table conta (
-    numconta BIGINT NOT NULL AUTO_INCREMENT,
-    saldo DOUBLE,
-    
-);
-    
-
 create table cliente (
     idcliente BIGINT NOT NULL AUTO_INCREMENT,
     nome VARCHAR(255),
@@ -23,3 +16,24 @@ create table cliente (
     constraint unique (cpf)
 );
 
+create table tipoconta(
+    idtipo BIGINT NOT NULL AUTO_INCREMENT,
+    descricao VARCHAR(255),
+    constraint primary key (idtipo)
+);
+
+create table conta (
+    numconta BIGINT NOT NULL AUTO_INCREMENT,
+    tipoconta BIGINT NOT NULL,
+    saldo DOUBLE,
+    limite DOUBLE,
+    depositoMinimo DOUBLE,
+    montanteMinimo DOUBLE,
+    idcliente BIGINT NOT NULL,
+    constraint primary key (numconta),
+    constraint foreign key (tipoconta) references tipoconta (idtipo),
+    constraint foreign key (idcliente) references cliente (idcliente)
+);
+
+INSERT INTO tipoconta (descricao) VALUES ('Conta Corrente');
+INSERT INTO tipoconta (descricao) VALUES ('Conta Investimento');

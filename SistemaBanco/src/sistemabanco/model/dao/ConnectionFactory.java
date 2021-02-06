@@ -9,7 +9,7 @@ public class ConnectionFactory {
 
     public Connection getConnection() {
         try {
-            return DriverManager.getConnection("jdbc:mysql://localhost/sistemabancario", "admin", "root");
+            return DriverManager.getConnection("jdbc:mysql://localhost/sistemabancario", "admin", "root"); //Jessima
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
