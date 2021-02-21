@@ -101,6 +101,11 @@ public class JanelaClienteView extends javax.swing.JFrame {
         String cpf = botoesClienteView.getCampoCPF().getText();
         return cpf;
     }
+    
+    public String getCampoListar(){
+        String listar = botoesClienteView.getCampoListar().getText();
+        return listar;
+    }
 
     public void inserirCliente(Cliente cliente) {
         modeloTabelaCliente.adicionaCliente(cliente);
@@ -110,7 +115,7 @@ public class JanelaClienteView extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null,mensagem + "\n", "Info", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void mostrarListaContatos(List<Cliente> lista) {
+    public void mostrarListaClientes(List<Cliente> lista) {
         modeloTabelaCliente.setListaClientes(lista);
     }
 

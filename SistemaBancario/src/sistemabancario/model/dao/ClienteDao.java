@@ -19,7 +19,10 @@ public class ClienteDao {
     private final String select = "select * from cliente";
     private final String update = "update cliente set nome=?, sobrenome=?, rg=?, cpf=?, endereco=?, salario=? WHERE idcliente=?";
     private final String delete = "delete from cliente WHERE idcliente=?";
-    private final String busca = "select * from cliente WHERE cpf = ?";
+    private final String buscaCPF = "select * from cliente WHERE cpf = ?"; //busca cliente a partir de cpf
+    private final String buscaNome = "select * from cliente WHERE nome LIKE ?"; //busca cliente a partir de nome ou parte
+    private final String buscaSobrenome = "select * from cliente WHERE sobrenome LIKE ?"; //busca cliente a partir de sobrenome ou parte
+    private final String buscaRG = "select * from cliente WHERE rg = ?"; //busca cliente a partir do rg
 
     public ClienteDao(ConnectionFactory conFactory) {
         this.connectionFactory = conFactory;
@@ -122,7 +125,7 @@ public class ClienteDao {
         Connection connection = connectionFactory.getConnection();
         PreparedStatement stmtBusca;
         ResultSet rs = null;
-        stmtBusca = connection.prepareStatement(busca);
+        stmtBusca = connection.prepareStatement(buscaCPF);
         Cliente cliente;
         try{
             stmtBusca.setString(1, cpf);
@@ -137,5 +140,101 @@ public class ClienteDao {
         } finally{
             stmtBusca.close();
         }
+    }
+    
+    public List<Cliente> listaNome(String n) throws SQLException{
+        Connection connection=connectionFactory.getConnection();
+        ResultSet rs = null;
+        PreparedStatement stmtLista = connection.prepareStatement(buscaNome);
+        try {
+            stmtLista.setString(1, "%" + n + "%");
+            rs = stmtLista.executeQuery();
+            List<Cliente> clientes = new ArrayList();
+            while (rs.next()) {
+                // criando o objeto Cliente
+                long idcliente = rs.getLong("idcliente");
+                String nome= rs.getString("nome");
+                String sobrenome= rs.getString("sobrenome");
+                String rg= rs.getString("rg");
+                String cpf= rs.getString("cpf");
+                String endereco = rs.getString("endereco");
+                Double salario = rs.getDouble("salario");
+                
+                // adicionando o objeto à lista
+                clientes.add(new Cliente(idcliente, nome, sobrenome, rg, cpf, endereco, salario));
+            }
+            
+            return clientes;
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally{
+            rs.close();
+            stmtLista.close();
+        }       
+    }
+    
+    public List<Cliente> listaSobrenome(String s) throws SQLException{
+        Connection connection=connectionFactory.getConnection();
+        ResultSet rs = null;
+        PreparedStatement stmtLista = connection.prepareStatement(buscaSobrenome);
+        try {
+            stmtLista.setString(1, "%" + s + "%");
+            rs = stmtLista.executeQuery();
+            List<Cliente> clientes = new ArrayList();
+            while (rs.next()) {
+                // criando o objeto Cliente
+                long idcliente = rs.getLong("idcliente");
+                String nome= rs.getString("nome");
+                String sobrenome= rs.getString("sobrenome");
+                String rg= rs.getString("rg");
+                String cpf= rs.getString("cpf");
+                String endereco = rs.getString("endereco");
+                Double salario = rs.getDouble("salario");
+                
+                // adicionando o objeto à lista
+                clientes.add(new Cliente(idcliente, nome, sobrenome, rg, cpf, endereco, salario));
+            }
+            
+            return clientes;
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally{
+            rs.close();
+            stmtLista.close();
+        } 
+    }
+    
+    public List<Cliente> listaRG(String r) throws SQLException{
+        Connection connection=connectionFactory.getConnection();
+        ResultSet rs = null;
+        PreparedStatement stmtLista = connection.prepareStatement(buscaRG);
+        try {
+            stmtLista.setString(1,r);
+            rs = stmtLista.executeQuery();
+            List<Cliente> clientes = new ArrayList();
+            while (rs.next()) {
+                // criando o objeto Cliente
+                long idcliente = rs.getLong("idcliente");
+                String nome= rs.getString("nome");
+                String sobrenome= rs.getString("sobrenome");
+                String rg= rs.getString("rg");
+                String cpf= rs.getString("cpf");
+                String endereco = rs.getString("endereco");
+                Double salario = rs.getDouble("salario");
+                
+                // adicionando o objeto à lista
+                clientes.add(new Cliente(idcliente, nome, sobrenome, rg, cpf, endereco, salario));
+            }
+            
+            return clientes;
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally{
+            rs.close();
+            stmtLista.close();
+        }   
     }
 }

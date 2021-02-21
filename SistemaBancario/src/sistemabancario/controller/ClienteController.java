@@ -5,6 +5,7 @@
  */
 package sistemabancario.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import sistemabancario.model.Cliente;
 import sistemabancario.model.dao.ClienteDao;
@@ -65,7 +66,7 @@ public class ClienteController {
             listarClientes();
         }
         catch(Exception e){
-            clienteView.apresentaErro("Erro ao atualizar contato."+e.getMessage());
+            clienteView.apresentaErro("Erro ao atualizar contato.");
         }
     }
 
@@ -76,14 +77,66 @@ public class ClienteController {
     public void listarClientes() {
         try{
             List<Cliente> lista = this.modelDao.getLista();
-            clienteView.mostrarListaContatos(lista);
+            clienteView.mostrarListaClientes(lista);
         }catch(Exception ex){
             clienteView.apresentaErro("Erro ao listar contatos.");
         }
     }
 
-    public void ordenarClientes() {
-    
+    public void listarPorNome() {
+        try{
+            String nome = clienteView.getCampoListar();
+            List<Cliente> lista = this.modelDao.listaNome(nome);
+            clienteView.mostrarListaClientes(lista);
+        }
+        catch(Exception e){
+            clienteView.apresentaErro("Erro ao listar contatos.");
+        }
     }
 
+    public void listarPorSobrenome() {
+        try{
+            String sobrenome = clienteView.getCampoListar();
+            List<Cliente> lista = this.modelDao.listaSobrenome(sobrenome);
+            clienteView.mostrarListaClientes(lista);
+        }
+        catch(Exception e){
+            clienteView.apresentaErro("Erro ao listar contatos.");
+        }
+    }
+
+    public void listarPorRg() {
+        try{
+            String rg = clienteView.getCampoListar();
+            List<Cliente> lista = this.modelDao.listaRG(rg);
+            clienteView.mostrarListaClientes(lista);
+        }
+        catch(Exception e){
+            clienteView.apresentaErro("Erro ao listar contatos.");
+        }
+    }
+
+    public void listarPorCpf() {
+        try{
+            String cpf = clienteView.getCampoListar();
+            Cliente c = this.modelDao.getCliente(cpf);
+            List<Cliente> lista = new ArrayList();
+            lista.add(c);
+            clienteView.mostrarListaClientes(lista);
+        }
+        catch(Exception e){
+            clienteView.apresentaErro("Erro ao listar contatos.");
+        }
+    }
+    
+    public void ordenarClientes(int index) {
+        switch(index){
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+        }
+    }
 }

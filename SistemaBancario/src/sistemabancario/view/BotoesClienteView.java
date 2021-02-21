@@ -1,22 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sistemabancario.view;
 
 import javax.swing.JTextField;
 import sistemabancario.controller.ClienteController;
 
-/**
- *
- * @author Franshinsca
- */
 public class BotoesClienteView extends javax.swing.JPanel {
 
-    /**
-     * Creates new form BotoesClienteView
-     */
     public BotoesClienteView() {
         initComponents();
     }
@@ -37,6 +25,9 @@ public class BotoesClienteView extends javax.swing.JPanel {
         bExcluirCliente = new javax.swing.JButton();
         campoCPF = new javax.swing.JTextField();
         labelCPF = new javax.swing.JLabel();
+        campoListar = new javax.swing.JTextField();
+        comboboxLista = new javax.swing.JComboBox<>();
+        comboboxOrdenar = new javax.swing.JComboBox<>();
 
         bNovoCliente.setText("Novo Cliente");
 
@@ -56,6 +47,16 @@ public class BotoesClienteView extends javax.swing.JPanel {
 
         labelCPF.setText("CPF");
 
+        campoListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoListarActionPerformed(evt);
+            }
+        });
+
+        comboboxLista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos os clientes", "Nome (ou parte)", "Sobrenome (ou parte)", "RG", "CPF" }));
+
+        comboboxOrdenar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "Sobrenome", "Salario" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -63,51 +64,62 @@ public class BotoesClienteView extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bListarClientes)
-                    .addComponent(bNovoCliente))
-                .addGap(18, 18, 18)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(campoListar)
+                            .addComponent(bListarClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(comboboxLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 47, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(bNovoCliente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelCPF)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(comboboxOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(bOrdenarClientes)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 101, Short.MAX_VALUE)
-                        .addComponent(labelCPF)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(bAlterarCliente)
-                            .addComponent(bExcluirCliente))))
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(bExcluirCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(bAlterarCliente)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(bOrdenarClientes)))
+                .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bListarClientes)
+                    .addComponent(comboboxLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboboxOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoListar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bOrdenarClientes))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(bNovoCliente)
-                        .addContainerGap(22, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bExcluirCliente)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(bAlterarCliente)
-                            .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelCPF))
-                        .addContainerGap())))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bListarClientes)
+                .addGap(18, 18, 18)
+                .addComponent(bExcluirCliente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bAlterarCliente)
+                    .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bNovoCliente)
+                    .addComponent(labelCPF))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void campoCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCPFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoCPFActionPerformed
+
+    private void campoListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoListarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoListarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -117,6 +129,9 @@ public class BotoesClienteView extends javax.swing.JPanel {
     private javax.swing.JButton bNovoCliente;
     private javax.swing.JButton bOrdenarClientes;
     private javax.swing.JTextField campoCPF;
+    private javax.swing.JTextField campoListar;
+    private javax.swing.JComboBox<String> comboboxLista;
+    private javax.swing.JComboBox<String> comboboxOrdenar;
     private javax.swing.JLabel labelCPF;
     // End of variables declaration//GEN-END:variables
 
@@ -125,11 +140,36 @@ public class BotoesClienteView extends javax.swing.JPanel {
         this.bNovoCliente.addActionListener(e -> controller.inserirCliente());
         this.bAlterarCliente.addActionListener(e -> controller.buscarCliente());
         this.bExcluirCliente.addActionListener(e -> controller.excluirCliente());
-        this.bListarClientes.addActionListener(e -> controller.listarClientes());
-        this.bOrdenarClientes.addActionListener(e -> controller.ordenarClientes());
+        this.bListarClientes.addActionListener(e -> {
+            int listar = comboboxLista.getSelectedIndex();
+            switch(listar){
+                case 0: //listar todos os clientes
+                    controller.listarClientes();
+                    break;
+                case 1: //listar por nome ou parte
+                    controller.listarPorNome();
+                    break;
+                case 2: //listar por sobrenome ou parte
+                    controller.listarPorSobrenome();
+                    break;
+                case 3: //listar por rg
+                    controller.listarPorRg();
+                    break;
+                case 4: //listar por cpf
+                    controller.listarPorCpf();
+                    break;
+            }});
+        this.bOrdenarClientes.addActionListener(e -> {
+            int ordenar = comboboxOrdenar.getSelectedIndex();
+            controller.ordenarClientes(ordenar);
+        });
     }
     
     public JTextField getCampoCPF() {
         return campoCPF;
+    }
+    
+    public JTextField getCampoListar() {
+        return campoListar;
     }
 }
