@@ -25,13 +25,22 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="bAlterarCliente" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="bExcluirCliente" min="-2" max="-2" attributes="0"/>
+                      <Component id="bOrdenarClientes" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="bOrdenarClientes" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="0" pref="101" max="32767" attributes="0"/>
+                      <Component id="labelCPF" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="campoCPF" min="-2" pref="96" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="bAlterarCliente" min="-2" max="-2" attributes="0"/>
+                          <Component id="bExcluirCliente" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
-              <EmptySpace pref="125" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -43,13 +52,24 @@
                   <Component id="bListarClientes" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="bOrdenarClientes" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="bNovoCliente" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="bAlterarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="bExcluirCliente" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="bNovoCliente" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="22" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="bExcluirCliente" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="bAlterarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="campoCPF" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelCPF" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -78,6 +98,16 @@
     <Component class="javax.swing.JButton" name="bExcluirCliente">
       <Properties>
         <Property name="text" type="java.lang.String" value="Excluir Cliente"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="campoCPF">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campoCPFActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelCPF">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="CPF"/>
       </Properties>
     </Component>
   </SubComponents>

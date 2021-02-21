@@ -5,6 +5,7 @@
  */
 package sistemabancario.view;
 
+import javax.swing.JTextField;
 import sistemabancario.controller.ClienteController;
 
 /**
@@ -34,6 +35,8 @@ public class BotoesClienteView extends javax.swing.JPanel {
         bOrdenarClientes = new javax.swing.JButton();
         bAlterarCliente = new javax.swing.JButton();
         bExcluirCliente = new javax.swing.JButton();
+        campoCPF = new javax.swing.JTextField();
+        labelCPF = new javax.swing.JLabel();
 
         bNovoCliente.setText("Novo Cliente");
 
@@ -44,6 +47,14 @@ public class BotoesClienteView extends javax.swing.JPanel {
         bAlterarCliente.setText("Atualizar Cliente");
 
         bExcluirCliente.setText("Excluir Cliente");
+
+        campoCPF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoCPFActionPerformed(evt);
+            }
+        });
+
+        labelCPF.setText("CPF");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -57,11 +68,18 @@ public class BotoesClienteView extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(bAlterarCliente)
-                        .addGap(18, 18, 18)
-                        .addComponent(bExcluirCliente))
-                    .addComponent(bOrdenarClientes))
-                .addContainerGap(125, Short.MAX_VALUE))
+                        .addComponent(bOrdenarClientes)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 101, Short.MAX_VALUE)
+                        .addComponent(labelCPF)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(bAlterarCliente)
+                            .addComponent(bExcluirCliente))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -70,14 +88,26 @@ public class BotoesClienteView extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bListarClientes)
                     .addComponent(bOrdenarClientes))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bNovoCliente)
-                    .addComponent(bAlterarCliente)
-                    .addComponent(bExcluirCliente))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(bNovoCliente)
+                        .addContainerGap(22, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bExcluirCliente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(bAlterarCliente)
+                            .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelCPF))
+                        .addContainerGap())))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void campoCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCPFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoCPFActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -86,14 +116,20 @@ public class BotoesClienteView extends javax.swing.JPanel {
     private javax.swing.JButton bListarClientes;
     private javax.swing.JButton bNovoCliente;
     private javax.swing.JButton bOrdenarClientes;
+    private javax.swing.JTextField campoCPF;
+    private javax.swing.JLabel labelCPF;
     // End of variables declaration//GEN-END:variables
 
     public void setController(ClienteController controller) {
       
-        this.bNovoCliente.addActionListener(e -> controller.criarCliente());
-        this.bAlterarCliente.addActionListener(e -> controller.atualizarCliente());
+        this.bNovoCliente.addActionListener(e -> controller.inserirCliente());
+        this.bAlterarCliente.addActionListener(e -> controller.buscarCliente());
         this.bExcluirCliente.addActionListener(e -> controller.excluirCliente());
         this.bListarClientes.addActionListener(e -> controller.listarClientes());
         this.bOrdenarClientes.addActionListener(e -> controller.ordenarClientes());
+    }
+    
+    public JTextField getCampoCPF() {
+        return campoCPF;
     }
 }

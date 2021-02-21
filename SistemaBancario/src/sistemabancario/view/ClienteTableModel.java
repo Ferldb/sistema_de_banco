@@ -14,7 +14,7 @@ import sistemabancario.model.Cliente;
 public class ClienteTableModel extends AbstractTableModel{
     private String[] colunas=new String[]{"id","Nome", "Sobrenome", "RG", "CPF", "Endereco", "Salario"};
 
-   private List<Cliente> lista=new ArrayList();
+    private List<Cliente> lista=new ArrayList();
 
     
     public ClienteTableModel(List<Cliente> lista){
@@ -109,7 +109,6 @@ public class ClienteTableModel extends AbstractTableModel{
     public void setListaClientes(List<Cliente> clientes) {
         this.lista = clientes;
         this.fireTableDataChanged();
-        //this.fireTableRowsInserted(0,contatos.size()-1);//update JTable
     }
 
     public void limpaTabela() {

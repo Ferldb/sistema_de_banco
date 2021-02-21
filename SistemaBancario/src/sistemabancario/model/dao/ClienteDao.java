@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sistemabancario.model.dao;
 
 import java.sql.Connection;
@@ -24,6 +19,7 @@ public class ClienteDao {
     private final String select = "select * from cliente";
     private final String update = "update cliente set nome=?, sobrenome=?, rg=?, cpf=?, endereco=?, salario=? WHERE idcliente=?";
     private final String delete = "delete from cliente WHERE idcliente=?";
+    private final String busca = "select * from cliente WHERE cpf = ?";
 
     public ClienteDao(ConnectionFactory conFactory) {
         this.connectionFactory = conFactory;
@@ -120,5 +116,26 @@ public class ClienteDao {
         } finally{
             stmtExcluir.close();
         }
-    }    
+    }
+    
+    public Cliente getCliente(String cpf) throws SQLException{
+        Connection connection = connectionFactory.getConnection();
+        PreparedStatement stmtBusca;
+        ResultSet rs = null;
+        stmtBusca = connection.prepareStatement(busca);
+        Cliente cliente;
+        try{
+            stmtBusca.setString(1, cpf);
+            rs = stmtBusca.executeQuery();
+            if (rs.next()){
+                cliente = new Cliente(rs.getInt("idcliente"),rs.getString("nome"),rs.getString("sobrenome"),rs.getString("rg"),rs.getString("cpf"),rs.getString("endereco"),rs.getDouble("salario"));
+                return cliente;
+            }
+            else{
+                throw new RuntimeException("Não existe cliente com este cpf. CPF="+cpf);
+            }
+        } finally{
+            stmtBusca.close();
+        }
+    }
 }

@@ -1,12 +1,15 @@
 package sistemabancario.view;
 
 import java.awt.event.MouseAdapter;
+import java.util.List;
+import javax.swing.JOptionPane;
 import sistemabancario.controller.ClienteController;
 import sistemabancario.model.Cliente;
 
 public class JanelaClienteView extends javax.swing.JFrame {
     
     private int linhaClicadaParaAtualizacao = -1;
+    private ClienteTableModel modeloTabelaCliente = new ClienteTableModel();
 
     public JanelaClienteView() {
         initComponents();
@@ -51,10 +54,10 @@ public class JanelaClienteView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private ClienteTableModel modeloTabelaCliente = new ClienteTableModel();
    
     public void setController(ClienteController controller) {
         botoesClienteView.setController(controller);
+        formularioClienteView.setController(controller);
         tabelaClienteView.getTabelaCliente().addMouseListener(new MouseAdapter(){
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -76,6 +79,50 @@ public class JanelaClienteView extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public void initView() {
+        tabelaClienteView.getTabelaCliente().setModel(modeloTabelaCliente);
         java.awt.EventQueue.invokeLater(() ->  this.setVisible(true));
+    }
+
+    public Cliente getCliente() {
+        String nome = formularioClienteView.getCampoNome().getText();
+        String sobrenome = formularioClienteView.getCampoSobrenome().getText();
+        String rg = formularioClienteView.getCampoRG().getText();
+        String cpf = formularioClienteView.getCampoCPF().getText();
+        String endereco = formularioClienteView.getCampoEndereco().getText();
+        String salario = formularioClienteView.getCampoSalario().getText();
+        
+        Double s = Double.parseDouble(salario);
+        
+        Cliente cliente = new Cliente(-1, nome, sobrenome, rg, cpf, endereco, s);
+        return cliente;
+    }
+    
+    public String getCPF(){
+        String cpf = botoesClienteView.getCampoCPF().getText();
+        return cpf;
+    }
+
+    public void inserirCliente(Cliente cliente) {
+        modeloTabelaCliente.adicionaCliente(cliente);
+    }
+
+    public void mostrarMensagem(String mensagem) {
+        JOptionPane.showMessageDialog(null,mensagem + "\n", "Info", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void mostrarListaContatos(List<Cliente> lista) {
+        modeloTabelaCliente.setListaClientes(lista);
+    }
+
+    public void apresentaErro(String erro) {
+        JOptionPane.showMessageDialog(null,erro + "\n", "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void preencherFormulario(Cliente cliente) {
+        formularioClienteView.setCliente(cliente);
+    }
+
+    public void atualizarCliente(Cliente cliente) {
+        modeloTabelaCliente.fireTableRowsUpdated(linhaClicadaParaAtualizacao, linhaClicadaParaAtualizacao);
     }
 }
