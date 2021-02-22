@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <Properties>
+    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[591, 236]"/>
+    </Property>
+  </Properties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -16,7 +21,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="labelSobrenome" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -28,16 +33,14 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Component id="campoEndereco" alignment="0" pref="307" max="32767" attributes="0"/>
+                  <Component id="campoEndereco" alignment="0" pref="505" max="32767" attributes="0"/>
                   <Component id="campoCPF" alignment="0" max="32767" attributes="0"/>
                   <Component id="campoRG" alignment="0" max="32767" attributes="0"/>
                   <Component id="campoSobrenome" alignment="0" max="32767" attributes="0"/>
-                  <Component id="campoNome" alignment="0" max="32767" attributes="0"/>
                   <Component id="campoSalario" max="32767" attributes="0"/>
+                  <Component id="campoNome" alignment="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="35" max="32767" attributes="0"/>
-              <Component id="bSalvar" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -73,7 +76,6 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="labelSalario" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="campoSalario" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="bSalvar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -122,11 +124,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="campoSalario">
-    </Component>
-    <Component class="javax.swing.JButton" name="bSalvar">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Salvar altera&#xe7;&#xf5;es"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>

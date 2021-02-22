@@ -34,7 +34,8 @@ public class FormularioClienteView extends javax.swing.JPanel {
         campoEndereco = new javax.swing.JTextField();
         labelSalario = new javax.swing.JLabel();
         campoSalario = new javax.swing.JTextField();
-        bSalvar = new javax.swing.JButton();
+
+        setPreferredSize(new java.awt.Dimension(591, 236));
 
         labelNome.setText("Nome");
 
@@ -47,8 +48,6 @@ public class FormularioClienteView extends javax.swing.JPanel {
         labelEndereco.setText("Endereco");
 
         labelSalario.setText("Salario");
-
-        bSalvar.setText("Salvar alterações");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -65,15 +64,13 @@ public class FormularioClienteView extends javax.swing.JPanel {
                     .addComponent(labelSalario))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(campoEndereco, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+                    .addComponent(campoEndereco, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
                     .addComponent(campoCPF, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(campoRG, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(campoSobrenome, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(campoNome, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(campoSalario))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addComponent(bSalvar)
-                .addGap(23, 23, 23))
+                    .addComponent(campoSalario)
+                    .addComponent(campoNome, javax.swing.GroupLayout.Alignment.LEADING))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,15 +98,13 @@ public class FormularioClienteView extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelSalario)
-                    .addComponent(campoSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bSalvar))
+                    .addComponent(campoSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bSalvar;
     private javax.swing.JTextField campoCPF;
     private javax.swing.JTextField campoEndereco;
     private javax.swing.JTextField campoNome;
@@ -148,6 +143,10 @@ public class FormularioClienteView extends javax.swing.JPanel {
         return campoSalario;
     }
     
+    public void setCampoNome(){
+        campoNome.setText("");
+    }
+    
     
     void setCliente(Cliente cliente) {
         this.clienteParaAtualizar = cliente;
@@ -159,7 +158,12 @@ public class FormularioClienteView extends javax.swing.JPanel {
         campoSalario.setText(Double.toString(clienteParaAtualizar.getSalario()));
     }
 
-    void setController(ClienteController controller) {
-        this.bSalvar.addActionListener(e -> controller.atualizarCliente());
+    void limparFormulario() {
+        campoNome.setText("");
+        campoSobrenome.setText("");
+        campoRG.setText("");
+        campoCPF.setText("");
+        campoEndereco.setText("");
+        campoSalario.setText("");
     }
 }

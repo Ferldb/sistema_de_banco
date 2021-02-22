@@ -1,21 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sistemabancario.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import sistemabancario.model.Cliente;
 import sistemabancario.model.dao.ClienteDao;
 import sistemabancario.model.dao.ConnectionFactory;
 import sistemabancario.view.JanelaClienteView;
 
-/**
- *
- * @author Franshinsca
- */
 public class ClienteController {
     private JanelaClienteView clienteView;
     private ClienteDao modelDao;
@@ -37,18 +29,21 @@ public class ClienteController {
         if(cliente!=null){
             modelDao.inserir(cliente);
             clienteView.inserirCliente(cliente);
+            clienteView.limparFormulario();
             clienteView.mostrarMensagem("Cliente inserido com sucesso");
         }
     }
+
     
     public void buscarCliente(){
         try{
             String cpf = clienteView.getCPF();
             Cliente cliente = modelDao.getCliente(cpf);
+            clienteView.initBotoes(1);
             clienteView.preencherFormulario(cliente);
         }
         catch(Exception e){
-            clienteView.apresentaErro("Erro ao atualizar contato.");
+            clienteView.apresentaErro(e.getMessage());
         }
     }
     
@@ -58,15 +53,17 @@ public class ClienteController {
             long id = modelDao.getCliente(cliente.getCpf()).getId();    //pega id
             cliente.setId(id);                                          //seta id
             if (cliente == null){
-                clienteView.apresentaErro("Selecione um contato para atualizar!!");
+                clienteView.apresentaErro("Selecione um cliente para atualizar!!");
                 return;
             }
             modelDao.atualizar(cliente);
-            clienteView.mostrarMensagem("Cliente atualizado com sucesso");
+            clienteView.limparFormulario();
             listarClientes();
+            clienteView.mostrarMensagem("Cliente atualizado com sucesso");
+            clienteView.initBotoes(0);
         }
         catch(Exception e){
-            clienteView.apresentaErro("Erro ao atualizar contato.");
+            clienteView.apresentaErro("Erro ao atualizar cliente.");
         }
     }
 
@@ -76,10 +73,10 @@ public class ClienteController {
 
     public void listarClientes() {
         try{
-            List<Cliente> lista = this.modelDao.getLista();
+            List<Cliente> lista = this.modelDao.getLista(0);
             clienteView.mostrarListaClientes(lista);
         }catch(Exception ex){
-            clienteView.apresentaErro("Erro ao listar contatos.");
+            clienteView.apresentaErro("Erro ao listar clientes.");
         }
     }
 
@@ -90,7 +87,7 @@ public class ClienteController {
             clienteView.mostrarListaClientes(lista);
         }
         catch(Exception e){
-            clienteView.apresentaErro("Erro ao listar contatos.");
+            clienteView.apresentaErro("Erro ao listar clientes.");
         }
     }
 
@@ -101,7 +98,7 @@ public class ClienteController {
             clienteView.mostrarListaClientes(lista);
         }
         catch(Exception e){
-            clienteView.apresentaErro("Erro ao listar contatos.");
+            clienteView.apresentaErro("Erro ao listar clientes.");
         }
     }
 
@@ -112,7 +109,7 @@ public class ClienteController {
             clienteView.mostrarListaClientes(lista);
         }
         catch(Exception e){
-            clienteView.apresentaErro("Erro ao listar contatos.");
+            clienteView.apresentaErro("Erro ao listar clientes.");
         }
     }
 
@@ -125,18 +122,31 @@ public class ClienteController {
             clienteView.mostrarListaClientes(lista);
         }
         catch(Exception e){
-            clienteView.apresentaErro("Erro ao listar contatos."+e.getMessage());
+            clienteView.apresentaErro("Erro ao listar clientes."+e.getMessage());
         }
     }
     
     public void ordenarClientes(int index) {
-        switch(index){
-            case 0:
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
+        int result = index;
+        try{
+            List<Cliente> lista = this.modelDao.getLista(index);
+            switch(result){
+                case 0:
+                    Collections.sort(lista);
+                    clienteView.mostrarListaClientes(lista);
+                    break;
+                case 1:
+                    Collections.sort(lista);
+                    clienteView.mostrarListaClientes(lista);
+                    break;
+                case 2:
+                    Collections.sort(lista);
+                    clienteView.mostrarListaClientes(lista);
+                    break;
+            }
+        }
+        catch (Exception e){
+            clienteView.apresentaErro("Erro ao listar clientes"+e.getMessage());
         }
     }
 }

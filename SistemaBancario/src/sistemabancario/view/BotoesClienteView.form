@@ -19,77 +19,68 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="campoListar" max="32767" attributes="0"/>
-                          <Component id="bListarClientes" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="comboboxLista" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="47" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="bNovoCliente" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="labelCPF" min="-2" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="comboboxOrdenar" min="-2" pref="115" max="-2" attributes="0"/>
-                  <Component id="campoCPF" min="-2" pref="96" max="-2" attributes="0"/>
-              </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="bExcluirCliente" max="32767" attributes="0"/>
-                          <Component id="bAlterarCliente" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="labelCPF" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="campoCPF" max="32767" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="bOrdenarClientes" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="campoListar" min="-2" pref="139" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="bAlterarCliente" max="32767" attributes="0"/>
+                  <Component id="comboboxOrdenar" max="32767" attributes="0"/>
+                  <Component id="comboboxLista" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="bExcluirCliente" max="32767" attributes="0"/>
+                  <Component id="bOrdenarClientes" alignment="0" pref="157" max="32767" attributes="0"/>
+                  <Component id="bListarClientes" alignment="0" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="campoListar" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="comboboxLista" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="comboboxOrdenar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="bOrdenarClientes" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="103" pref="103" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="bAlterarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="campoCPF" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelCPF" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="bExcluirCliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="campoListar" pref="24" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="comboboxLista" alignment="3" max="32767" attributes="0"/>
+                              <Component id="bListarClientes" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="comboboxOrdenar" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                          <Component id="bOrdenarClientes" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="61" pref="61" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="bListarClientes" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="bExcluirCliente" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="bAlterarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="campoCPF" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="bNovoCliente" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="labelCPF" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace pref="19" max="32767" attributes="0"/>
+              <EmptySpace pref="16" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="bNovoCliente">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Novo Cliente"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JButton" name="bListarClientes">
       <Properties>
         <Property name="text" type="java.lang.String" value="Listar Clientes"/>
@@ -99,6 +90,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Ordenar Clientes"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bOrdenarClientesActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="bAlterarCliente">
       <Properties>

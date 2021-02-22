@@ -1,11 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sistemabancario.model;
 
-public class Cliente {
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+public class Cliente implements Comparable<Cliente>{
     private long idcliente;
     private String nome;
     private String sobrenome;
@@ -13,6 +12,7 @@ public class Cliente {
     private String cpf;
     private String endereco;
     private double salario;
+    private int ordenar; //atributo para ordenação da lista de clientes
 
     public Cliente(long idcliente, String nome, String sobrenome, String rg, String cpf, String endereco, double salario) {
         this.idcliente = idcliente;
@@ -80,8 +80,30 @@ public class Cliente {
         this.salario = salario;
     }
     
+    public int getOrdenar(){
+        return ordenar;
+    }
+    
+    public void setOrdenar(int o){
+        this.ordenar = o;
+    }
+    
     @Override
     public String toString(){
         return this.getNome() + " " + this.getSobrenome() + " - " + this.getRg() + " " + this.getCpf() + " " + this.getEndereco();
     }
+
+    @Override
+    public int compareTo(Cliente c) {
+        if(this.ordenar == 0){ //ordenar por nome
+            return this.getNome().compareToIgnoreCase(c.getNome());
+        }
+        else if (this.ordenar == 1){ //ordenar por sobrenome
+            return this.getSobrenome().compareToIgnoreCase(c.getSobrenome());
+        }
+        else { //ordenar por salario
+            return this.getSalario() >= c.getSalario() ? -1 : 0;
+        }
+    }
+
 }

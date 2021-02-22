@@ -17,7 +17,7 @@ public class ClienteDao {
     private ConnectionFactory connectionFactory;
     private final String insert = "insert into cliente (nome,sobrenome,rg,cpf,endereco,salario) values (?,?,?,?,?,?)";
     private final String select = "select * from cliente";
-    private final String update = "update cliente set nome=?, sobrenome=?, rg=?, cpf=?, endereco=?, salario=? WHERE idcliente=?";
+    private final String update = "update cliente set nome=?, sobrenome=?, rg=?, endereco=?, salario=? WHERE idcliente=?";
     private final String delete = "delete from cliente WHERE idcliente=?";
     private final String buscaCPF = "select * from cliente WHERE cpf = ?"; //busca cliente a partir de cpf
     private final String buscaNome = "select * from cliente WHERE nome LIKE ?"; //busca cliente a partir de nome ou parte
@@ -53,7 +53,7 @@ public class ClienteDao {
         } 
     }
 
-    public List<Cliente> getLista() throws SQLException{
+    public List<Cliente> getLista(int o) throws SQLException{
         Connection connection=connectionFactory.getConnection();
         ResultSet rs = null;
         PreparedStatement stmtLista = connection.prepareStatement(select);
@@ -71,7 +71,9 @@ public class ClienteDao {
                 Double salario = rs.getDouble("salario");
                 
                 // adicionando o objeto à lista
-                clientes.add(new Cliente(idcliente, nome, sobrenome, rg, cpf, endereco, salario));
+                Cliente c = new Cliente(idcliente, nome, sobrenome, rg, cpf, endereco, salario);
+                c.setOrdenar(o); //seta indice para ordenação (default 0 se não for chamada de ordenação)
+                clientes.add(c);
             }
             
             return clientes;
@@ -92,10 +94,9 @@ public class ClienteDao {
             stmtAtualiza.setString(1, cliente.getNome());
             stmtAtualiza.setString(2, cliente.getSobrenome());
             stmtAtualiza.setString(3, cliente.getRg());
-            stmtAtualiza.setString(4, cliente.getCpf());
-            stmtAtualiza.setString(5, cliente.getEndereco());
-            stmtAtualiza.setDouble(6, cliente.getSalario());
-            stmtAtualiza.setLong(7, cliente.getId());
+            stmtAtualiza.setString(4, cliente.getEndereco());
+            stmtAtualiza.setDouble(5, cliente.getSalario());
+            stmtAtualiza.setLong(6, cliente.getId());
             stmtAtualiza.executeUpdate();
         } finally{
             stmtAtualiza.close();
