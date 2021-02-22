@@ -8,7 +8,7 @@ create table cliente (
     idcliente BIGINT NOT NULL AUTO_INCREMENT,
     nome VARCHAR(255),
     sobrenome VARCHAR(255),
-    rg VARCHAR(8),
+    rg VARCHAR(9),
     cpf VARCHAR(11),
     endereco VARCHAR(255),
     salario DOUBLE,
@@ -37,3 +37,5 @@ create table conta (
 
 INSERT INTO tipoconta (descricao) VALUES ('Conta Corrente');
 INSERT INTO tipoconta (descricao) VALUES ('Conta Investimento');
+
+ALTER TABLE cliente MODIFY rg varchar(9);

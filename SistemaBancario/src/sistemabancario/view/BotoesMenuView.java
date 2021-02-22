@@ -83,10 +83,19 @@ public class BotoesMenuView extends javax.swing.JPanel {
     private javax.swing.JButton bMovimentar;
     // End of variables declaration//GEN-END:variables
 
-    public void setController() {
+    public void setController(MenuController controller) {
       
-        this.bClientes.addActionListener(e -> new ClienteController());
-        this.bConta.addActionListener(e -> new ContaController());
-        this.bMovimentar.addActionListener(e -> new ClienteContaController());
+        this.bClientes.addActionListener(e -> {
+            controller.visibilidade();
+            new ClienteController();
+                });
+        this.bConta.addActionListener(e -> {
+            controller.visibilidade();
+            new ContaController();
+                });
+        this.bMovimentar.addActionListener(e -> {
+            controller.visibilidade();
+            new ClienteContaController();
+                });
     }
 }

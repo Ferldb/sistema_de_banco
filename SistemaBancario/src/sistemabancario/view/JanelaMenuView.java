@@ -43,11 +43,15 @@ public class JanelaMenuView extends javax.swing.JFrame {
     private sistemabancario.view.BotoesMenuView botoesMenuView;
     // End of variables declaration//GEN-END:variables
 
-    public void setController() {
-        botoesMenuView.setController();
+    public void setController(MenuController controller) {
+        botoesMenuView.setController(controller);
     }
 
     public void initView() {
         java.awt.EventQueue.invokeLater(() ->  this.setVisible(true));
+    }
+
+    public void desabilitaMenu(MenuController controller) {
+        this.dispose();
     }
 }

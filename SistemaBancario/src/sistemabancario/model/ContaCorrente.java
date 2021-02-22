@@ -5,7 +5,23 @@
  */
 package sistemabancario.model;
 
-public class ContaCorrente {
+
+public class ContaCorrente extends Conta{
+
+    private double limite;
+
+    public ContaCorrente(double limite, long idconta, long idcliente, double saldo) {
+        super(idconta, idcliente, saldo);
+        this.limite = limite;
+    }
+
+    public double getLimite() {
+        return limite;
+    }
+
+    public void setLimite(double limite) {
+        this.limite = limite;
+    }
     
     /*
     
@@ -19,4 +35,6 @@ public class ContaCorrente {
     }
     
     */
+
+    
 }

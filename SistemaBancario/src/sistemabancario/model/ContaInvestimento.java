@@ -5,8 +5,34 @@
  */
 package sistemabancario.model;
 
-public class ContaInvestimento {
+public class ContaInvestimento extends Conta {
     
+    private double montanteMin;
+    private double depositoMin;
+
+    public ContaInvestimento(long idconta, long idcliente, double saldo, double montanteMin, double depositoMin) {
+        super(idconta, idcliente, saldo);
+        this.montanteMin = montanteMin;
+        this.depositoMin = depositoMin;
+    }
+    
+    public double getMontanteMin() {
+        return montanteMin;
+    }
+
+    public double getDepositoMin() {
+        return depositoMin;
+    }
+
+      public void setMontanteMin(double montanteMin) {
+        this.montanteMin = montanteMin;
+    }
+
+    public void setDepositoMin(double depositoMin) {
+        this.depositoMin = depositoMin;
+    }
+
+
     /*
     
     //Recebe como parâmetro o valor a ser depositado. Se o valor a ser depositado for maior ou igual ao depositoMinimo 
@@ -26,6 +52,4 @@ public class ContaInvestimento {
     }
     
     */
-    
-    
 }

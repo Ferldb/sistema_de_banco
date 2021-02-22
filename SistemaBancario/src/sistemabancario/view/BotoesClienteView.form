@@ -60,11 +60,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="comboboxLista" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="comboboxOrdenar" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="campoListar" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                  <Component id="bOrdenarClientes" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="comboboxLista" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="comboboxOrdenar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="bOrdenarClientes" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="bListarClientes" min="-2" max="-2" attributes="0"/>

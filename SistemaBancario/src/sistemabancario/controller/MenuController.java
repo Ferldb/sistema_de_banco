@@ -12,7 +12,12 @@ public class MenuController {
     }
     
     private void initController(){
-        this.menuView.setController();
+        this.menuView.setController(this);
         this.menuView.initView();
     }
+    
+    public void visibilidade(){
+        this.menuView.desabilitaMenu(this);
+    }
+
 }

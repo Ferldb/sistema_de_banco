@@ -6,6 +6,42 @@
 package sistemabancario.model;
 
 public class Conta {
+    
+    private long idconta;
+    private long idcliente;
+    private double saldo;
+
+    public Conta(long idconta, long idcliente, double saldo) {
+        this.idconta = idconta;
+        this.idcliente = idcliente;
+        this.saldo = saldo;
+    }
+
+    public long getIdconta() {
+        return idconta;
+    }
+
+    public long getIdcliente() {
+        return idcliente;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setIdconta(long idconta) {
+        this.idconta = idconta;
+    }
+
+    public void setIdcliente(long idcliente) {
+        this.idcliente = idcliente;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+    
+    
     /*
     //o valor depositado deve ser positivo. Caso contrário o método retorna false
     public boolean deposita(double valor){

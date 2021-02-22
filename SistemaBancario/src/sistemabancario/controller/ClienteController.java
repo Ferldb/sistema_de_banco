@@ -48,7 +48,7 @@ public class ClienteController {
             clienteView.preencherFormulario(cliente);
         }
         catch(Exception e){
-            clienteView.apresentaErro("Erro ao atualizar contato."+e.getMessage());
+            clienteView.apresentaErro("Erro ao atualizar contato.");
         }
     }
     
@@ -125,7 +125,7 @@ public class ClienteController {
             clienteView.mostrarListaClientes(lista);
         }
         catch(Exception e){
-            clienteView.apresentaErro("Erro ao listar contatos.");
+            clienteView.apresentaErro("Erro ao listar contatos."+e.getMessage());
         }
     }
     
