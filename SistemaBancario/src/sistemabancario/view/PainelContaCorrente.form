@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="labelLimite" max="32767" attributes="0"/>
+                      <Component id="labelDepositoInicial" pref="107" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="labelNumConta" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="campoDepositoInicial" alignment="1" max="32767" attributes="0"/>
+                  <Component id="campoLimite" alignment="1" max="32767" attributes="0"/>
+                  <Component id="campoNumConta" alignment="1" pref="94" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace pref="185" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="bCriarConta" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelDepositoInicial" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="campoDepositoInicial" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelLimite" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="campoLimite" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="campoNumConta" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelNumConta" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="bCriarConta" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="labelDepositoInicial">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Dep&#xf3;sito Inicial:    R$"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelLimite">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Limite:                   R$"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelNumConta">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="N&#xfa;mero da Conta:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="campoNumConta">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="text" type="java.lang.String" value="N&#xda;MERO"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="campoDepositoInicial">
+    </Component>
+    <Component class="javax.swing.JTextField" name="campoLimite">
+    </Component>
+    <Component class="javax.swing.JButton" name="bCriarConta">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Criar Conta"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>
