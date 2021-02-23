@@ -1,6 +1,9 @@
 package sistemabancario.view;
 
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import sistemabancario.controller.ClienteContaController;
 
@@ -15,8 +18,13 @@ public class JanelaManipularContaView extends javax.swing.JFrame {
          this.bPesquisar.addActionListener(e -> controller.buscarCliente());
          this.bCarregarOperacao.addActionListener((ActionEvent e) -> {
          int indice = ComboBoxOperacao.getSelectedIndex();
+         try {
+                 controller.movimentarConta(indice);
+             } catch (SQLException ex) {
+                 Logger.getLogger(JanelaManipularContaView.class.getName()).log(Level.SEVERE, null, ex);
+             }
          painelContaCliente1.setVisible(true);
-         painelContaCliente1.setLabels(indice);
+         painelContaCliente1.setLabels(indice);  
         });
     }
 
@@ -40,6 +48,10 @@ public class JanelaManipularContaView extends javax.swing.JFrame {
     
     public void desabilitaMenu(ClienteContaController aThis) {
         this.dispose();
+    }
+    
+    public void mostrarSaldo(double saldo){
+        painelContaCliente1.setCampoValor(saldo);
     }
     
     @SuppressWarnings("unchecked")

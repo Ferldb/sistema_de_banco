@@ -5,6 +5,8 @@
  */
 package sistemabancario.view;
 
+import javax.swing.JTextField;
+
 /**
  *
  * @author eduar
@@ -64,7 +66,7 @@ public class PainelContaCliente extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(labelOperacao, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(campoValor, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelOperacao2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
@@ -101,6 +103,11 @@ public class PainelContaCliente extends javax.swing.JPanel {
         }
     }
 
+    public void setCampoValor(Double saldo) {
+        campoValor.setText(Double.toString(saldo));
+    }
+
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bConfirmar;
     private javax.swing.JTextField campoValor;

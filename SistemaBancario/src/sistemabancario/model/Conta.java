@@ -10,6 +10,7 @@ public class Conta {
     private long idconta;
     private Cliente cliente;
     private double saldo;
+    private long tipoconta;
 
     public Conta(long idconta, Cliente cliente, double saldo) {
         this.idconta = idconta;
@@ -42,6 +43,7 @@ public class Conta {
     }
     
     
+    
     /*
     //o valor depositado deve ser positivo. Caso contrário o método retorna false
     public boolean deposita(double valor){
@@ -51,4 +53,12 @@ public class Conta {
     public boolean saca(double valor){
     }
     */
+
+    public long getTipoconta() {
+        return tipoconta;
+    }
+
+    public void setTipoconta(long tipoconta) {
+        this.tipoconta = tipoconta;
+    }
 }

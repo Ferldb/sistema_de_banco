@@ -41,9 +41,9 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="labelOperacao" min="-2" pref="22" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="campoValor" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                  <Component id="labelOperacao2" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                  <Component id="labelOperacao2" min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="26" max="32767" attributes="0"/>
               <Component id="bConfirmar" min="-2" max="-2" attributes="0"/>
