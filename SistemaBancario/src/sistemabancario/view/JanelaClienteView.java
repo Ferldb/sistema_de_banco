@@ -136,7 +136,7 @@ public class JanelaClienteView extends javax.swing.JFrame {
     }
 
     public void mostrarMensagem(String mensagem) {
-        JOptionPane.showMessageDialog(null,mensagem + "\n", "Info", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, mensagem + "\n", "Info", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void mostrarListaClientes(List<Cliente> lista) {
@@ -144,7 +144,7 @@ public class JanelaClienteView extends javax.swing.JFrame {
     }
 
     public void apresentaErro(String erro) {
-        JOptionPane.showMessageDialog(null,erro + "\n", "Erro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, erro + "\n", "Erro", JOptionPane.ERROR_MESSAGE);
     }
 
     public void preencherFormulario(Cliente cliente) {

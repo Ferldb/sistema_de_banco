@@ -193,8 +193,16 @@ public class ClienteDao {
                 // adicionando o objeto à lista
                 clientes.add(new Cliente(idcliente, nome, sobrenome, rg, cpf, endereco, salario));
             }
-            
+            if(clientes.isEmpty()){
+                if(i == 1)
+                    throw new RuntimeException("Não existem clientes cadastrados com o NOME ou parte dele ''" + n + "''");
+                if(i == 2)
+                    throw new RuntimeException("Não existem clientes cadastrados com o SOBRENOME ou parte dele ''" + n + "''");
+                if(i == 3)
+                    throw new RuntimeException("Não existe cliente cadastrado com o RG: " + n);
+            }
             return clientes;
+            
             
         } catch (SQLException e) {
             throw new RuntimeException(e);

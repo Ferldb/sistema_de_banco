@@ -70,7 +70,6 @@ public class ClienteController {
             clienteView.initBotoes(0);
         }
         catch(Exception e){
-            //clienteView.apresentaErro("Erro ao atualizar cliente.");
             clienteView.apresentaErro(e.getMessage());
         }
     }
@@ -101,7 +100,7 @@ public class ClienteController {
             clienteView.mostrarListaClientes(lista);
         }
         catch(Exception e){
-            clienteView.apresentaErro("Erro ao listar clientes.");
+            clienteView.apresentaErro("Erro ao listar clientes!");
         }
     }
     
@@ -116,11 +115,23 @@ public class ClienteController {
             default:
                 try{
                     String busca = clienteView.getCampoListar();
-                    List<Cliente> lista = this.modelDao.listaFiltro(busca, index);
-                    clienteView.mostrarListaClientes(lista);
+                    if("".equals(busca)){
+                        if(index == 1)
+                            clienteView.mostrarMensagem("Digite um NOME (ou parte) para busca...");
+                        if(index == 2)
+                            clienteView.mostrarMensagem("Digite um SOBRENOME (ou parte) para busca...");
+                        if(index == 3)
+                            clienteView.mostrarMensagem("Digite um RG para busca...");
+                    }
+                    else {
+                        List<Cliente> lista = this.modelDao.listaFiltro(busca, index);
+                        clienteView.mostrarListaClientes(lista);
+                    }
                 }
-                catch(SQLException e){
-                    clienteView.apresentaErro("Erro ao listar clientes: " + e.getMessage()); 
+                catch(Exception e){
+                    List<Cliente> listaVazia = new ArrayList();
+                    clienteView.mostrarListaClientes(listaVazia);
+                    clienteView.apresentaErro("Erro ao listar clientes! " + e.getMessage());
                 }
                 break;
         }
@@ -129,13 +140,20 @@ public class ClienteController {
     public void listarPorCpf() {
         try{
             String cpf = clienteView.getCampoListar();
-            Cliente c = this.modelDao.getCliente(cpf);
-            List<Cliente> lista = new ArrayList();
-            lista.add(c);
-            clienteView.mostrarListaClientes(lista);
+            if("".equals(cpf)){
+                clienteView.mostrarMensagem("Digite um CPF para busca...");
+            }
+            else{
+                Cliente c = this.modelDao.getCliente(cpf);
+                List<Cliente> lista = new ArrayList();
+                lista.add(c);
+                clienteView.mostrarListaClientes(lista);
+            }
         }
         catch(Exception e){
-            clienteView.apresentaErro("Erro ao listar clientes: " + e.getMessage());
+            List<Cliente> lista = new ArrayList();
+            clienteView.mostrarListaClientes(lista);
+            clienteView.apresentaErro("Erro ao listar cliente! " + e.getMessage());
         }
     }
     
