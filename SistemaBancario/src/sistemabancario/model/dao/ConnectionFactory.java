@@ -9,8 +9,9 @@ public class ConnectionFactory {
 
     public Connection getConnection() {
         try {
-           // return DriverManager.getConnection("jdbc:mysql://localhost/sistemabancario", "admin", "root"); //Jessima
-            return DriverManager.getConnection("jdbc:mariadb://localhost:3306/sistemabancario","root", ""); //Duda
+            //return DriverManager.getConnection("jdbc:mysql://localhost/sistemabancario", "admin", "root"); //Jessima
+            //return DriverManager.getConnection("jdbc:mariadb://localhost:3306/sistemabancario","root", ""); //Duda
+            return DriverManager.getConnection("jdbc:mysql://localhost/sistemabancario", "root", ""); //Madu
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
