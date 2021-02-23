@@ -69,7 +69,21 @@ public class ClienteController {
     }
 
     public void excluirCliente() {
-       
+       try{
+           String cpf = clienteView.getCPF();
+           Cliente cliente = modelDao.getCliente(cpf);
+           int res = clienteView.confirmacao(cliente);
+           if (res == 0){
+               //buscar lista de contas para excluir
+               //chamar contaDao para excluir contas
+               modelDao.excluir(cliente);
+               listarClientes();
+               clienteView.mostrarMensagem("Cliente removido com sucesso");
+           }
+       }
+       catch (Exception e){
+           clienteView.apresentaErro(e.getMessage());
+       }
     }
 
     public void listarClientes() {
@@ -80,40 +94,26 @@ public class ClienteController {
             clienteView.apresentaErro("Erro ao listar clientes.");
         }
     }
-
-    public void listarPorNome() {
-        try{
-            String nome = clienteView.getCampoListar();
-            List<Cliente> lista = this.modelDao.listaNome(nome);
-            clienteView.mostrarListaClientes(lista);
+    
+    public void listarFiltro(int index){
+        if(index == 0){
+            this.listarClientes();
         }
-        catch(Exception e){
-            clienteView.apresentaErro("Erro ao listar clientes.");
+        else if(index == 4){
+            this.listarPorCpf();
         }
-    }
-
-    public void listarPorSobrenome() {
-        try{
-            String sobrenome = clienteView.getCampoListar();
-            List<Cliente> lista = this.modelDao.listaSobrenome(sobrenome);
-            clienteView.mostrarListaClientes(lista);
-        }
-        catch(Exception e){
-            clienteView.apresentaErro("Erro ao listar clientes.");
+        else{
+            try{
+                String busca = clienteView.getCampoListar();
+                List<Cliente> lista = this.modelDao.listaFiltro(busca, index);
+                clienteView.mostrarListaClientes(lista);
+            }
+            catch(Exception e){
+                clienteView.apresentaErro("Erro ao listar clientes."+e.getMessage());
+            } 
         }
     }
-
-    public void listarPorRg() {
-        try{
-            String rg = clienteView.getCampoListar();
-            List<Cliente> lista = this.modelDao.listaRG(rg);
-            clienteView.mostrarListaClientes(lista);
-        }
-        catch(Exception e){
-            clienteView.apresentaErro("Erro ao listar clientes.");
-        }
-    }
-
+    
     public void listarPorCpf() {
         try{
             String cpf = clienteView.getCampoListar();
@@ -128,23 +128,10 @@ public class ClienteController {
     }
     
     public void ordenarClientes(int index) {
-        int result = index;
         try{
             List<Cliente> lista = this.modelDao.getLista(index);
-            switch(result){
-                case 0:
-                    Collections.sort(lista);
-                    clienteView.mostrarListaClientes(lista);
-                    break;
-                case 1:
-                    Collections.sort(lista);
-                    clienteView.mostrarListaClientes(lista);
-                    break;
-                case 2:
-                    Collections.sort(lista);
-                    clienteView.mostrarListaClientes(lista);
-                    break;
-            }
+            Collections.sort(lista);
+            clienteView.mostrarListaClientes(lista);
         }
         catch (Exception e){
             clienteView.apresentaErro("Erro ao listar clientes"+e.getMessage());
