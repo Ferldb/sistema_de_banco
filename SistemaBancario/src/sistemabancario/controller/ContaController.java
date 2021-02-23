@@ -11,6 +11,7 @@ import sistemabancario.model.Cliente;
 import sistemabancario.model.dao.ClienteDao;
 import sistemabancario.model.dao.ConnectionFactory;
 import sistemabancario.view.JanelaContaView;
+import sistemabancario.view.JanelaMenuView;
 import sistemabancario.view.PainelContaCorrente;
 import sistemabancario.view.PainelContaInvestimento;
 
@@ -46,6 +47,12 @@ public class ContaController {
         catch(Exception e){
             contaView.apresentaErro("Contato não encontrado.");
         }
+    }
+
+    public void visibilidade() {
+        this.contaView.desabilitaMenu(this);
+        JanelaMenuView view = new JanelaMenuView();
+        new MenuController(view);
     }
 
    

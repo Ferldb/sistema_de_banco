@@ -7,6 +7,7 @@ import sistemabancario.model.Cliente;
 import sistemabancario.model.dao.ClienteDao;
 import sistemabancario.model.dao.ConnectionFactory;
 import sistemabancario.view.JanelaClienteView;
+import sistemabancario.view.JanelaMenuView;
 
 public class ClienteController {
     private JanelaClienteView clienteView;
@@ -148,5 +149,11 @@ public class ClienteController {
         catch (Exception e){
             clienteView.apresentaErro("Erro ao listar clientes"+e.getMessage());
         }
+    }
+    
+    public void visibilidade() {
+        this.clienteView.desabilitaMenu(this);
+        JanelaMenuView view = new JanelaMenuView();
+        new MenuController(view);
     }
 }

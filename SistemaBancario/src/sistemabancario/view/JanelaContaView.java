@@ -28,6 +28,7 @@ public class JanelaContaView extends javax.swing.JFrame {
         painelContaInvestimento1 = new sistemabancario.view.PainelContaInvestimento();
         bTipoConta = new javax.swing.JButton();
         labelResultado = new javax.swing.JLabel();
+        bVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,6 +64,8 @@ public class JanelaContaView extends javax.swing.JFrame {
 
         bTipoConta.setText("Carregar Dados");
 
+        bVoltar.setText("Voltar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -87,7 +90,10 @@ public class JanelaContaView extends javax.swing.JFrame {
                             .addComponent(labelResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(painelConta, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(painelConta, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(bVoltar)))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -107,7 +113,9 @@ public class JanelaContaView extends javax.swing.JFrame {
                     .addComponent(bTipoConta))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(painelConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bVoltar)
+                .addContainerGap())
         );
 
         pack();
@@ -118,6 +126,7 @@ public class JanelaContaView extends javax.swing.JFrame {
     }//GEN-LAST:event_ComboBoxTipoContaActionPerformed
 
     public void setController(ContaController controller) {
+         this.bVoltar.addActionListener( e -> controller.visibilidade());
          this.bPesquisar.addActionListener(e -> controller.buscarCliente());
          this.bTipoConta.addActionListener((ActionEvent e) -> {
          int indice = ComboBoxTipoConta.getSelectedIndex();
@@ -133,6 +142,7 @@ public class JanelaContaView extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> ComboBoxTipoConta;
     private javax.swing.JButton bPesquisar;
     private javax.swing.JButton bTipoConta;
+    private javax.swing.JButton bVoltar;
     private javax.swing.JTextField campoCPF;
     private javax.swing.JLabel labelCPF;
     private javax.swing.JLabel labelResultado;
@@ -158,5 +168,9 @@ public class JanelaContaView extends javax.swing.JFrame {
 
     public void resultadoCpf(String texto) {
       labelResultado.setText(texto);
+    }
+
+    public void desabilitaMenu(ContaController aThis) {
+        this.dispose();
     }
 }

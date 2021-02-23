@@ -4,6 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.util.List;
 import javax.swing.JOptionPane;
 import sistemabancario.controller.ClienteController;
+import sistemabancario.controller.MenuController;
 import sistemabancario.model.Cliente;
 
 public class JanelaClienteView extends javax.swing.JFrame {
@@ -18,17 +19,19 @@ public class JanelaClienteView extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         tabelaClienteView = new sistemabancario.view.TabelaClienteView();
         botoesClienteView = new sistemabancario.view.BotoesClienteView();
         botoesFormularioClienteView = new sistemabancario.view.BotoesFormularioClienteView();
         formularioClienteView = new sistemabancario.view.FormularioClienteView();
+        bVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setMinimumSize(new java.awt.Dimension(500, 600));
         setSize(new java.awt.Dimension(100, 500));
+
+        bVoltar.setText("Voltar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -47,11 +50,12 @@ public class JanelaClienteView extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(145, 145, 145)
                         .addComponent(botoesClienteView, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(253, 253, 253)
-                .addComponent(botoesFormularioClienteView, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(bVoltar)
+                        .addGap(170, 170, 170)
+                        .addComponent(botoesFormularioClienteView, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -59,11 +63,14 @@ public class JanelaClienteView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(tabelaClienteView, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(botoesClienteView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(formularioClienteView, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botoesFormularioClienteView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(botoesClienteView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(formularioClienteView, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botoesFormularioClienteView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bVoltar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -72,12 +79,14 @@ public class JanelaClienteView extends javax.swing.JFrame {
 
    
     public void setController(ClienteController controller) {
+        this.bVoltar.addActionListener( e -> controller.visibilidade());
         botoesClienteView.setController(controller);
         botoesFormularioClienteView.setController(controller);
         tabelaClienteView.getTabelaCliente();
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bVoltar;
     private sistemabancario.view.BotoesClienteView botoesClienteView;
     private sistemabancario.view.BotoesFormularioClienteView botoesFormularioClienteView;
     private sistemabancario.view.FormularioClienteView formularioClienteView;
@@ -144,5 +153,9 @@ public class JanelaClienteView extends javax.swing.JFrame {
     
     public void initBotoes(int i){
         botoesFormularioClienteView.initBotoes(i);
+    }
+    
+    public void desabilitaMenu(ClienteController controller) {
+        this.dispose();
     }
 }
