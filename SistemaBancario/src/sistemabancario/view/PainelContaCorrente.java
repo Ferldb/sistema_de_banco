@@ -5,6 +5,9 @@
  */
 package sistemabancario.view;
 
+import javax.swing.JTextField;
+import sistemabancario.controller.ContaController;
+
 /**
  *
  * @author eduar
@@ -99,4 +102,26 @@ public class PainelContaCorrente extends javax.swing.JPanel {
     private javax.swing.JLabel labelLimite;
     private javax.swing.JLabel labelNumConta;
     // End of variables declaration//GEN-END:variables
+
+    void setController(ContaController controller) {
+        this.bCriarConta.addActionListener(e -> controller.criarConta(1));
+    }
+
+    public JTextField getCampoDepositoInicial() {
+        return campoDepositoInicial;
+    }
+
+    public JTextField getCampoLimite() {
+        return campoLimite;
+    }
+
+    public JTextField getCampoNumConta() {
+        return campoNumConta;
+    }
+    
+    public void limparFormulario(){
+        campoLimite.setText("");
+        campoDepositoInicial.setText("");
+    }
+    
 }
