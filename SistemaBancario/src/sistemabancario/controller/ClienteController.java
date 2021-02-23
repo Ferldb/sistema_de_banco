@@ -30,11 +30,8 @@ public class ClienteController {
     public void inserirCliente() {
            try{
                 Cliente cliente = clienteView.getCliente();
-                Cliente cliente2 = modelDao.getCliente(cliente.getCpf());
-                if(cliente2 != null) {
-                    JOptionPane.showMessageDialog(null, "Cliente com o CPF " + cliente2.getCpf() + " já é cadastrado..." + "\n", "Erro", JOptionPane.ERROR_MESSAGE);
-                }
-                else if (cliente2 == null){
+                int x = modelDao.buscaCliente(cliente.getCpf());
+                if (x == 0){
                     modelDao.inserir(cliente);
                     clienteView.inserirCliente(cliente);
                     clienteView.limparFormulario();

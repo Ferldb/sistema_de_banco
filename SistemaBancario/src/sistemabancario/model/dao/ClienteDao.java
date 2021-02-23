@@ -138,6 +138,26 @@ public class ClienteDao {
         }
     }
     
+    public int buscaCliente(String cpf) throws SQLException{
+        Connection connection = connectionFactory.getConnection();
+        PreparedStatement stmtBusca;
+        ResultSet rs = null;
+        stmtBusca = connection.prepareStatement(buscaCPF);
+        Cliente cliente;
+        try{
+            stmtBusca.setString(1, cpf);
+            rs = stmtBusca.executeQuery();
+            if (rs.next()){
+                throw new RuntimeException("Cliente com o CPF " + cpf + " já é cadastrado...");
+            }
+            else 
+                return 0;
+        }
+        finally{
+            stmtBusca.close();
+        }
+    }
+    
     //cria lista com clientes a partir de filtro 1-nome 2-sobrenome 3-rg
     public List<Cliente> listaFiltro(String n, int i) throws SQLException{
         Connection connection=connectionFactory.getConnection();
