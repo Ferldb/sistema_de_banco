@@ -130,9 +130,10 @@ public class ClienteDao {
                 return cliente;
             }
             else{
-                throw new RuntimeException("Não existe cliente com este cpf. CPF="+cpf);
+                throw new RuntimeException("Não existe cliente cadastrado com o CPF: " + cpf);
             }
-        } finally{
+        }
+        finally{
             stmtBusca.close();
         }
     }

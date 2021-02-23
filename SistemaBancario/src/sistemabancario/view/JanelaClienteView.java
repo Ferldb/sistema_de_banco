@@ -100,17 +100,25 @@ public class JanelaClienteView extends javax.swing.JFrame {
     }
 
     public Cliente getCliente() {
-        String nome = formularioClienteView.getCampoNome().getText();
-        String sobrenome = formularioClienteView.getCampoSobrenome().getText();
-        String rg = formularioClienteView.getCampoRG().getText();
-        String cpf = formularioClienteView.getCampoCPF().getText();
-        String endereco = formularioClienteView.getCampoEndereco().getText();
-        String salario = formularioClienteView.getCampoSalario().getText();
-        
-        Double s = Double.parseDouble(salario);
-        
-        Cliente cliente = new Cliente(-1, nome, sobrenome, rg, cpf, endereco, s);
-        return cliente;
+        try {
+            String nome = formularioClienteView.getCampoNome().getText();
+            String sobrenome = formularioClienteView.getCampoSobrenome().getText();
+            String rg = formularioClienteView.getCampoRG().getText();
+            String cpf = formularioClienteView.getCampoCPF().getText();
+            String endereco = formularioClienteView.getCampoEndereco().getText();
+            String salario = formularioClienteView.getCampoSalario().getText();
+            
+            if ("".equals(nome) || "".equals(sobrenome) || "".equals(rg) || "".equals(cpf) || "".equals(endereco) || "".equals(salario)){
+                throw new RuntimeException("Campo obrigatorio em branco...");
+            }
+            
+            Double s = Double.parseDouble(salario);
+            Cliente cliente = new Cliente(-1, nome, sobrenome, rg, cpf, endereco, s);
+            return cliente;
+        }
+        finally{
+            
+        }
     }
     
     public String getCPF(){

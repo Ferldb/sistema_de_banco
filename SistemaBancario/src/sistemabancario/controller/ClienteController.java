@@ -1,8 +1,10 @@
 package sistemabancario.controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.swing.JOptionPane;
 import sistemabancario.model.Cliente;
 import sistemabancario.model.dao.ClienteDao;
 import sistemabancario.model.dao.ConnectionFactory;
@@ -29,15 +31,23 @@ public class ClienteController {
     }
     
     public void inserirCliente() {
-        Cliente cliente = clienteView.getCliente();
-        if(cliente!=null){
-            modelDao.inserir(cliente);
-            clienteView.inserirCliente(cliente);
-            clienteView.limparFormulario();
-            clienteView.mostrarMensagem("Cliente inserido com sucesso");
-        }
+           try{
+                Cliente cliente = clienteView.getCliente();
+                Cliente cliente2 = modelDao.getCliente(cliente.getCpf());
+                if(cliente2 != null) {
+                    JOptionPane.showMessageDialog(null, "Cliente com o CPF " + cliente2.getCpf() + " já é cadastrado..." + "\n", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+                else if (cliente2 == null){
+                    modelDao.inserir(cliente);
+                    clienteView.inserirCliente(cliente);
+                    clienteView.limparFormulario();
+                    clienteView.mostrarMensagem("Cliente inserido com sucesso!");
+                }
+           }
+           catch(Exception e){
+               clienteView.apresentaErro(e.getMessage());
+           }
     }
-
     
     public void buscarCliente(){
         try{
@@ -56,18 +66,15 @@ public class ClienteController {
             Cliente cliente = clienteView.getCliente();                 //pega cliente do formulario
             long id = modelDao.getCliente(cliente.getCpf()).getId();    //pega id
             cliente.setId(id);                                          //seta id
-            if (cliente == null){
-                clienteView.apresentaErro("Selecione um cliente para atualizar!!");
-                return;
-            }
             modelDao.atualizar(cliente);
             clienteView.limparFormulario();
             listarClientes();
-            clienteView.mostrarMensagem("Cliente atualizado com sucesso");
+            clienteView.mostrarMensagem("Cliente atualizado com sucesso!");
             clienteView.initBotoes(0);
         }
         catch(Exception e){
-            clienteView.apresentaErro("Erro ao atualizar cliente.");
+            //clienteView.apresentaErro("Erro ao atualizar cliente.");
+            clienteView.apresentaErro(e.getMessage());
         }
     }
 
@@ -95,27 +102,30 @@ public class ClienteController {
         try{
             List<Cliente> lista = this.modelDao.getLista(0);
             clienteView.mostrarListaClientes(lista);
-        }catch(Exception ex){
+        }
+        catch(Exception e){
             clienteView.apresentaErro("Erro ao listar clientes.");
         }
     }
     
     public void listarFiltro(int index){
-        if(index == 0){
-            this.listarClientes();
-        }
-        else if(index == 4){
-            this.listarPorCpf();
-        }
-        else{
-            try{
-                String busca = clienteView.getCampoListar();
-                List<Cliente> lista = this.modelDao.listaFiltro(busca, index);
-                clienteView.mostrarListaClientes(lista);
-            }
-            catch(Exception e){
-                clienteView.apresentaErro("Erro ao listar clientes."+e.getMessage());
-            } 
+        switch (index) {
+            case 0:
+                this.listarClientes();
+                break;
+            case 4:
+                this.listarPorCpf();
+                break;
+            default:
+                try{
+                    String busca = clienteView.getCampoListar();
+                    List<Cliente> lista = this.modelDao.listaFiltro(busca, index);
+                    clienteView.mostrarListaClientes(lista);
+                }
+                catch(SQLException e){
+                    clienteView.apresentaErro("Erro ao listar clientes: " + e.getMessage()); 
+                }
+                break;
         }
     }
     
@@ -128,7 +138,7 @@ public class ClienteController {
             clienteView.mostrarListaClientes(lista);
         }
         catch(Exception e){
-            clienteView.apresentaErro("Erro ao listar clientes."+e.getMessage());
+            clienteView.apresentaErro("Erro ao listar clientes: " + e.getMessage());
         }
     }
     
@@ -139,7 +149,7 @@ public class ClienteController {
             clienteView.mostrarListaClientes(lista);
         }
         catch (Exception e){
-            clienteView.apresentaErro("Erro ao listar clientes"+e.getMessage());
+            clienteView.apresentaErro("Erro ao listar clientes: " + e.getMessage());
         }
     }
     
