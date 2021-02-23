@@ -158,4 +158,8 @@ public class JanelaClienteView extends javax.swing.JFrame {
     public void desabilitaMenu(ClienteController controller) {
         this.dispose();
     }
+
+    public int confirmacao(Cliente cliente) {
+        return JOptionPane.showConfirmDialog(this, "Todas as contas do cliente "+cliente.getNome()+" "+cliente.getSobrenome()+" também serão excluídas. Deseja prosseguir?",null,JOptionPane.YES_NO_OPTION);
+    }
 }

@@ -141,24 +141,9 @@ public class BotoesClienteView extends javax.swing.JPanel {
         this.bAlterarCliente.addActionListener(e -> controller.buscarCliente());
         this.bExcluirCliente.addActionListener(e -> controller.excluirCliente());
         this.bListarClientes.addActionListener(e -> {
-            int listar = comboboxLista.getSelectedIndex();
-            switch(listar){
-                case 0: //listar todos os clientes
-                    controller.listarClientes();
-                    break;
-                case 1: //listar por nome ou parte
-                    controller.listarPorNome();
-                    break;
-                case 2: //listar por sobrenome ou parte
-                    controller.listarPorSobrenome();
-                    break;
-                case 3: //listar por rg
-                    controller.listarPorRg();
-                    break;
-                case 4: //listar por cpf
-                    controller.listarPorCpf();
-                    break;
-            }});
+            int index = comboboxLista.getSelectedIndex();
+            controller.listarFiltro(index);
+            });
         this.bOrdenarClientes.addActionListener(e -> {
             int ordenar = comboboxOrdenar.getSelectedIndex();
             controller.ordenarClientes(ordenar);

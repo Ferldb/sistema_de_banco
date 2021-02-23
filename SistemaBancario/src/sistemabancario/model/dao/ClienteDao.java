@@ -103,12 +103,6 @@ public class ClienteDao {
         }
 
     }
-    
-    public void exluirLista(List<Cliente> clientes) throws SQLException {
-        for(Cliente cliente:clientes){
-            excluir(cliente);
-        }
-    }
 
     public void excluir(Cliente cliente) throws SQLException {
         Connection connection=connectionFactory.getConnection();
@@ -143,12 +137,26 @@ public class ClienteDao {
         }
     }
     
-    public List<Cliente> listaNome(String n) throws SQLException{
+    //cria lista com clientes a partir de filtro 1-nome 2-sobrenome 3-rg
+    public List<Cliente> listaFiltro(String n, int i) throws SQLException{
         Connection connection=connectionFactory.getConnection();
         ResultSet rs = null;
-        PreparedStatement stmtLista = connection.prepareStatement(buscaNome);
+        PreparedStatement stmtLista = null;
+        String query = null;
+        if(i == 1) {
+            stmtLista = connection.prepareStatement(buscaNome);
+            query = "%"+n+"%";
+        }
+        if(i == 2){
+            stmtLista = connection.prepareStatement(buscaSobrenome);
+            query = "%"+n+"%";
+        }
+        if(i == 3){
+            query = n;
+            stmtLista = connection.prepareStatement(buscaRG);
+        }
         try {
-            stmtLista.setString(1, "%" + n + "%");
+            stmtLista.setString(1, query);
             rs = stmtLista.executeQuery();
             List<Cliente> clientes = new ArrayList();
             while (rs.next()) {
@@ -173,69 +181,5 @@ public class ClienteDao {
             rs.close();
             stmtLista.close();
         }       
-    }
-    
-    public List<Cliente> listaSobrenome(String s) throws SQLException{
-        Connection connection=connectionFactory.getConnection();
-        ResultSet rs = null;
-        PreparedStatement stmtLista = connection.prepareStatement(buscaSobrenome);
-        try {
-            stmtLista.setString(1, "%" + s + "%");
-            rs = stmtLista.executeQuery();
-            List<Cliente> clientes = new ArrayList();
-            while (rs.next()) {
-                // criando o objeto Cliente
-                long idcliente = rs.getLong("idcliente");
-                String nome= rs.getString("nome");
-                String sobrenome= rs.getString("sobrenome");
-                String rg= rs.getString("rg");
-                String cpf= rs.getString("cpf");
-                String endereco = rs.getString("endereco");
-                Double salario = rs.getDouble("salario");
-                
-                // adicionando o objeto à lista
-                clientes.add(new Cliente(idcliente, nome, sobrenome, rg, cpf, endereco, salario));
-            }
-            
-            return clientes;
-            
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally{
-            rs.close();
-            stmtLista.close();
-        } 
-    }
-    
-    public List<Cliente> listaRG(String r) throws SQLException{
-        Connection connection=connectionFactory.getConnection();
-        ResultSet rs = null;
-        PreparedStatement stmtLista = connection.prepareStatement(buscaRG);
-        try {
-            stmtLista.setString(1,r);
-            rs = stmtLista.executeQuery();
-            List<Cliente> clientes = new ArrayList();
-            while (rs.next()) {
-                // criando o objeto Cliente
-                long idcliente = rs.getLong("idcliente");
-                String nome= rs.getString("nome");
-                String sobrenome= rs.getString("sobrenome");
-                String rg= rs.getString("rg");
-                String cpf= rs.getString("cpf");
-                String endereco = rs.getString("endereco");
-                Double salario = rs.getDouble("salario");
-                
-                // adicionando o objeto à lista
-                clientes.add(new Cliente(idcliente, nome, sobrenome, rg, cpf, endereco, salario));
-            }
-            
-            return clientes;
-            
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally{
-            rs.close();
-            stmtLista.close();
-        }   
     }
 }
