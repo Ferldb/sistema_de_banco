@@ -8,16 +8,19 @@ import javax.swing.JOptionPane;
 import sistemabancario.model.Cliente;
 import sistemabancario.model.dao.ClienteDao;
 import sistemabancario.model.dao.ConnectionFactory;
+import sistemabancario.model.dao.ContaDao;
 import sistemabancario.view.JanelaClienteView;
 import sistemabancario.view.JanelaMenuView;
 
 public class ClienteController {
     private JanelaClienteView clienteView;
     private ClienteDao modelDao;
+    private ContaDao contaDao;
     
     public ClienteController(){
         this.clienteView = new JanelaClienteView();
         this.modelDao = new ClienteDao(new ConnectionFactory());
+        this.contaDao = new ContaDao(new ConnectionFactory());
         initController();
     }
     
@@ -73,20 +76,22 @@ public class ClienteController {
     }
 
     public void excluirCliente() {
-       try{
-           String cpf = clienteView.getCPF();
-           Cliente cliente = modelDao.getCliente(cpf);
-           int res = clienteView.confirmacao(cliente);
-           if (res == 0){
-               //buscar lista de contas para excluir
-               //chamar contaDao para excluir contas
-               modelDao.excluir(cliente);
-               listarClientes();
-               clienteView.mostrarMensagem("Cliente removido com sucesso!");
-           }
-       }
-       catch (Exception e){
-           clienteView.apresentaErro(e.getMessage());
+        try{
+            String cpf = clienteView.getCPF();
+            Cliente cliente = modelDao.getCliente(cpf);
+            int res = clienteView.confirmacao(cliente);
+            if (res == 0){
+                boolean existe = contaDao.clienteExiste(cliente);
+                if(existe){
+                    contaDao.excluirConta(cliente.getId());
+                }
+                modelDao.excluir(cliente);
+                listarClientes();
+                clienteView.mostrarMensagem("Cliente removido com sucesso");
+            }
+        }
+        catch (Exception e){
+            clienteView.apresentaErro(e.getMessage());
        }
     }
 

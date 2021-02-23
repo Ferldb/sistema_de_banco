@@ -6,6 +6,9 @@ import javax.swing.GroupLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import sistemabancario.controller.ContaController;
+import sistemabancario.model.Conta;
+import sistemabancario.model.ContaCorrente;
+import sistemabancario.model.ContaInvestimento;
 
 public class JanelaContaView extends javax.swing.JFrame {
 
@@ -24,8 +27,8 @@ public class JanelaContaView extends javax.swing.JFrame {
         bPesquisar = new javax.swing.JButton();
         labelTipoConta = new javax.swing.JLabel();
         painelConta = new javax.swing.JPanel();
-        painelContaCorrente1 = new sistemabancario.view.PainelContaCorrente();
-        painelContaInvestimento1 = new sistemabancario.view.PainelContaInvestimento();
+        painelContaCorrente = new sistemabancario.view.PainelContaCorrente();
+        painelContaInvestimento = new sistemabancario.view.PainelContaInvestimento();
         bTipoConta = new javax.swing.JButton();
         labelResultado = new javax.swing.JLabel();
         bVoltar = new javax.swing.JButton();
@@ -51,15 +54,15 @@ public class JanelaContaView extends javax.swing.JFrame {
             painelContaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelContaLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(painelContaCorrente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(painelContaCorrente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(painelContaInvestimento1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(painelContaInvestimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelContaLayout.setVerticalGroup(
             painelContaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelContaCorrente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(painelContaInvestimento1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(painelContaCorrente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(painelContaInvestimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         bTipoConta.setText("Carregar Dados");
@@ -131,8 +134,8 @@ public class JanelaContaView extends javax.swing.JFrame {
          this.bTipoConta.addActionListener((ActionEvent e) -> {
          int indice = ComboBoxTipoConta.getSelectedIndex();
       
-         if (indice==0){ painelContaCorrente1.setVisible(true); painelContaInvestimento1.setVisible(false);}
-         else {painelContaCorrente1.setVisible(false); painelContaInvestimento1.setVisible(true);}
+         if (indice==0){ painelContaCorrente.setVisible(true); painelContaInvestimento.setVisible(false); painelContaCorrente.setController(controller);} //conta corrente
+         else {painelContaCorrente.setVisible(false); painelContaInvestimento.setVisible(true); painelContaInvestimento.setController(controller);}       //conta investimento
          painelConta.repaint();//Recarrega a página
         
          });
@@ -148,13 +151,13 @@ public class JanelaContaView extends javax.swing.JFrame {
     private javax.swing.JLabel labelResultado;
     private javax.swing.JLabel labelTipoConta;
     private javax.swing.JPanel painelConta;
-    private sistemabancario.view.PainelContaCorrente painelContaCorrente1;
-    private sistemabancario.view.PainelContaInvestimento painelContaInvestimento1;
+    private sistemabancario.view.PainelContaCorrente painelContaCorrente;
+    private sistemabancario.view.PainelContaInvestimento painelContaInvestimento;
     // End of variables declaration//GEN-END:variables
 
     public void initView() {
         java.awt.EventQueue.invokeLater(() ->  this.setVisible(true));
-         painelContaCorrente1.setVisible(false); painelContaInvestimento1.setVisible(false);
+         painelContaCorrente.setVisible(false); painelContaInvestimento.setVisible(false);
     }
     
     public String getCPF(){
@@ -162,8 +165,13 @@ public class JanelaContaView extends javax.swing.JFrame {
         return cpf;
     }
     
+    
     public void apresentaErro(String erro) {
         JOptionPane.showMessageDialog(null,erro + "\n", "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    public void mostrarMensagem(String mensagem) {
+        JOptionPane.showMessageDialog(null,mensagem + "\n", "Info", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void resultadoCpf(String texto) {
@@ -172,5 +180,43 @@ public class JanelaContaView extends javax.swing.JFrame {
 
     public void desabilitaMenu(ContaController aThis) {
         this.dispose();
+    }
+    
+    public ContaCorrente getContaCorrente(){
+        String limite = painelContaCorrente.getCampoLimite().getText();
+        Double l = Double.parseDouble(limite);
+        ContaCorrente conta = new ContaCorrente(l, -1, -1, 0);
+
+        return conta;
+    }
+    
+    public ContaInvestimento getContaInvestimento(){
+        String montante = painelContaInvestimento.getCampoMontanteMinimo().getText();
+        String deposito = painelContaInvestimento.getCampoDepositoMinimo().getText();
+        Double m = Double.parseDouble(montante);
+        Double d = Double.parseDouble(deposito);
+        ContaInvestimento conta = new ContaInvestimento(-1, -1, 0, m, d);
+        
+        
+        return conta;
+    }
+    
+    public Double getDepositoCC(){
+        String d = painelContaCorrente.getCampoDepositoInicial().getText();
+        return Double.parseDouble(d);
+    }
+    
+    public Double getDepositoCI(){
+        String d = painelContaInvestimento.getCampoDepositoInicial().getText();
+        return Double.parseDouble(d);
+    }
+    
+    public void limparFormulario(int tipo){
+        if (tipo == 1) painelContaCorrente.limparFormulario();
+        else painelContaInvestimento.limparFormulario();
+        campoCPF.setText("");
+        labelResultado.setText("");
+        painelContaCorrente.setVisible(false);
+        painelContaInvestimento.setVisible(false);
     }
 }

@@ -5,6 +5,9 @@
  */
 package sistemabancario.view;
 
+import javax.swing.JTextField;
+import sistemabancario.controller.ContaController;
+
 /**
  *
  * @author eduar
@@ -99,4 +102,27 @@ public class PainelContaInvestimento extends javax.swing.JPanel {
     private javax.swing.JLabel labelDepositoMinimo;
     private javax.swing.JLabel labelMontanteMinimo;
     // End of variables declaration//GEN-END:variables
+
+    void setController(ContaController controller) {
+        this.bCriarConta.addActionListener(e -> controller.criarConta(2));
+    }
+
+    public JTextField getCampoDepositoInicial() {
+        return campoDepositoInicial;
+    }
+
+    public JTextField getCampoDepositoMinimo() {
+        return campoDepositoMinimo;
+    }
+
+    public JTextField getCampoMontanteMinimo() {
+        return campoMontanteMinimo;
+    }
+    
+    public void limparFormulario(){
+        campoDepositoInicial.setText("");
+        campoDepositoMinimo.setText("");
+        campoMontanteMinimo.setText("");
+    }
+    
 }

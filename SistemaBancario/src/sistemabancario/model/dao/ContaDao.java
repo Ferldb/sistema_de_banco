@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import sistemabancario.model.Cliente;
 import sistemabancario.model.Conta;
 import sistemabancario.model.ContaCorrente;
 import sistemabancario.model.ContaInvestimento;
@@ -73,8 +74,16 @@ public class ContaDao {
     }
     
     //exclui uma conta (decidir se passar objeto conta ou cliente)
-    public void excluirConta(Conta conta){
-        
+    public void excluirConta(long idcliente) throws SQLException{
+        Connection connection=connectionFactory.getConnection();
+        PreparedStatement stmtExcluir;
+        stmtExcluir = connection.prepareStatement(delete);
+        try {
+            stmtExcluir.setLong(1, idcliente);
+            stmtExcluir.executeUpdate();
+        } finally{
+            stmtExcluir.close();
+        }
     }
     
     //atualiza o saldo da conta
@@ -82,9 +91,36 @@ public class ContaDao {
         
     }
     
-    //pega uma conta no banco de dados
-    /*public Conta getConta(){
-        
-    }*/
+    public void procuraCliente(long idcliente) throws SQLException{
+        Connection connection = connectionFactory.getConnection();
+        PreparedStatement stmtBusca;
+        ResultSet rs = null;
+        stmtBusca = connection.prepareStatement(select);
+        try{
+            stmtBusca.setLong(1, idcliente);
+            rs = stmtBusca.executeQuery();
+            if(rs.next()) throw new RuntimeException("Cliente já possui conta vinculada!");
+        }
+        finally{
+            stmtBusca.close();
+        }
+    }
+    
+    public boolean clienteExiste(Cliente c) throws SQLException{
+        Connection connection = connectionFactory.getConnection();
+        PreparedStatement stmtBusca;
+        ResultSet rs = null;
+        stmtBusca = connection.prepareStatement(select);
+        boolean existe = false;
+        try{
+            stmtBusca.setLong(1, c.getId());
+            rs = stmtBusca.executeQuery();
+            if(rs.next()) existe = true;
+        }
+        finally{
+            stmtBusca.close();
+        }
+        return existe;
+    }
 
 }
