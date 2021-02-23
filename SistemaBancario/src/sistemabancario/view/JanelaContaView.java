@@ -185,7 +185,7 @@ public class JanelaContaView extends javax.swing.JFrame {
     public ContaCorrente getContaCorrente(){
         String limite = painelContaCorrente.getCampoLimite().getText();
         Double l = Double.parseDouble(limite);
-        ContaCorrente conta = new ContaCorrente(l, -1, -1, 0);
+        ContaCorrente conta = new ContaCorrente(l, -1, null, 0);
 
         return conta;
     }
@@ -195,7 +195,7 @@ public class JanelaContaView extends javax.swing.JFrame {
         String deposito = painelContaInvestimento.getCampoDepositoMinimo().getText();
         Double m = Double.parseDouble(montante);
         Double d = Double.parseDouble(deposito);
-        ContaInvestimento conta = new ContaInvestimento(-1, -1, 0, m, d);
+        ContaInvestimento conta = new ContaInvestimento(-1, null, 0, m, d);
         
         
         return conta;

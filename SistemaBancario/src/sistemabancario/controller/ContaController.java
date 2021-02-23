@@ -68,7 +68,7 @@ public class ContaController {
             contaDao.procuraCliente(cliente.getId());            //procura cliente na tabela de contas
             if (tipo == 1){
                 ContaCorrente cc = contaView.getContaCorrente(); //pega os dados inseridos
-                cc.setIdcliente(cliente.getId());                //seta id do cliente
+                cc.setCliente(cliente);                //seta id do cliente
                 Double d = contaView.getDepositoCC();            //pega saldo inicial
                 cc.setSaldo(cc.getSaldo() + d);                  //seta saldo
                 contaDao.inserirCC(cc);
@@ -78,7 +78,7 @@ public class ContaController {
             }
             else{
                 ContaInvestimento ci = contaView.getContaInvestimento(); //pega os dados inseridos
-                ci.setIdcliente(cliente.getId());                        //seta id cliente
+                ci.setCliente(cliente);                                  //seta id cliente
                 Double d = contaView.getDepositoCI();                    //pega saldo inicial
                 ci.setSaldo(ci.getSaldo() + d);                          //seta saldo
                 contaDao.inserirCI(ci);

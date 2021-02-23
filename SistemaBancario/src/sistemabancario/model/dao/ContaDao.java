@@ -34,7 +34,7 @@ public class ContaDao {
             stmtAdiciona.setLong(1, 1);
             stmtAdiciona.setDouble(2, conta.getSaldo());
             stmtAdiciona.setDouble(3, conta.getLimite());
-            stmtAdiciona.setLong(4, conta.getIdcliente());
+            stmtAdiciona.setLong(4, conta.getCliente().getId());
             // executa
             stmtAdiciona.execute();
             //Seta o id da conta
@@ -59,7 +59,7 @@ public class ContaDao {
             stmtAdiciona.setDouble(2, conta.getSaldo());
             stmtAdiciona.setDouble(3, conta.getMontanteMin());
             stmtAdiciona.setDouble(4, conta.getDepositoMin());
-            stmtAdiciona.setLong(5, conta.getIdcliente());
+            stmtAdiciona.setLong(5, conta.getCliente().getId());
             // executa
             stmtAdiciona.execute();
             //Seta o id da conta

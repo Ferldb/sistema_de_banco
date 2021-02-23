@@ -8,12 +8,12 @@ package sistemabancario.model;
 public class Conta {
     
     private long idconta;
-    private long idcliente;
+    private Cliente cliente;
     private double saldo;
 
-    public Conta(long idconta, long idcliente, double saldo) {
+    public Conta(long idconta, Cliente cliente, double saldo) {
         this.idconta = idconta;
-        this.idcliente = idcliente;
+        this.cliente = cliente;
         this.saldo = saldo;
     }
 
@@ -21,8 +21,8 @@ public class Conta {
         return idconta;
     }
 
-    public long getIdcliente() {
-        return idcliente;
+    public Cliente getCliente() {
+        return cliente;
     }
 
     public double getSaldo() {
@@ -33,8 +33,8 @@ public class Conta {
         this.idconta = idconta;
     }
 
-    public void setIdcliente(long idcliente) {
-        this.idcliente = idcliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public void setSaldo(double saldo) {
