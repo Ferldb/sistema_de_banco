@@ -154,6 +154,7 @@ public class FormularioClienteView extends javax.swing.JPanel {
         campoSobrenome.setText(clienteParaAtualizar.getSobrenome());
         campoRG.setText(clienteParaAtualizar.getRg());
         campoCPF.setText(clienteParaAtualizar.getCpf());
+        campoCPF.setEditable(false);
         campoEndereco.setText(clienteParaAtualizar.getEndereco());
         campoSalario.setText(Double.toString(clienteParaAtualizar.getSalario()));
     }
@@ -163,6 +164,7 @@ public class FormularioClienteView extends javax.swing.JPanel {
         campoSobrenome.setText("");
         campoRG.setText("");
         campoCPF.setText("");
+        campoCPF.setEditable(true);
         campoEndereco.setText("");
         campoSalario.setText("");
     }
