@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import sistemabancario.controller.ClienteContaController;
+import sistemabancario.controller.ManipularController;
 
 public class JanelaManipularContaView extends javax.swing.JFrame {
 
@@ -14,7 +14,7 @@ public class JanelaManipularContaView extends javax.swing.JFrame {
         initComponents();
     }
 
-    public void setController(ClienteContaController controller) {
+    public void setController(ManipularController controller) {
 
         this.bVoltar.addActionListener(e -> controller.visibilidade());
         this.bPesquisar.addActionListener(e -> controller.buscarCliente());
@@ -69,7 +69,7 @@ public class JanelaManipularContaView extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, erro + "\n", "Erro", JOptionPane.ERROR_MESSAGE);
     }
 
-    public void desabilitaMenu(ClienteContaController aThis) {
+    public void desabilitaMenu(ManipularController aThis) {
         this.dispose();
     }
 

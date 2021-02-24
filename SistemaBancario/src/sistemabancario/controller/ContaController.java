@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sistemabancario.controller;
 
 import javax.swing.JLabel;
@@ -19,10 +14,6 @@ import sistemabancario.view.JanelaMenuView;
 import sistemabancario.view.PainelContaCorrente;
 import sistemabancario.view.PainelContaInvestimento;
 
-/**
- *
- * @author Franshinsca
- */
 public class ContaController {
     private JanelaContaView contaView;
     private ClienteDao clienteDao;
@@ -43,25 +34,14 @@ public class ContaController {
     public void buscarCliente(){
         try{
             String cpf = contaView.getCPF();
-            if("".equals(cpf)){
-                String s = "";
-                contaView.resultadoCpf(s);
-                contaView.mostrarMensagem("Digite um CPF para busca...");
-            }
-            else {
-                Cliente cliente = clienteDao.getCliente(cpf);
-                String nome = "Cliente: " + cliente.getNome() + " " + cliente.getSobrenome();
-                if (nome != null)
-                    contaView.resultadoCpf(nome);
-                else
-                    throw new RuntimeException();
-                contaView.repaint();
-            }
+            Cliente cliente = clienteDao.getCliente(cpf);
+            String nome = "Cliente: "+cliente.getNome()+" "+cliente.getSobrenome();
+            if (nome!=null) contaView.resultadoCpf(nome);
+            else throw new RuntimeException();
+            contaView.repaint();
         }
         catch(Exception e){
-            String s = "";
-            contaView.resultadoCpf(s);
-            contaView.apresentaErro("Erro ao buscar cliente! " + e.getMessage());
+            contaView.apresentaErro("Cliente não encontrado.");
         }
     }
 
@@ -71,47 +51,33 @@ public class ContaController {
         new MenuController(view);
     }
     
-    public void verificaCliente(){
-        
-    }
-    
-    //tipo = 1 conta corrente  -  tipo = 2 conta investimento
+    //tipo = 1 conta corrente  -  tipo  = 2 conta investimento
     public void criarConta(int tipo) {
         try{
             String cpf = contaView.getCPF();
             Cliente cliente = clienteDao.getCliente(cpf);
-
-            int x = contaDao.procuraCliente(cliente.getId());        //procura cliente na tabela de contas
-            if (x == 0){
-                //significa que cliente ainda não pussui conta
-                if (tipo == 1){
-                    ContaCorrente cc = contaView.getContaCorrente();   //pega os dados inseridos
-                    cc.setCliente(cliente);                            //seta id do cliente
-                    Double d = contaView.getDepositoCC();              //pega saldo inicial
-                    cc.setSaldo(cc.getSaldo() + d);                    //seta saldo
-                    contaDao.inserirCC(cc);
-                    contaView.limparFormulario(tipo);
-                    contaView.mostrarMensagem("Conta Corrente criada com sucesso para o(a) cliente "+cliente.getNome()+" "+cliente.getSobrenome()+"\n Num conta = "+cc.getIdconta());
-
-                }
-                else if (tipo == 2){
-                    ContaInvestimento ci = contaView.getContaInvestimento(); //pega os dados inseridos
-                    ci.setCliente(cliente);                                  //seta id cliente
-                    Double d = contaView.getDepositoCI();                    //pega saldo inicial
-                    ci.setSaldo(ci.getSaldo() + d);                          //seta saldo
-                    contaDao.inserirCI(ci);
-                    contaView.limparFormulario(tipo);
-                    contaView.mostrarMensagem("Conta Investimento criada com sucesso para o(a) cliente "+cliente.getNome()+" "+cliente.getSobrenome()+"\n Num conta = "+ci.getIdconta());
-                }
+            contaDao.procuraCliente(cliente.getId());            //procura cliente na tabela de contas
+            if (tipo == 1){
+                ContaCorrente cc = contaView.getContaCorrente(); //pega os dados inseridos
+                cc.setDono(cliente);                //seta id do cliente
+                Double d = contaView.getDepositoCC();            //pega saldo inicial
+                cc.setSaldo(cc.getSaldo() + d);                  //seta saldo
+                contaDao.inserirCC(cc);
+                contaView.limparFormulario(tipo);
+                contaView.mostrarMensagem("Conta Corrente criada com sucesso para o(a) cliente "+cliente.getNome()+" "+cliente.getSobrenome()+"\n Num conta = "+cc.getNumero());
+            }
+            else{
+                ContaInvestimento ci = contaView.getContaInvestimento(); //pega os dados inseridos
+                ci.setDono(cliente);                                     //seta id cliente
+                Double d = contaView.getDepositoCI();                    //pega saldo inicial
+                ci.setSaldo(ci.getSaldo() + d);                          //seta saldo
+                contaDao.inserirCI(ci);
+                contaView.limparFormulario(tipo);
+                contaView.mostrarMensagem("Conta Investimento criada com sucesso para o(a) cliente "+cliente.getNome()+" "+cliente.getSobrenome()+"\n Num conta = "+ci.getNumero());
             }
         } catch(Exception e){
-            contaView.apresentaErro("Não foi possível criar conta! " + e.getMessage());
+            contaView.apresentaErro("Erro ao criar conta = "+e.getMessage());
         }
     }
 
-   
-    
-    
-         
-    
 }

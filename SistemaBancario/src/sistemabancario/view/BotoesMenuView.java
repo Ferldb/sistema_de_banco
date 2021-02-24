@@ -1,6 +1,6 @@
 package sistemabancario.view;
 
-import sistemabancario.controller.ClienteContaController;
+import sistemabancario.controller.ManipularController;
 import sistemabancario.controller.ClienteController;
 import sistemabancario.controller.ContaController;
 import sistemabancario.controller.MenuController;
@@ -95,7 +95,7 @@ public class BotoesMenuView extends javax.swing.JPanel {
                 });
         this.bMovimentar.addActionListener(e -> {
             controller.visibilidade();
-            new ClienteContaController();
+            new ManipularController();
                 });
     }
 }

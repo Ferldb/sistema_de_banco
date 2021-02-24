@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sistemabancario.model;
 
-public class ContaCorrente extends Conta implements ContaI {
+public class ContaCorrente extends Conta {
 
     private double limite;
 
@@ -22,18 +17,20 @@ public class ContaCorrente extends Conta implements ContaI {
         this.limite = limite;
     }
 
-    @Override
     public void remunera() {
-        double novosaldo = getSaldo() * 1.01;
-        setSaldo(novosaldo);
+        if (this.getSaldo() < 0) throw new RuntimeException("Impossível realizar remuneração em saldo negativo!! Saldo: "+this.getSaldo());
+        double novosaldo = this.getSaldo() * 1.01;
+        this.setSaldo(novosaldo);
     }
     
-    @Override
     public boolean saca(double valor) {
-        if (valor < 0) return false;
-        if((getSaldo()-valor) < (0-limite)) return false;
-        double novosaldo = getSaldo() - valor;
-        setSaldo(novosaldo);
-        return true;
+        if((this.getSaldo() - valor) < (0 - this.getLimite())) {
+            throw new RuntimeException("Impossivel realizar o saque! Valor ultrapassa o limite da conta!!!");
+        }
+        else{
+            boolean saque = super.saca(valor);
+            if(!saque) return false;
+            else return true;
+        }
     }
 }

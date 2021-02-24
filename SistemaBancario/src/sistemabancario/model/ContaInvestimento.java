@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sistemabancario.model;
 
 public class ContaInvestimento extends Conta{
@@ -32,26 +27,27 @@ public class ContaInvestimento extends Conta{
         this.depositoMin = depositoMin;
     }
     
-    @Override
     public void remunera() {
-        double novosaldo = getSaldo()*1.02;
-        setSaldo(novosaldo);
+        if (this.getSaldo() < 0) throw new RuntimeException("Impossível realizar remuneração em saldo negativo!! Saldo: "+this.getSaldo());
+        double novosaldo = this.getSaldo()*1.02;
+        this.setSaldo(novosaldo);
     }
     
-    @Override
     public boolean deposita(double valor) {
-        if (valor < depositoMin) return false;
-        double novosaldo = getSaldo()+valor;
-        setSaldo(novosaldo);
-        return true;
+        if (valor < this.getDepositoMin()) throw new RuntimeException("Impossivel realizar o depósito!! O valor depositado deve ser maior ou igual ao Depósito Mínimo estipulado para a conta");
+        else{
+            boolean deposito = super.deposita(valor);
+            if(!deposito) return false;
+            else return true;
+        }
     }
     
-    @Override
     public boolean saca(double valor) {
-        if (valor < 0) return false;
-        if((getSaldo()  - valor) < (montanteMin)) return false;
-        double novosaldo = getSaldo() - valor;
-        setSaldo(novosaldo);
-        return true;
+        if((this.getSaldo() - valor) < (this.getMontanteMin())) throw new RuntimeException("Impossivel realizar o saque! O saldo não pode ficar menor do que o Montante Mínimo estipulado para a conta");
+        else{
+            boolean saque = super.saca(valor);
+            if(!saque) return false;
+            else return true;
+        }
     }
 }

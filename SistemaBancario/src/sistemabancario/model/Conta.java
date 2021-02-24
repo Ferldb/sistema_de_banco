@@ -1,48 +1,33 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sistemabancario.model;
 
 public class Conta implements ContaI {
 
-    private long idconta;
+    private long numConta;
     private Cliente cliente;
     private double saldo;
     private long tipoconta;
 
     public Conta(long idconta, Cliente cliente, double saldo) {
-        this.idconta = idconta;
+        this.numConta = idconta;
         this.cliente = cliente;
         this.saldo = saldo;
-    }
-
-    public long getIdconta() {
-        return idconta;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
     }
 
     public double getSaldo() {
         return saldo;
     }
 
-    public void setIdconta(long idconta) {
-        this.idconta = idconta;
+    public void setNumero(long numConta) {
+        this.numConta = numConta;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setDono(Cliente cliente) {
         this.cliente = cliente;
     }
 
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
-
-    //o valor depositado deve ser positivo. Caso contrário o método retorna false
 
     public long getTipoconta() {
         return tipoconta;
@@ -54,31 +39,31 @@ public class Conta implements ContaI {
 
     @Override
     public Cliente getDono() {
-        return this.cliente;
+        return cliente;
     }
 
     @Override
-    public int getNumero() {
-        return (int) this.idconta;
+    public long getNumero() {
+        return this.numConta;
     }
 
     @Override
     public void remunera() {
-        double novosaldo = getSaldo() * 1;
-        setSaldo(novosaldo);
     }
 
     @Override
     public boolean deposita(double valor) {
         if (valor < 0) return false;
-        this.saldo = saldo + valor;
+        this.setSaldo(this.getSaldo() + valor);
         return true;
     }
 
     @Override
     public boolean saca(double valor) {
         if (valor < 0) return false;
-        this.saldo = saldo - valor;
-        return true;
+        else{
+            this.setSaldo(this.getSaldo() - valor);
+            return true;
+        }
     }
 }

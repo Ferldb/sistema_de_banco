@@ -34,14 +34,14 @@ public class ContaDao {
             stmtAdiciona.setLong(1, 1);
             stmtAdiciona.setDouble(2, conta.getSaldo());
             stmtAdiciona.setDouble(3, conta.getLimite());
-            stmtAdiciona.setLong(4, conta.getCliente().getId());
+            stmtAdiciona.setLong(4, conta.getDono().getId());
             // executa
             stmtAdiciona.execute();
             //Seta o id da conta
             ResultSet rs = stmtAdiciona.getGeneratedKeys();
             rs.next();
             long id = rs.getLong(1);
-            conta.setIdconta(id);
+            conta.setNumero(id);
             
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -59,14 +59,14 @@ public class ContaDao {
             stmtAdiciona.setDouble(2, conta.getSaldo());
             stmtAdiciona.setDouble(3, conta.getMontanteMin());
             stmtAdiciona.setDouble(4, conta.getDepositoMin());
-            stmtAdiciona.setLong(5, conta.getCliente().getId());
+            stmtAdiciona.setLong(5, conta.getDono().getId());
             // executa
             stmtAdiciona.execute();
             //Seta o id da conta
             ResultSet rs = stmtAdiciona.getGeneratedKeys();
             rs.next();
             long id = rs.getLong(1);
-            conta.setIdconta(id);
+            conta.setNumero(id);
             
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -93,7 +93,7 @@ public class ContaDao {
         try {
             // seta os valores
             stmtUpdate.setDouble(1, valor);
-            stmtUpdate.setLong(2, conta.getIdconta());
+            stmtUpdate.setLong(2, conta.getNumero());
             // executa
             stmtUpdate.executeUpdate();
             
@@ -102,7 +102,7 @@ public class ContaDao {
         } 
     }
     
-    public int procuraCliente(long idcliente) throws SQLException{
+    public void procuraCliente(long idcliente) throws SQLException{
         Connection connection = connectionFactory.getConnection();
         PreparedStatement stmtBusca;
         ResultSet rs = null;
@@ -110,11 +110,7 @@ public class ContaDao {
         try{
             stmtBusca.setLong(1, idcliente);
             rs = stmtBusca.executeQuery();
-            if (rs.next()){
-                throw new RuntimeException("Cliente já possui uma conta vinculada!");
-            }
-            else 
-                return 0;
+            if(rs.next()) throw new RuntimeException("Cliente já possui conta vinculada!");
         }
         finally{
             stmtBusca.close();
@@ -152,59 +148,11 @@ public class ContaDao {
                 tipo = rs.getLong("tipoconta"); //pega o tipo da conta
                 if (tipo == 1) {
                     conta = new ContaCorrente(rs.getDouble("limite"),rs.getLong("numconta"),cliente,rs.getDouble("saldo"));
-                    conta.setTipoconta(tipo);
+                    //conta.setTipoconta(tipo);
                 }
                 else {
                     conta = new ContaInvestimento(rs.getLong("numconta"),cliente,rs.getDouble("saldo"),rs.getDouble("montanteMinimo"),rs.getDouble("depositoMinimo"));
-                    conta.setTipoconta(tipo);
-                }
-            }
-        }
-        finally{
-            stmtBusca.close();
-        }
-        return conta;
-    }
-    
-    public ContaCorrente buscaContaCorrente(Cliente cliente) throws SQLException{
-        Connection connection = connectionFactory.getConnection();
-        PreparedStatement stmtBusca;
-        ResultSet rs = null;
-        stmtBusca = connection.prepareStatement(select);
-        ContaCorrente conta = null;
-        long tipo;
-        try{
-            stmtBusca.setLong(1, cliente.getId());
-            rs = stmtBusca.executeQuery();
-            if(rs.next()){
-                tipo = rs.getLong("tipoconta"); //pega o tipo da conta
-                if (tipo == 1) {
-                    conta = new ContaCorrente(rs.getDouble("limite"),rs.getLong("numconta"),cliente,rs.getDouble("saldo"));
-                    conta.setTipoconta(tipo);
-                }
-            }
-        }
-        finally{
-            stmtBusca.close();
-        }
-        return conta;
-    }
-    
-    public ContaInvestimento buscaContaInvestimento(Cliente cliente) throws SQLException{
-        Connection connection = connectionFactory.getConnection();
-        PreparedStatement stmtBusca;
-        ResultSet rs = null;
-        stmtBusca = connection.prepareStatement(select);
-        ContaInvestimento conta = null;
-        long tipo;
-        try{
-            stmtBusca.setLong(1, cliente.getId());
-            rs = stmtBusca.executeQuery();
-            if(rs.next()){
-                tipo = rs.getLong("tipoconta"); //pega o tipo da conta
-                if (tipo == 2) {
-                    conta = new ContaInvestimento(rs.getLong("numconta"),cliente,rs.getDouble("saldo"),rs.getDouble("montanteMinimo"),rs.getDouble("depositoMinimo"));
-                    conta.setTipoconta(tipo);
+                    //conta.setTipoconta(tipo);
                 }
             }
         }
