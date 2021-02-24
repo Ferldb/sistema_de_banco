@@ -16,21 +16,14 @@ public class JanelaManipularContaView extends javax.swing.JFrame {
     public void setController(ClienteContaController controller) {
          this.bVoltar.addActionListener( e -> controller.visibilidade());
          this.bPesquisar.addActionListener(e -> controller.buscarCliente());
-         this.bCarregarOperacao.addActionListener((ActionEvent e) -> {
+         this.bCarregar.addActionListener((ActionEvent e) -> {
          int indice = ComboBoxOperacao.getSelectedIndex();
-         try {
-                 controller.movimentarConta(indice);
-             } catch (SQLException ex) {
-                 Logger.getLogger(JanelaManipularContaView.class.getName()).log(Level.SEVERE, null, ex);
-             }
-         painelContaCliente1.setVisible(true);
-         painelContaCliente1.setLabels(indice);  
+            controller.movimentarConta(indice);
         });
     }
 
     public void initView() {
         java.awt.EventQueue.invokeLater(() ->  this.setVisible(true));
-        painelContaCliente1.setVisible(false);
     }
     
     public String getCPF(){
@@ -51,7 +44,9 @@ public class JanelaManipularContaView extends javax.swing.JFrame {
     }
     
     public void mostrarSaldo(double saldo){
-        painelContaCliente1.setCampoValor(saldo);
+        lOperacao.setText("SALDO");
+        campoValor.setEditable(false);
+        campoValor.setText(Double.toString(saldo));
     }
     
     @SuppressWarnings("unchecked")
@@ -64,9 +59,12 @@ public class JanelaManipularContaView extends javax.swing.JFrame {
         labelCPF = new javax.swing.JLabel();
         labelOperacao = new javax.swing.JLabel();
         ComboBoxOperacao = new javax.swing.JComboBox<>();
-        bCarregarOperacao = new javax.swing.JButton();
+        bCarregar = new javax.swing.JButton();
         labelResultado = new javax.swing.JLabel();
-        painelContaCliente1 = new sistemabancario.view.PainelContaCliente();
+        jPanel1 = new javax.swing.JPanel();
+        campoValor = new javax.swing.JTextField();
+        bConfirmar = new javax.swing.JButton();
+        lOperacao = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,7 +78,32 @@ public class JanelaManipularContaView extends javax.swing.JFrame {
 
         ComboBoxOperacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Saque", "Depósito", "Ver Saldo", "Remunera" }));
 
-        bCarregarOperacao.setText("Carregar Dados");
+        bCarregar.setText("Carregar Dados");
+
+        campoValor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoValorActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(85, 85, 85)
+                .addComponent(campoValor, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(campoValor, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        bConfirmar.setText("Confirmar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -88,9 +111,6 @@ public class JanelaManipularContaView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(bVoltar))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -103,17 +123,30 @@ public class JanelaManipularContaView extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(labelCPF)
                                         .addGap(18, 18, 18)
-                                        .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lOperacao, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(57, 57, 57)
-                                        .addComponent(bCarregarOperacao))
+                                        .addComponent(bCarregar))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(18, 18, 18)
                                         .addComponent(bPesquisar))))
-                            .addComponent(labelResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(painelContaCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(32, Short.MAX_VALUE))
+                            .addComponent(labelResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 31, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(bVoltar)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(bConfirmar)))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,9 +162,16 @@ public class JanelaManipularContaView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ComboBoxOperacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelOperacao)
-                    .addComponent(bCarregarOperacao))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                .addComponent(painelContaCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bCarregar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bConfirmar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lOperacao, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 96, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bVoltar)
                 .addContainerGap())
@@ -140,16 +180,23 @@ public class JanelaManipularContaView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void campoValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoValorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoValorActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBoxOperacao;
-    private javax.swing.JButton bCarregarOperacao;
+    private javax.swing.JButton bCarregar;
+    private javax.swing.JButton bConfirmar;
     private javax.swing.JButton bPesquisar;
     private javax.swing.JButton bVoltar;
     private javax.swing.JTextField campoCPF;
+    private javax.swing.JTextField campoValor;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lOperacao;
     private javax.swing.JLabel labelCPF;
     private javax.swing.JLabel labelOperacao;
     private javax.swing.JLabel labelResultado;
-    private sistemabancario.view.PainelContaCliente painelContaCliente1;
     // End of variables declaration//GEN-END:variables
 }
