@@ -16,7 +16,7 @@ public class ContaDao {
     private ConnectionFactory connectionFactory;
     private final String insertCC = "insert into conta (tipoconta,saldo,limite,idcliente) values (?,?,?,?)";
     private final String insertCI = "insert into conta (tipoconta,saldo,montanteMinimo,depositoMinimo,idcliente) values (?,?,?,?,?)";
-    private final String update = "update conta set saldo = ? where idcliente = ?";
+    private final String update = "update conta set saldo = ? where numconta = ?";
     private final String select = "select * from conta WHERE idcliente = ?";
     private final String delete = "delete from conta WHERE idcliente=?";
     
