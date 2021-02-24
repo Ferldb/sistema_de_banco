@@ -87,20 +87,18 @@ public class ContaDao {
     }
     
     //atualiza o saldo da conta
-    public void atualizaSaldo(Conta conta, double valor){
+    public void atualizaSaldo(Conta conta, double valor) throws SQLException{
          Connection connection=connectionFactory.getConnection();
+         PreparedStatement stmtUpdate = connection.prepareStatement(update);
         try {
-            // prepared statement para inserção
-            PreparedStatement stmtUpdate = connection.prepareStatement(update);
             // seta os valores
             stmtUpdate.setDouble(1, valor);
             stmtUpdate.setLong(2, conta.getIdconta());
             // executa
-            stmtUpdate.execute();
-            //Seta o id da conta
-            stmtUpdate.execute();            
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            stmtUpdate.executeUpdate();
+            
+        } finally{
+            stmtUpdate.close();
         } 
     }
     
