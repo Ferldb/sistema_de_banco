@@ -5,11 +5,12 @@
  */
 package sistemabancario.model;
 
-public class Conta {
-    
+public class Conta implements ContaI {
+
     private long idconta;
     private Cliente cliente;
     private double saldo;
+    private long tipoconta;
 
     public Conta(long idconta, Cliente cliente, double saldo) {
         this.idconta = idconta;
@@ -40,15 +41,44 @@ public class Conta {
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
-    
-    
-    /*
+
     //o valor depositado deve ser positivo. Caso contrário o método retorna false
-    public boolean deposita(double valor){
+
+    public long getTipoconta() {
+        return tipoconta;
     }
-    
-    //o valor sacado deve ser positivo. Caso contrário o método retorna false. Mostrar mensagem na tela informando usuário
-    public boolean saca(double valor){
+
+    public void setTipoconta(long tipoconta) {
+        this.tipoconta = tipoconta;
     }
-    */
+
+    @Override
+    public Cliente getDono() {
+        return this.cliente;
+    }
+
+    @Override
+    public int getNumero() {
+        return (int) this.idconta;
+    }
+
+    @Override
+    public void remunera() {
+        double novosaldo = getSaldo() * 1;
+        setSaldo(novosaldo);
+    }
+
+    @Override
+    public boolean deposita(double valor) {
+        if (valor < 0) return false;
+        this.saldo = saldo + valor;
+        return true;
+    }
+
+    @Override
+    public boolean saca(double valor) {
+        if (valor < 0) return false;
+        this.saldo = saldo - valor;
+        return true;
+    }
 }
