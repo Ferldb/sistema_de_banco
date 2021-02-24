@@ -138,7 +138,10 @@ public class BotoesClienteView extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     public void setController(ClienteController controller) {
-        this.bAlterarCliente.addActionListener(e -> campoListar.setText(""));
+        this.bAlterarCliente.addActionListener(e -> {
+            controller.buscarCliente();
+            campoCPF.setText("");
+                });
         this.bExcluirCliente.addActionListener(e -> controller.excluirCliente());
         this.bListarClientes.addActionListener(e -> {
             int index = comboboxLista.getSelectedIndex();
