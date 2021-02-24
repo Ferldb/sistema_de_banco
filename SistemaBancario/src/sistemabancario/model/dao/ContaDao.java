@@ -16,7 +16,7 @@ public class ContaDao {
     private ConnectionFactory connectionFactory;
     private final String insertCC = "insert into conta (tipoconta,saldo,limite,idcliente) values (?,?,?,?)";
     private final String insertCI = "insert into conta (tipoconta,saldo,montanteMinimo,depositoMinimo,idcliente) values (?,?,?,?,?)";
-    private final String update = "update conta set saldo = ? where idcliente = ?";
+    private final String update = "update conta set saldo = ? where numconta = ?";
     private final String select = "select * from conta WHERE idcliente = ?";
     private final String delete = "delete from conta WHERE idcliente=?";
     
@@ -87,11 +87,22 @@ public class ContaDao {
     }
     
     //atualiza o saldo da conta
-    public void atualizaSaldo(Conta conta, double valor){
-        
+    public void atualizaSaldo(Conta conta, double valor) throws SQLException{
+         Connection connection=connectionFactory.getConnection();
+         PreparedStatement stmtUpdate = connection.prepareStatement(update);
+        try {
+            // seta os valores
+            stmtUpdate.setDouble(1, valor);
+            stmtUpdate.setLong(2, conta.getIdconta());
+            // executa
+            stmtUpdate.executeUpdate();
+            
+        } finally{
+            stmtUpdate.close();
+        } 
     }
     
-    public void procuraCliente(long idcliente) throws SQLException{
+    public int procuraCliente(long idcliente) throws SQLException{
         Connection connection = connectionFactory.getConnection();
         PreparedStatement stmtBusca;
         ResultSet rs = null;
@@ -99,7 +110,11 @@ public class ContaDao {
         try{
             stmtBusca.setLong(1, idcliente);
             rs = stmtBusca.executeQuery();
-            if(rs.next()) throw new RuntimeException("Cliente já possui conta vinculada!");
+            if (rs.next()){
+                throw new RuntimeException("Cliente já possui uma conta vinculada!");
+            }
+            else 
+                return 0;
         }
         finally{
             stmtBusca.close();
