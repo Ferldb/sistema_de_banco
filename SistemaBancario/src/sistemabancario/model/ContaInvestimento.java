@@ -49,7 +49,7 @@ public class ContaInvestimento extends Conta{
     @Override
     public boolean saca(double valor) {
         if (valor < 0) return false;
-        if((getSaldo() - valor) < (montanteMin)) return false;
+        if((getSaldo()  - valor) < (montanteMin)) return false;
         double novosaldo = getSaldo() - valor;
         setSaldo(novosaldo);
         return true;

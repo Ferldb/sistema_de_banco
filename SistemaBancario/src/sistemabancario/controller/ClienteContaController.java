@@ -98,17 +98,8 @@ public class ClienteContaController {
                         ClienteContaView.mostrarSaldo(saldo);
                         break;
                     case 3:
-                        long tipoc = contac.getTipoconta();
-                        if (tipoc == 1) {
-                            valor = contac.getSaldo() * 1.01;
-                            contac.setSaldo(valor);
-                            contaDao.atualizaSaldo(contac, valor);
-
-                        } else if (tipoc == 2) {
-                            valor = contac.getSaldo() * 1.02;
-                            contac.setSaldo(valor);
-                            contaDao.atualizaSaldo(contac, valor);
-                        }
+                        contac.remunera();
+                        contaDao.atualizaSaldo(contac, contac.getSaldo());
                         ClienteContaView.MostraMensagem("Remunerado com sucesso! NOVO SALDO: " + contac.getSaldo());
                         break;
                 }
@@ -143,17 +134,8 @@ public class ClienteContaController {
                         ClienteContaView.mostrarSaldo(saldo);
                         break;
                     case 3:
-                        long tipoc = contai.getTipoconta();
-                        if (tipoc == 1) {
-                            valor = contai.getSaldo() * 1.01;
-                            contai.setSaldo(valor);
-                            contaDao.atualizaSaldo(contai, valor);
-
-                        } else if (tipoc == 2) {
-                            valor = contai.getSaldo() * 1.02;
-                            contai.setSaldo(valor);
-                            contaDao.atualizaSaldo(contai, valor);
-                        }
+                        contai.remunera();
+                        contaDao.atualizaSaldo(contai, contai.getSaldo());
                         ClienteContaView.MostraMensagem("Remunerado com sucesso! NOVO SALDO: " + contai.getSaldo());
                         break;
                 }
