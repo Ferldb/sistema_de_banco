@@ -163,4 +163,52 @@ public class ContaDao {
         }
         return conta;
     }
+    
+    public ContaCorrente buscaContaCorrente(Cliente cliente) throws SQLException{
+        Connection connection = connectionFactory.getConnection();
+        PreparedStatement stmtBusca;
+        ResultSet rs = null;
+        stmtBusca = connection.prepareStatement(select);
+        ContaCorrente conta = null;
+        long tipo;
+        try{
+            stmtBusca.setLong(1, cliente.getId());
+            rs = stmtBusca.executeQuery();
+            if(rs.next()){
+                tipo = rs.getLong("tipoconta"); //pega o tipo da conta
+                if (tipo == 1) {
+                    conta = new ContaCorrente(rs.getDouble("limite"),rs.getLong("numconta"),cliente,rs.getDouble("saldo"));
+                    conta.setTipoconta(tipo);
+                }
+            }
+        }
+        finally{
+            stmtBusca.close();
+        }
+        return conta;
+    }
+    
+    public ContaInvestimento buscaContaInvestimento(Cliente cliente) throws SQLException{
+        Connection connection = connectionFactory.getConnection();
+        PreparedStatement stmtBusca;
+        ResultSet rs = null;
+        stmtBusca = connection.prepareStatement(select);
+        ContaInvestimento conta = null;
+        long tipo;
+        try{
+            stmtBusca.setLong(1, cliente.getId());
+            rs = stmtBusca.executeQuery();
+            if(rs.next()){
+                tipo = rs.getLong("tipoconta"); //pega o tipo da conta
+                if (tipo == 2) {
+                    conta = new ContaInvestimento(rs.getLong("numconta"),cliente,rs.getDouble("saldo"),rs.getDouble("montanteMinimo"),rs.getDouble("depositoMinimo"));
+                    conta.setTipoconta(tipo);
+                }
+            }
+        }
+        finally{
+            stmtBusca.close();
+        }
+        return conta;
+    }
 }

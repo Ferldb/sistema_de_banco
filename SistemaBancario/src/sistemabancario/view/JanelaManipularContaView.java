@@ -21,9 +21,11 @@ public class JanelaManipularContaView extends javax.swing.JFrame {
         this.bCarregar.addActionListener((ActionEvent e) -> {
             int indice = ComboBoxOperacao.getSelectedIndex();
             if(indice == 2 || indice == 3){
-                campoValor.setEditable(false);
-                
+                bConfirmar.setVisible(false);
+                campoValor.setVisible(true);
+                campoValor.setEditable(false);               
                 controller.movimentarConta(indice);
+                lOperacao.setVisible(true);
             }
             else{
                 campoValor.setText("");
@@ -72,7 +74,7 @@ public class JanelaManipularContaView extends javax.swing.JFrame {
     }
 
     public void mostrarSaldo(double saldo) {
-        lOperacao.setText("SALDO");
+        lOperacao.setText("SALDO: ");
         campoValor.setEditable(false);
         campoValor.setText(Double.toString(saldo));
     }
@@ -91,8 +93,8 @@ public class JanelaManipularContaView extends javax.swing.JFrame {
         labelResultado = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         campoValor = new javax.swing.JTextField();
-        bConfirmar = new javax.swing.JButton();
         lOperacao = new javax.swing.JLabel();
+        bConfirmar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -119,16 +121,23 @@ public class JanelaManipularContaView extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(93, 93, 93)
+                .addGap(22, 22, 22)
+                .addComponent(lOperacao, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campoValor, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(campoValor, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(campoValor, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(lOperacao, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         bConfirmar.setText("Confirmar");
@@ -160,8 +169,7 @@ public class JanelaManipularContaView extends javax.swing.JFrame {
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(labelCPF)
                                                 .addGap(18, 18, 18)
-                                                .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(lOperacao, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGap(57, 57, 57)
@@ -192,14 +200,9 @@ public class JanelaManipularContaView extends javax.swing.JFrame {
                     .addComponent(labelOperacao)
                     .addComponent(bCarregar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bConfirmar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lOperacao, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 96, Short.MAX_VALUE)))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bConfirmar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bVoltar)
                 .addContainerGap())

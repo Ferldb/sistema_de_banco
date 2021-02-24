@@ -5,8 +5,8 @@
  */
 package sistemabancario.model;
 
-public class ContaInvestimento extends Conta {
-    
+public class ContaInvestimento extends Conta{
+
     private double montanteMin;
     private double depositoMin;
 
@@ -15,7 +15,7 @@ public class ContaInvestimento extends Conta {
         this.montanteMin = montanteMin;
         this.depositoMin = depositoMin;
     }
-    
+
     public double getMontanteMin() {
         return montanteMin;
     }
@@ -24,32 +24,34 @@ public class ContaInvestimento extends Conta {
         return depositoMin;
     }
 
-      public void setMontanteMin(double montanteMin) {
+    public void setMontanteMin(double montanteMin) {
         this.montanteMin = montanteMin;
     }
 
     public void setDepositoMin(double depositoMin) {
         this.depositoMin = depositoMin;
     }
-
-
-    /*
     
-    //Recebe como parâmetro o valor a ser depositado. Se o valor a ser depositado for maior ou igual ao depositoMinimo 
-    //então, o depósito deve ser efetuado. Para isso chame o método deposita da classe pai (Conta) e retorne true. Caso contrário, 
-    //deve-se retornar false. Mostrar mensagem na tela informando usuário.
-    public boolean deposita(double valor){
+    @Override
+    public void remunera() {
+        double novosaldo = getSaldo()*1.02;
+        setSaldo(novosaldo);
     }
     
-    //Recebe como parâmetro o valor a ser sacado. Se o novo valor do saldo (considerando o saque) for maior ou igual ao montanteMinimo,
-    //o saque deve ser efetuado. Para isso invoque o método saque da classe pai (Conta) e retorne true. Caso contrário, deve-se retornar 
-    //false. Mostrar mensagem na tela informando usuário.
-    public boolean saca(double valor){
+    @Override
+    public boolean deposita(double valor) {
+        if (valor < depositoMin) return false;
+        double novosaldo = getSaldo()+valor;
+        setSaldo(novosaldo);
+        return true;
     }
     
-    //Aplicar remuneração de 2% ao saldo da conta
-    public void remunera(){
+    @Override
+    public boolean saca(double valor) {
+        if (valor < 0) return false;
+        if((getSaldo() - valor) < (montanteMin)) return false;
+        double novosaldo = getSaldo() - valor;
+        setSaldo(novosaldo);
+        return true;
     }
-    
-    */
 }

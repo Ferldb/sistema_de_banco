@@ -8,6 +8,8 @@ package sistemabancario.controller;
 import java.sql.SQLException;
 import sistemabancario.model.Cliente;
 import sistemabancario.model.Conta;
+import sistemabancario.model.ContaCorrente;
+import sistemabancario.model.ContaInvestimento;
 import sistemabancario.model.dao.ClienteDao;
 import sistemabancario.model.dao.ConnectionFactory;
 import sistemabancario.model.dao.ContaDao;
@@ -62,57 +64,102 @@ public class ClienteContaController {
     public void movimentarConta(int index) {
         try {
             String cpf = ClienteContaView.getCPF();
-
             Cliente cliente = modelDao.getCliente(cpf);
             //a busca cliente tem que verificar se tem conta
             boolean busca = contaDao.clienteExiste(cliente); //verifica se cliente tem conta //retornar erro se não tiver
             Conta conta = contaDao.buscaConta(cliente);
-            //switch com os indices
-            double valor;
-            switch (index) {
-                //0 - saque
-                case 0:
-                    valor = ClienteContaView.getCampoValor();
-                    boolean sucesso = conta.saca(valor);
-                    contaDao.atualizaSaldo(conta, conta.getSaldo());
-                    if (sucesso == true) {
-                        ClienteContaView.MostraMensagem("Sacado com sucesso!");
-                    } else {
-                        ClienteContaView.apresentaErro("Erro ao sacar");
-                    }
-                    break;
-                //pega o valor do campo valor na view
-                //executa método da conta
-                //chama dao
-                //limpa campo e seta invisivel (botao e campo)
-                //emitir notificação de sucesso
-                case 1:
-                    valor = ClienteContaView.getCampoValor();
-                    sucesso = conta.deposita(valor);
-                    contaDao.atualizaSaldo(conta, conta.getSaldo());
-                    if (sucesso == true) {
-                        ClienteContaView.MostraMensagem("Depositado com sucesso!");
-                    } else {
-                        ClienteContaView.apresentaErro("Erro ao depositar");
-                    }
-                    break;
-                case 2:
-                    double saldo = conta.getSaldo();
-                    ClienteContaView.mostrarSaldo(saldo);
-                    break;
-                case 3:
-                    long tipoc = conta.getTipoconta();
-                    if (tipoc == 1) {
-                        valor = conta.getSaldo() * 1.01;
-                        contaDao.atualizaSaldo(conta, valor);
-                    } else if (tipoc == 2) {
-                        valor = conta.getSaldo() * 1.02;
-                        contaDao.atualizaSaldo(conta, valor);
-                    }
-                    break;
+            if (conta.getTipoconta() == 1) {
+                ContaCorrente contac = contaDao.buscaContaCorrente(cliente);
+                double valor;
+                switch (index) {
+                    //0 - saque
+                    case 0:
+                        valor = ClienteContaView.getCampoValor();
+                        boolean sucesso = contac.saca(valor);
+                        if (sucesso == true) {
+                            contaDao.atualizaSaldo(contac, contac.getSaldo());
+                            ClienteContaView.MostraMensagem("Sacado com sucesso! NOVO SALDO: " + contac.getSaldo());
+                        } else {
+                            ClienteContaView.apresentaErro("Erro ao sacar");
+                        }
+                        break;
+                    case 1:
+                        valor = ClienteContaView.getCampoValor();
+                        sucesso = contac.deposita(valor);
+                        if (sucesso == true) {
+                            contaDao.atualizaSaldo(contac, contac.getSaldo());
+                            ClienteContaView.MostraMensagem("Depositado com sucesso! NOVO SALDO: " + contac.getSaldo());
+                        } else {
+                            ClienteContaView.apresentaErro("Erro ao depositar");
+                        }
+                        break;
+                    case 2:
+                        double saldo = contac.getSaldo();
+                        ClienteContaView.mostrarSaldo(saldo);
+                        break;
+                    case 3:
+                        long tipoc = contac.getTipoconta();
+                        if (tipoc == 1) {
+                            valor = contac.getSaldo() * 1.01;
+                            contac.setSaldo(valor);
+                            contaDao.atualizaSaldo(contac, valor);
+
+                        } else if (tipoc == 2) {
+                            valor = contac.getSaldo() * 1.02;
+                            contac.setSaldo(valor);
+                            contaDao.atualizaSaldo(contac, valor);
+                        }
+                        ClienteContaView.MostraMensagem("Remunerado com sucesso! NOVO SALDO: " + contac.getSaldo());
+                        break;
+                }
+            }
+            if (conta.getTipoconta() == 2) {
+                ContaInvestimento contai = contaDao.buscaContaInvestimento(cliente);
+                double valor;
+                switch (index) {
+                    //0 - saque
+                    case 0:
+                        valor = ClienteContaView.getCampoValor();
+                        boolean sucesso = contai.saca(valor);
+                        if (sucesso == true) {
+                            contaDao.atualizaSaldo(contai, contai.getSaldo());
+                            ClienteContaView.MostraMensagem("Sacado com sucesso! NOVO SALDO: " + contai.getSaldo());
+                        } else {
+                            ClienteContaView.apresentaErro("Erro ao sacar");
+                        }
+                        break;
+                    case 1:
+                        valor = ClienteContaView.getCampoValor();
+                        sucesso = contai.deposita(valor);
+                        if (sucesso == true) {
+                            contaDao.atualizaSaldo(contai, contai.getSaldo());
+                            ClienteContaView.MostraMensagem("Depositado com sucesso! NOVO SALDO: " + contai.getSaldo());
+                        } else {
+                            ClienteContaView.apresentaErro("Erro ao depositar");
+                        }
+                        break;
+                    case 2:
+                        double saldo = contai.getSaldo();
+                        ClienteContaView.mostrarSaldo(saldo);
+                        break;
+                    case 3:
+                        long tipoc = contai.getTipoconta();
+                        if (tipoc == 1) {
+                            valor = contai.getSaldo() * 1.01;
+                            contai.setSaldo(valor);
+                            contaDao.atualizaSaldo(contai, valor);
+
+                        } else if (tipoc == 2) {
+                            valor = contai.getSaldo() * 1.02;
+                            contai.setSaldo(valor);
+                            contaDao.atualizaSaldo(contai, valor);
+                        }
+                        ClienteContaView.MostraMensagem("Remunerado com sucesso! NOVO SALDO: " + contai.getSaldo());
+                        break;
+                }
             }
         } catch (Exception e) {
-            ClienteContaView.apresentaErro("Clientea não encontrado.");
+            ClienteContaView.apresentaErro("Erro na operação.");
         }
     }
 }
