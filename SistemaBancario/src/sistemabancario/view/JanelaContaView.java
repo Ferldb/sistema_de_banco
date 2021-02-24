@@ -3,9 +3,11 @@ package sistemabancario.view;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.GroupLayout;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import sistemabancario.controller.ContaController;
+import sistemabancario.model.Cliente;
 import sistemabancario.model.Conta;
 import sistemabancario.model.ContaCorrente;
 import sistemabancario.model.ContaInvestimento;
@@ -45,6 +47,11 @@ public class JanelaContaView extends javax.swing.JFrame {
         labelCPF.setText("CPF");
 
         bPesquisar.setText("Pesquisar");
+        bPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bPesquisarActionPerformed(evt);
+            }
+        });
 
         labelTipoConta.setText("Tipo de Conta");
 
@@ -128,17 +135,38 @@ public class JanelaContaView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ComboBoxTipoContaActionPerformed
 
+    private void bPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPesquisarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bPesquisarActionPerformed
+
     public void setController(ContaController controller) {
-         this.bVoltar.addActionListener( e -> controller.visibilidade());
-         this.bPesquisar.addActionListener(e -> controller.buscarCliente());
-         this.bTipoConta.addActionListener((ActionEvent e) -> {
-         int indice = ComboBoxTipoConta.getSelectedIndex();
+        this.bVoltar.addActionListener( e -> controller.visibilidade());
+        this.bPesquisar.addActionListener(e -> {
+             controller.buscarCliente();
+             //this.campoCPF.setText("");
+        });
+        this.bTipoConta.addActionListener((ActionEvent e) -> {
+            
+            //controller.verificaCliente();
+            if("".equals(this.labelResultado.getText())){
+                this.mostrarMensagem("Selecione primeiro um cliente...");
+            }
+            else{
+                int indice = ComboBoxTipoConta.getSelectedIndex();
       
-         if (indice==0){ painelContaCorrente.setVisible(true); painelContaInvestimento.setVisible(false); painelContaCorrente.setController(controller);} //conta corrente
-         else {painelContaCorrente.setVisible(false); painelContaInvestimento.setVisible(true); painelContaInvestimento.setController(controller);}       //conta investimento
-         painelConta.repaint();//Recarrega a página
-        
-         });
+                if (indice==0){ //conta corrente
+                    painelContaCorrente.setVisible(true);
+                    painelContaInvestimento.setVisible(false);
+                    painelContaCorrente.setController(controller);
+                }
+                else{           //conta investimento
+                    painelContaCorrente.setVisible(false);
+                    painelContaInvestimento.setVisible(true);
+                    painelContaInvestimento.setController(controller);
+                }
+                painelConta.repaint();  //recarrega a página
+            }
+        });
     }
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -161,17 +189,19 @@ public class JanelaContaView extends javax.swing.JFrame {
     }
     
     public String getCPF(){
-        String cpf = campoCPF.getText();
-        return cpf;
+        return campoCPF.getText();
+    }
+
+    public String getLabelResultado() {
+        return labelResultado.getText();
     }
     
-    
     public void apresentaErro(String erro) {
-        JOptionPane.showMessageDialog(null,erro + "\n", "Erro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, erro + "\n", "Erro", JOptionPane.ERROR_MESSAGE);
     }
     
     public void mostrarMensagem(String mensagem) {
-        JOptionPane.showMessageDialog(null,mensagem + "\n", "Info", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, mensagem + "\n", "Info", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void resultadoCpf(String texto) {

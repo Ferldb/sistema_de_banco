@@ -121,12 +121,11 @@ public class ClienteDao {
         PreparedStatement stmtBusca;
         ResultSet rs = null;
         stmtBusca = connection.prepareStatement(buscaCPF);
-        Cliente cliente;
         try{
             stmtBusca.setString(1, cpf);
             rs = stmtBusca.executeQuery();
             if (rs.next()){
-                cliente = new Cliente(rs.getInt("idcliente"),rs.getString("nome"),rs.getString("sobrenome"),rs.getString("rg"),rs.getString("cpf"),rs.getString("endereco"),rs.getDouble("salario"));
+                Cliente cliente = new Cliente(rs.getInt("idcliente"),rs.getString("nome"),rs.getString("sobrenome"),rs.getString("rg"),rs.getString("cpf"),rs.getString("endereco"),rs.getDouble("salario"));
                 return cliente;
             }
             else{
@@ -143,7 +142,6 @@ public class ClienteDao {
         PreparedStatement stmtBusca;
         ResultSet rs = null;
         stmtBusca = connection.prepareStatement(buscaCPF);
-        Cliente cliente;
         try{
             stmtBusca.setString(1, cpf);
             rs = stmtBusca.executeQuery();

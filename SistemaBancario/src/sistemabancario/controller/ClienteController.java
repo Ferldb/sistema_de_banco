@@ -31,19 +31,19 @@ public class ClienteController {
     }
     
     public void inserirCliente() {
-           try{
-                Cliente cliente = clienteView.getCliente();
-                int x = modelDao.buscaCliente(cliente.getCpf());
-                if (x == 0){
-                    modelDao.inserir(cliente);
-                    clienteView.inserirCliente(cliente);
-                    clienteView.limparFormulario();
-                    clienteView.mostrarMensagem("Cliente inserido com sucesso!");
-                }
-           }
-           catch(Exception e){
-               clienteView.apresentaErro(e.getMessage());
-           }
+        try{
+            Cliente cliente = clienteView.getCliente();
+            int x = modelDao.buscaCliente(cliente.getCpf());
+            if (x == 0){
+                modelDao.inserir(cliente);
+                clienteView.inserirCliente(cliente);
+                clienteView.limparFormulario();
+                clienteView.mostrarMensagem("Cliente inserido com sucesso!");
+            }
+        }
+        catch(Exception e){
+            clienteView.apresentaErro(e.getMessage());
+        }
     }
     
     public void buscarCliente(){
