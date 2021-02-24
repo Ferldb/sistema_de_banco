@@ -6,7 +6,7 @@
 package sistemabancario.model;
 
 public class Conta {
-    
+
     private long idconta;
     private Cliente cliente;
     private double saldo;
@@ -41,18 +41,25 @@ public class Conta {
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
-    
-    
-    
-    /*
+
     //o valor depositado deve ser positivo. Caso contrário o método retorna false
-    public boolean deposita(double valor){
+    public boolean deposita(double valor) {
+        if (valor <= 0) {
+            return false;
+        }
+        this.saldo = saldo + valor;
+        return true;
     }
-    
+
     //o valor sacado deve ser positivo. Caso contrário o método retorna false. Mostrar mensagem na tela informando usuário
-    public boolean saca(double valor){
+    public boolean saca(double valor) {
+        if (saldo - valor >= 0) {
+            this.saldo = saldo - valor;
+            return true;
+        } else {
+            return false;
+        }
     }
-    */
 
     public long getTipoconta() {
         return tipoconta;

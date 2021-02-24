@@ -9,10 +9,10 @@ public class ConnectionFactory {
 
     public Connection getConnection() {
         try {
-            return DriverManager.getConnection("jdbc:mysql://localhost/sistemabancario", "admin", "root"); //Jessima
+            //return DriverManager.getConnection("jdbc:mysql://localhost/sistemabancario", "admin", "root"); //Jessima
             //return DriverManager.getConnection("jdbc:mariadb://localhost:3306/sistemabancario","root", ""); //Duda
             //return DriverManager.getConnection("jdbc:mysql://localhost/sistemabancario", "root", ""); //Madu
-            //return DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/projeto_final", "root", "97350141");
+            return DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/projeto_final", "root", "97350141");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

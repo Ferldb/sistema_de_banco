@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import sistemabancario.controller.ClienteContaController;
 
 public class JanelaManipularContaView extends javax.swing.JFrame {
@@ -14,41 +15,68 @@ public class JanelaManipularContaView extends javax.swing.JFrame {
     }
 
     public void setController(ClienteContaController controller) {
-         this.bVoltar.addActionListener( e -> controller.visibilidade());
-         this.bPesquisar.addActionListener(e -> controller.buscarCliente());
-         this.bCarregar.addActionListener((ActionEvent e) -> {
-         int indice = ComboBoxOperacao.getSelectedIndex();
+
+        this.bVoltar.addActionListener(e -> controller.visibilidade());
+        this.bPesquisar.addActionListener(e -> controller.buscarCliente());
+        this.bCarregar.addActionListener((ActionEvent e) -> {
+            int indice = ComboBoxOperacao.getSelectedIndex();
+            if(indice == 2 || indice == 3){
+                campoValor.setEditable(false);
+                
+                controller.movimentarConta(indice);
+            }
+            else{
+                campoValor.setText("");
+                campoValor.setEditable(true);
+                campoValor.setVisible(true);
+                bConfirmar.setVisible(true);
+            }
+        });
+        this.bConfirmar.addActionListener((ActionEvent e) -> {
+            campoValor.setEditable(true);
+            int indice = ComboBoxOperacao.getSelectedIndex();
             controller.movimentarConta(indice);
         });
     }
 
     public void initView() {
-        java.awt.EventQueue.invokeLater(() ->  this.setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> this.setVisible(true));
+        campoValor.setVisible(false);
+        bConfirmar.setVisible(false);
+
     }
-    
-    public String getCPF(){
+
+    public String getCPF() {
         String cpf = campoCPF.getText();
         return cpf;
     }
+
+    public void MostraMensagem(String mensagem){
+        JOptionPane.showMessageDialog(this, mensagem + "\n", "Info", JOptionPane.INFORMATION_MESSAGE);
+    }
     
+    public double getCampoValor() {
+        return Double.parseDouble(campoValor.getText());
+    }
+
     public void resultadoCpf(String texto) {
-      labelResultado.setText(texto);
+        labelResultado.setText(texto);
     }
-    
+
     public void apresentaErro(String erro) {
-        JOptionPane.showMessageDialog(null,erro + "\n", "Erro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, erro + "\n", "Erro", JOptionPane.ERROR_MESSAGE);
     }
-    
+
     public void desabilitaMenu(ClienteContaController aThis) {
         this.dispose();
     }
-    
-    public void mostrarSaldo(double saldo){
+
+    public void mostrarSaldo(double saldo) {
         lOperacao.setText("SALDO");
         campoValor.setEditable(false);
         campoValor.setText(Double.toString(saldo));
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -91,14 +119,14 @@ public class JanelaManipularContaView extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(85, 85, 85)
+                .addGap(93, 93, 93)
                 .addComponent(campoValor, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addGap(28, 28, 28)
                 .addComponent(campoValor, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -112,40 +140,40 @@ public class JanelaManipularContaView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(labelOperacao)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(ComboBoxOperacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(labelCPF)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(lOperacao, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(57, 57, 57)
-                                        .addComponent(bCarregar))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(bPesquisar))))
-                            .addComponent(labelResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 31, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bConfirmar)
+                        .addGap(21, 21, 21))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(bVoltar)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(bConfirmar)))))
+                                .addGap(22, 22, 22)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(labelOperacao)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(ComboBoxOperacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(labelCPF)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(lOperacao, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(57, 57, 57)
+                                                .addComponent(bCarregar))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(18, 18, 18)
+                                                .addComponent(bPesquisar))))
+                                    .addComponent(labelResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(bVoltar)))
+                        .addGap(0, 31, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
