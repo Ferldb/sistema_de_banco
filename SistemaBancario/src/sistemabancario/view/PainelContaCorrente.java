@@ -32,8 +32,6 @@ public class PainelContaCorrente extends javax.swing.JPanel {
 
         labelDepositoInicial = new javax.swing.JLabel();
         labelLimite = new javax.swing.JLabel();
-        labelNumConta = new javax.swing.JLabel();
-        campoNumConta = new javax.swing.JTextField();
         campoDepositoInicial = new javax.swing.JTextField();
         campoLimite = new javax.swing.JTextField();
         bCriarConta = new javax.swing.JButton();
@@ -41,11 +39,6 @@ public class PainelContaCorrente extends javax.swing.JPanel {
         labelDepositoInicial.setText("Depósito Inicial:    R$");
 
         labelLimite.setText("Limite:                   R$");
-
-        labelNumConta.setText("Número da Conta:");
-
-        campoNumConta.setEditable(false);
-        campoNumConta.setText("NÚMERO");
 
         bCriarConta.setText("Criar Conta");
 
@@ -55,16 +48,13 @@ public class PainelContaCorrente extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(labelLimite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(labelDepositoInicial, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
-                    .addComponent(labelNumConta))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(labelLimite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelDepositoInicial, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(campoDepositoInicial, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(campoLimite, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(campoNumConta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE))
+                    .addComponent(campoDepositoInicial, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                    .addComponent(campoLimite, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap(185, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -82,13 +72,9 @@ public class PainelContaCorrente extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelLimite)
                     .addComponent(campoLimite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoNumConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelNumConta))
-                .addGap(18, 18, 18)
+                .addGap(50, 50, 50)
                 .addComponent(bCriarConta)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -97,10 +83,8 @@ public class PainelContaCorrente extends javax.swing.JPanel {
     private javax.swing.JButton bCriarConta;
     private javax.swing.JTextField campoDepositoInicial;
     private javax.swing.JTextField campoLimite;
-    private javax.swing.JTextField campoNumConta;
     private javax.swing.JLabel labelDepositoInicial;
     private javax.swing.JLabel labelLimite;
-    private javax.swing.JLabel labelNumConta;
     // End of variables declaration//GEN-END:variables
 
     void setController(ContaController controller) {
@@ -113,10 +97,6 @@ public class PainelContaCorrente extends javax.swing.JPanel {
 
     public JTextField getCampoLimite() {
         return campoLimite;
-    }
-
-    public JTextField getCampoNumConta() {
-        return campoNumConta;
     }
     
     public void limparFormulario(){
