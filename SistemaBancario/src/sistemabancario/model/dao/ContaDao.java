@@ -102,7 +102,7 @@ public class ContaDao {
         } 
     }
     
-    public void procuraCliente(long idcliente) throws SQLException{
+    public int procuraCliente(long idcliente) throws SQLException{
         Connection connection = connectionFactory.getConnection();
         PreparedStatement stmtBusca;
         ResultSet rs = null;
@@ -110,7 +110,11 @@ public class ContaDao {
         try{
             stmtBusca.setLong(1, idcliente);
             rs = stmtBusca.executeQuery();
-            if(rs.next()) throw new RuntimeException("Cliente já possui conta vinculada!");
+            if (rs.next()){
+                throw new RuntimeException("\nCliente já possui uma conta vinculada!");
+            }
+            else 
+                return 0;
         }
         finally{
             stmtBusca.close();

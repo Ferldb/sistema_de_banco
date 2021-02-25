@@ -28,21 +28,28 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Component id="labelTipoConta" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="ComboBoxTipoConta" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="103" max="-2" attributes="0"/>
                               <Component id="bTipoConta" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="labelCPF" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="campoCPF" min="-2" pref="100" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                              <Component id="bPesquisar" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="labelCliente" min="-2" max="-2" attributes="0"/>
+                                  <Component id="labelCPF" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="campoCPF" min="-2" pref="100" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="bPesquisar" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="labelResultado" min="-2" pref="228" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <Component id="labelResultado" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -67,9 +74,12 @@
                   <Component id="campoCPF" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="bPesquisar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="labelResultado" min="-2" pref="27" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="labelCliente" max="32767" attributes="0"/>
+                  <Component id="labelResultado" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="ComboBoxTipoConta" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labelTipoConta" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -77,7 +87,7 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="painelConta" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="11" max="32767" attributes="0"/>
               <Component id="bVoltar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -159,6 +169,11 @@
     <Component class="javax.swing.JButton" name="bVoltar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Voltar"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelCliente">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cliente:"/>
       </Properties>
     </Component>
   </SubComponents>

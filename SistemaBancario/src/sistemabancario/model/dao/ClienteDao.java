@@ -116,6 +116,7 @@ public class ClienteDao {
         }
     }
     
+    //retorna exceção se o cliente NÃO for cadastrado
     public Cliente getCliente(String cpf) throws SQLException{
         Connection connection = connectionFactory.getConnection();
         PreparedStatement stmtBusca;
@@ -129,7 +130,7 @@ public class ClienteDao {
                 return cliente;
             }
             else{
-                throw new RuntimeException("Não existe cliente cadastrado com o CPF: " + cpf);
+                throw new RuntimeException("\nNão existe cliente cadastrado com o CPF: " + cpf);
             }
         }
         finally{
@@ -137,6 +138,7 @@ public class ClienteDao {
         }
     }
     
+    //retorna exceção se o cliente JÁ for cadastrado
     public int buscaCliente(String cpf) throws SQLException{
         Connection connection = connectionFactory.getConnection();
         PreparedStatement stmtBusca;
@@ -146,7 +148,7 @@ public class ClienteDao {
             stmtBusca.setString(1, cpf);
             rs = stmtBusca.executeQuery();
             if (rs.next()){
-                throw new RuntimeException("Cliente com o CPF " + cpf + " já é cadastrado...");
+                throw new RuntimeException("\nCliente com o CPF " + cpf + " já é cadastrado...");
             }
             else 
                 return 0;
@@ -193,11 +195,11 @@ public class ClienteDao {
             }
             if(clientes.isEmpty()){
                 if(i == 1)
-                    throw new RuntimeException("Não existem clientes cadastrados com o NOME ou parte dele ''" + n + "''");
+                    throw new RuntimeException("\nNão existem clientes cadastrados com o NOME ou parte dele ''" + n + "''");
                 if(i == 2)
-                    throw new RuntimeException("Não existem clientes cadastrados com o SOBRENOME ou parte dele ''" + n + "''");
+                    throw new RuntimeException("\nNão existem clientes cadastrados com o SOBRENOME ou parte dele ''" + n + "''");
                 if(i == 3)
-                    throw new RuntimeException("Não existe cliente cadastrado com o RG: " + n);
+                    throw new RuntimeException("\nNão existe cliente cadastrado com o RG: " + n);
             }
             return clientes;
             
