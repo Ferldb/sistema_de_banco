@@ -141,8 +141,11 @@ public class BotoesClienteView extends javax.swing.JPanel {
         this.bAlterarCliente.addActionListener(e -> {
             controller.buscarCliente();
             campoCPF.setText("");
-                });
-        this.bExcluirCliente.addActionListener(e -> controller.excluirCliente());
+        });
+        this.bExcluirCliente.addActionListener(e -> {
+            controller.excluirCliente();
+            campoCPF.setText("");
+        });
         this.bListarClientes.addActionListener(e -> {
             int index = comboboxLista.getSelectedIndex();
             controller.listarFiltro(index);

@@ -42,19 +42,23 @@ public class ClienteController {
             }
         }
         catch(Exception e){
-            clienteView.apresentaErro(e.getMessage());
+            clienteView.apresentaErro("Erro ao inserir cliente! " + e.getMessage());
         }
     }
     
     public void buscarCliente(){
         try{
             String cpf = clienteView.getCPF();
-            Cliente cliente = modelDao.getCliente(cpf);
-            clienteView.initBotoes(1);
-            clienteView.preencherFormulario(cliente);
-        }
-        catch(Exception e){
-            clienteView.apresentaErro(e.getMessage());
+            if("".equals(cpf)){
+                clienteView.mostrarMensagem("Digite um CPF para busca...");
+            }
+            else {
+                Cliente cliente = modelDao.getCliente(cpf);
+                clienteView.initBotoes(1);
+                clienteView.preencherFormulario(cliente);
+            }
+        }catch(Exception e){
+            clienteView.apresentaErro("Erro ao buscar cliente! " + e.getMessage());
         }
     }
     
@@ -77,20 +81,25 @@ public class ClienteController {
     public void excluirCliente() {
         try{
             String cpf = clienteView.getCPF();
-            Cliente cliente = modelDao.getCliente(cpf);
-            int res = clienteView.confirmacao(cliente);
-            if (res == 0){
-                boolean existe = contaDao.clienteExiste(cliente);
-                if(existe){
-                    contaDao.excluirConta(cliente.getId());
+            if("".equals(cpf)){
+                clienteView.mostrarMensagem("Digite um CPF para busca...");
+            }
+            else {
+                Cliente cliente = modelDao.getCliente(cpf);
+                int res = clienteView.confirmacao(cliente);
+                if (res == 0){
+                    boolean existe = contaDao.clienteExiste(cliente);
+                    if(existe){
+                        contaDao.excluirConta(cliente.getId());
+                    }
+                    modelDao.excluir(cliente);
+                    listarClientes();
+                    clienteView.mostrarMensagem("Cliente removido com sucesso!");
                 }
-                modelDao.excluir(cliente);
-                listarClientes();
-                clienteView.mostrarMensagem("Cliente removido com sucesso");
             }
         }
         catch (Exception e){
-            clienteView.apresentaErro(e.getMessage());
+            clienteView.apresentaErro("Erro ao buscar cliente! " + e.getMessage());
        }
     }
 

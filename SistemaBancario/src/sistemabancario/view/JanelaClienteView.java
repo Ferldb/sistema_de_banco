@@ -109,15 +109,19 @@ public class JanelaClienteView extends javax.swing.JFrame {
             String salario = formularioClienteView.getCampoSalario().getText();
             
             if ("".equals(nome) || "".equals(sobrenome) || "".equals(rg) || "".equals(cpf) || "".equals(endereco) || "".equals(salario)){
-                throw new RuntimeException("Campo obrigatorio em branco...");
+                throw new RuntimeException("\nCampo obrigatorio em branco...");
             }
-            
-            Double s = Double.parseDouble(salario);
+            Double s;
+            try{
+                s = Double.parseDouble(salario);
+            }catch(Exception e){
+                throw new RuntimeException("\nValor de SALÁRIO inválido...");
+            }
+
             Cliente cliente = new Cliente(-1, nome, sobrenome, rg, cpf, endereco, s);
             return cliente;
         }
         finally{
-            
         }
     }
     
@@ -168,6 +172,6 @@ public class JanelaClienteView extends javax.swing.JFrame {
     }
 
     public int confirmacao(Cliente cliente) {
-        return JOptionPane.showConfirmDialog(this, "Todas as contas do cliente "+cliente.getNome()+" "+cliente.getSobrenome()+" também serão excluídas. Deseja prosseguir?",null,JOptionPane.YES_NO_OPTION);
+        return JOptionPane.showConfirmDialog(this, "ATENÇÃO!\nTodas as contas do cliente " + cliente.getNome() + " " + cliente.getSobrenome() + " também serão excluídas.\nDeseja prosseguir?", null, JOptionPane.YES_NO_OPTION);
     }
 }
