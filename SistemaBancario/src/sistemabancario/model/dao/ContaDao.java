@@ -102,6 +102,7 @@ public class ContaDao {
         } 
     }
     
+    //retorna exceção se o cliente JÁ possuir conta vinculada
     public int procuraCliente(long idcliente) throws SQLException{
         Connection connection = connectionFactory.getConnection();
         PreparedStatement stmtBusca;
@@ -115,6 +116,26 @@ public class ContaDao {
             }
             else 
                 return 0;
+        }
+        finally{
+            stmtBusca.close();
+        }
+    }
+    
+    //retorna exceção se o cliente NÃO possuir conta vinculada
+    public int procuraCliente2(long idcliente) throws SQLException{
+        Connection connection = connectionFactory.getConnection();
+        PreparedStatement stmtBusca;
+        ResultSet rs = null;
+        stmtBusca = connection.prepareStatement(select);
+        try{
+            stmtBusca.setLong(1, idcliente);
+            rs = stmtBusca.executeQuery();
+            if(rs.next()){
+                return 0;
+            }
+            else 
+                throw new RuntimeException("\nCliente NÃO possui uma conta vinculada!");
         }
         finally{
             stmtBusca.close();

@@ -29,23 +29,50 @@ public class ManipularController {
         this.manipularView.initView();
     }
 
+    //procura cliente por CPF e exibe nome na lacuna
     public void buscarCliente() {
         try {
             String cpf = manipularView.getCPF();
-            Cliente cliente = modelDao.getCliente(cpf);
-            boolean busca = contaDao.clienteExiste(cliente); //verifica se cliente tem conta vinculada
-            if (!busca) throw new RuntimeException("Cliente "+cliente.getNome()+" "+cliente.getNome()+" CPF: "+cliente.getCpf()+" não possui conta vinculada");
-            String nome = "Nome do cliente: " + cliente.getNome() + " " + cliente.getSobrenome();
-            if (nome != null) {
-                manipularView.resultadoCpf(nome);
-            } else {
-                throw new RuntimeException("Cliente não encontrado");
+            if("".equals(cpf)){
+                String s = "";
+                manipularView.resultadoCpf(s);
+                manipularView.mostrarMensagem("Digite um CPF para busca...");
             }
-
-            manipularView.repaint();
+            else{
+                Cliente cliente = modelDao.getCliente(cpf);
+                String nome = cliente.getNome() + " " + cliente.getSobrenome();
+                if (nome != null){
+                    manipularView.resultadoCpf(nome);
+                    if(manipularView.getlOperacao().isVisible())
+                        manipularView.getlOperacao().setVisible(false);
+                    if(manipularView.getbConfirmar().isVisible())
+                        manipularView.getbConfirmar().setVisible(false);
+                    if(manipularView.getCampoValor().isVisible())
+                        manipularView.getCampoValor().setVisible(false);
+                }
+                else
+                    throw new RuntimeException();
+                manipularView.repaint();
+            }
         } catch (Exception e) {
-            manipularView.apresentaErro(e.getMessage());
+            String s = "";
+            manipularView.resultadoCpf(s);
+            manipularView.apresentaErro("Erro ao buscar cliente! " + e.getMessage());
         }
+    }
+    
+    //verifica se o cliente buscado já possui conta vinculada ou não
+    public int verificarCliente(){
+        try{
+            String cpf = manipularView.getCPF();
+            Cliente cliente = modelDao.getCliente(cpf);
+            contaDao.procuraCliente2(cliente.getId());
+            return 0;
+        }
+        catch(Exception e){
+            manipularView.apresentaErro("Não foi possível carregar os dados! " + e.getMessage());
+        }
+        return 1;
     }
 
     public void visibilidade() {
@@ -59,42 +86,80 @@ public class ManipularController {
             String cpf = manipularView.getCPF();
             Cliente cliente = modelDao.getCliente(cpf);
             Conta conta = contaDao.buscaConta(cliente);
-            double valor;
+            double v = 0.0;
+            String valor = "";
+            boolean sucesso;
             
             switch (index) {
-                case 0: //saque
-                    valor = manipularView.getCampoValor();
-                    boolean sucesso = conta.saca(valor);
-                    if (sucesso == true) {
-                        contaDao.atualizaSaldo(conta, conta.getSaldo());
-                        manipularView.MostraMensagem("Sacado com sucesso! NOVO SALDO: " + conta.getSaldo());
-                    } else {
-                        manipularView.apresentaErro("Erro ao sacar");
+                //saque
+                case 0:
+                    try{
+                        valor = manipularView.getCampoValor().getText();
+                        v = Double.parseDouble(valor);
+                        try{
+                            sucesso = conta.saca(v);
+                            if (sucesso == true) {
+                                contaDao.atualizaSaldo(conta, conta.getSaldo());
+                                String s = String.format("%.2f", conta.getSaldo());
+                                manipularView.mostrarMensagem("SAQUE realizado com sucesso!\nNOVO SALDO: R$ " + s);
+                                this.movimentarConta(2);
+                            } else {
+                                manipularView.apresentaErro("Não foi possível completar o SAQUE!\nO valor a ser sacado não pode ser negativo!");
+                            }
+                            break;
+                        }catch(Exception e){
+                            manipularView.apresentaErro(e.getMessage());
+                        }
+                        break;
+                    }catch(Exception e){
+                        if ("".equals(valor))
+                            throw new RuntimeException("Digite um valor para SAQUE!");
+                        else
+                            throw new RuntimeException("Valor de SAQUE inválido...");
                     }
-                    break;
-                case 1: //depósito
-                    valor = manipularView.getCampoValor();
-                    sucesso = conta.deposita(valor);
-                    if (sucesso == true) {
-                        contaDao.atualizaSaldo(conta, conta.getSaldo());
-                        manipularView.MostraMensagem("Depositado com sucesso! NOVO SALDO: " + conta.getSaldo());
-                    } else {
-                        manipularView.apresentaErro("Erro ao depositar");
+                //depósito
+                case 1:
+                    try{
+                        valor = manipularView.getCampoValor().getText();
+                        v = Double.parseDouble(valor);
+                        try{
+                            sucesso = conta.deposita(v);
+                            if (sucesso == true) {
+                                contaDao.atualizaSaldo(conta, conta.getSaldo());
+                                String s = String.format("%.2f", conta.getSaldo());
+                                manipularView.mostrarMensagem("DEPÓSITO realizado com sucesso!\nNOVO SALDO: R$ " + s);
+                                this.movimentarConta(2);
+                            } else {
+                                manipularView.apresentaErro("Não foi possível completar o DEPÓSITO!\nO valor a ser depositado não pode ser negativo!");
+                            }
+                            break;
+                        }catch(Exception e){
+                            manipularView.apresentaErro(e.getMessage());
+                        }
+                        break;
+                    }catch(Exception e){
+                        if ("".equals(valor))
+                            throw new RuntimeException("Digite um valor para DEPÓSITO!");
+                        else
+                            throw new RuntimeException("Valor de DEPÓSITO inválido...");
                     }
-                    break;
-                case 2: //saldo
+                //saldo
+                case 2:
                     double saldo = conta.getSaldo();
                     manipularView.mostrarSaldo(saldo);
                     break;
-                case 3: //remuneração
+                //remuneração
+                case 3:
                     conta.remunera();
                     contaDao.atualizaSaldo(conta, conta.getSaldo());
-                    manipularView.MostraMensagem("Remunerado com sucesso! NOVO SALDO: " + conta.getSaldo());
+                    String s = String.format("%.2f", conta.getSaldo());
+                    manipularView.mostrarMensagem("Remuneração realiada com sucesso!\nNOVO SALDO: R$ " + s);
+                    this.movimentarConta(2);
                     break;
             }
         }
         catch(Exception e){
-            manipularView.apresentaErro("Erro na operação. "+e.getMessage());
+            manipularView.apresentaErro(e.getMessage());
         }
     }
     

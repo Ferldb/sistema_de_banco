@@ -150,10 +150,7 @@ public class JanelaContaView extends javax.swing.JFrame {
 
     public void setController(ContaController controller) {
         this.bVoltar.addActionListener(e -> controller.visibilidade());
-        this.bPesquisar.addActionListener(e -> {
-             controller.buscarCliente();
-             //this.campoCPF.setText("");
-        });
+        this.bPesquisar.addActionListener(e -> controller.buscarCliente());
         this.bTipoConta.addActionListener((ActionEvent e) -> {
             
             if("".equals(this.labelResultado.getText())){

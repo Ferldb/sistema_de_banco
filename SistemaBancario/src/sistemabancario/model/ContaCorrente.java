@@ -16,21 +16,25 @@ public class ContaCorrente extends Conta {
     public void setLimite(double limite) {
         this.limite = limite;
     }
-
-    public void remunera() {
-        if (this.getSaldo() < 0) throw new RuntimeException("Impossível realizar remuneração em saldo negativo!! Saldo: "+this.getSaldo());
-        double novosaldo = this.getSaldo() * 1.01;
-        this.setSaldo(novosaldo);
-    }
     
     public boolean saca(double valor) {
-        if((this.getSaldo() - valor) < (0 - this.getLimite())) {
-            throw new RuntimeException("Impossivel realizar o saque! Valor ultrapassa o limite da conta!!!");
-        }
+        if((this.getSaldo() - valor) < (0 - this.getLimite()))
+            throw new RuntimeException("Não foi possível completar o SAQUE!\nO novo valor do saldo ultrapassa o limite da conta...\n*LIMITE: " + String.format("%.2f", this.getLimite()));
         else{
             boolean saque = super.saca(valor);
-            if(!saque) return false;
-            else return true;
+            if(!saque)
+                return false;
+            else
+                return true;
+        }
+    }
+
+    public void remunera() {
+        if (this.getSaldo() < 0)
+            throw new RuntimeException("Não foi possível realizar a REMUNERAÇÃO!\nEsta operação não pode ser aplicada em contas com saldo negativo...\n*SALDO ATUAL: " + String.format("%.2f", this.getSaldo()));
+        else{
+            double novosaldo = this.getSaldo() * 1.01;
+            this.setSaldo(novosaldo);
         }
     }
 }

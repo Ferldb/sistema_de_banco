@@ -53,14 +53,20 @@ public class Conta implements ContaI {
 
     @Override
     public boolean deposita(double valor) {
-        if (valor < 0) return false;
-        this.setSaldo(this.getSaldo() + valor);
-        return true;
+        if (valor <= 0){
+            return false;
+        }
+        else{
+            this.setSaldo(this.getSaldo() + valor);
+            return true;
+        }
     }
 
     @Override
     public boolean saca(double valor) {
-        if (valor < 0) return false;
+        if (valor <= 0){
+            return false;
+        }
         else{
             this.setSaldo(this.getSaldo() - valor);
             return true;
