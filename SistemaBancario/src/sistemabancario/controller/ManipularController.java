@@ -65,9 +65,9 @@ public class ManipularController {
     //verifica se o cliente buscado já possui conta vinculada ou não
     public int verificarCliente(){
         try{
-            String cpf = manipularView.getCPF();        //pega cpf digitado no campo de busca
-            Cliente cliente = modelDao.getCliente(cpf); //busca cliente na base de dados cliente
-            contaDao.procuraCliente2(cliente.getId());  //busca cliente na tabela de contas
+            String cpf = manipularView.getCPF();            //pega cpf digitado no campo de busca
+            Cliente cliente = modelDao.getCliente(cpf);     //busca cliente na base de dados cliente
+            contaDao.procuraCliente(2, cliente.getId());    //busca cliente na tabela de contas
             return 0;
         }
         catch(Exception e){

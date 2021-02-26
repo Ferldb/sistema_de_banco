@@ -12,6 +12,7 @@ public abstract class Conta implements ContaI {
         this.saldo = saldo;
     }
 
+    @Override
     public double getSaldo() {
         return saldo;
     }

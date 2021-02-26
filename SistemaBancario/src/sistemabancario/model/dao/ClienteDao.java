@@ -28,7 +28,7 @@ public class ClienteDao {
         this.connectionFactory = conFactory;
     }
     
-    //insere novo cliente na base de dados
+    // insere novo cliente na base de dados
     public void inserir(Cliente cliente) throws SQLException {
         Connection connection=connectionFactory.getConnection();
         // prepared statement para inserção
@@ -43,7 +43,7 @@ public class ClienteDao {
             stmtAdiciona.setDouble(6, cliente.getSalario());
             // executa
             stmtAdiciona.execute();
-            //Seta o id do cliente
+            // seta o id do cliente
             ResultSet rs = stmtAdiciona.getGeneratedKeys();
             rs.next();
             long i = rs.getLong(1);
@@ -56,7 +56,7 @@ public class ClienteDao {
     }
     
     //retorna lista de clientes cadastrados na base de dados
-    public List<Cliente> getLista(int o) throws SQLException{
+    public List<Cliente> getLista(int o) throws SQLException {
         Connection connection=connectionFactory.getConnection();
         ResultSet rs = null;
         //prepare statement para select
@@ -76,7 +76,7 @@ public class ClienteDao {
                 String endereco = rs.getString("endereco");
                 Double salario = rs.getDouble("salario");
                 
-                // instancia objeto cliente
+                // instancia objeto Cliente
                 Cliente c = new Cliente(idcliente, nome, sobrenome, rg, cpf, endereco, salario);
                 c.setOrdenar(o); //seta indice para ordenação (default 0 se não for chamada de ordenação)
                 clientes.add(c); //adiciona cliente à lista
@@ -86,11 +86,10 @@ public class ClienteDao {
             
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally{  //finaliza conexão com base de dados
+        } finally {  //finaliza conexão com base de dados
             rs.close();
             stmtLista.close();
         }
-
     }
     
     //atualiza cliente na base de dados
@@ -216,11 +215,10 @@ public class ClienteDao {
                     throw new RuntimeException("\nNão existe cliente cadastrado com o RG: " + n);
             }
             return clientes;    //retorna lista de clientes
-            
-            
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally{
+        } finally {
             rs.close();
             stmtLista.close();  //finaliza conexão com base de dados
         }       

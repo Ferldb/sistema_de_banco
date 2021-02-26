@@ -69,7 +69,7 @@ public class ContaController {
         try{
             String cpf = contaView.getCPF();                //pega cpf inserido no campo de busca
             Cliente cliente = clienteDao.getCliente(cpf);   //busca se cliente na base de dados
-            contaDao.procuraCliente(cliente.getId());       //busca se cliente possui conta vinculada
+            contaDao.procuraCliente(1, cliente.getId());       //busca se cliente possui conta vinculada
             return 0;                                       
         }
         catch(Exception e){
@@ -84,7 +84,7 @@ public class ContaController {
             String cpf = contaView.getCPF();                        //pega cpf digitado no campo de busca
             Cliente cliente = clienteDao.getCliente(cpf);           //pega cliente na base de dados
 
-            int x = contaDao.procuraCliente(cliente.getId());        //procura cliente na tabela de contas
+            int x = contaDao.procuraCliente(1, cliente.getId());        //procura cliente na tabela de contas
             if (x == 0){ //se cliente ainda não pussui conta
                 if (tipo == 1){ //conta corrente
                     ContaCorrente cc = contaView.getContaCorrente();    //pega os dados inseridos

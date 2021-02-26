@@ -109,8 +109,10 @@ public class ContaDao {
         } 
     }
     
-    //procura cliente na tabela de contas - retorna exceção se o cliente JÁ possuir conta vinculada
-    public int procuraCliente(long idcliente) throws SQLException{
+    //procura cliente na tabela de contas
+    // i == 1 - retorna exceção se o cliente JÁ possuir conta vinculada
+    // i == 2 - retorna exceção se o cliente NÃO possuir conta vinculada
+    public int procuraCliente(int i, long idcliente) throws SQLException{
         Connection connection = connectionFactory.getConnection();
         //prepared statemente para select
         PreparedStatement stmtBusca;
@@ -119,31 +121,20 @@ public class ContaDao {
         try{
             stmtBusca.setLong(1, idcliente);    //seta idcliente a ser buscado
             rs = stmtBusca.executeQuery();      //executa query
-            if (rs.next()){                     //levanta exceção se encontrar cliente
-                throw new RuntimeException("\nCliente já possui uma conta vinculada!");
+            if(i == 1) {
+                if (rs.next()){                     //levanta exceção se encontrar cliente
+                    throw new RuntimeException("\nCliente já possui uma conta vinculada!");
+                }
+                else 
+                    return 0;
             }
-            else 
-                return 0;
-        }
-        finally{
-            stmtBusca.close();  //finaliza conexão com base de dados
-        }
-    }
-    
-    //retorna exceção se o cliente NÃO possuir conta vinculada
-    public int procuraCliente2(long idcliente) throws SQLException{
-        Connection connection = connectionFactory.getConnection();
-        PreparedStatement stmtBusca;
-        ResultSet rs = null;
-        stmtBusca = connection.prepareStatement(select);
-        try{
-            stmtBusca.setLong(1, idcliente);    //seta idcliente a ser buscado 
-            rs = stmtBusca.executeQuery();      //executa query
-            if(rs.next()){
-                return 0;
+            else { //i == 2
+                if(rs.next()){
+                    return 0;
+                }
+                else    //levanta exceção se cliente não possui conta vinculada
+                    throw new RuntimeException("\nCliente NÃO possui uma conta vinculada!");
             }
-            else    //levanta exceção se cliente não possui conta vinculada
-                throw new RuntimeException("\nCliente NÃO possui uma conta vinculada!");
         }
         finally{
             stmtBusca.close();  //finaliza conexão com base de dados
