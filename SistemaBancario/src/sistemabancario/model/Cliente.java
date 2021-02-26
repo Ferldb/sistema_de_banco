@@ -94,6 +94,7 @@ public class Cliente implements Comparable<Cliente>{
     }
 
     @Override
+    //método da interface comparable
     public int compareTo(Cliente c) {
         if(this.ordenar == 0){ //ordenar por nome
             return this.getNome().compareToIgnoreCase(c.getNome());

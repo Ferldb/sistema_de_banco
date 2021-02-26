@@ -11,11 +11,13 @@ public class MenuController {
         initController();
     }
     
+    //inicializa o controller e seta elementos
     private void initController(){
         this.menuView.setController(this);
         this.menuView.initView();
     }
     
+    //troca visibilidade
     public void visibilidade(){
         this.menuView.desabilitaMenu(this);
     }

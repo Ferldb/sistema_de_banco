@@ -102,7 +102,8 @@ public class PainelContaInvestimento extends javax.swing.JPanel {
     private javax.swing.JLabel labelDepositoMinimo;
     private javax.swing.JLabel labelMontanteMinimo;
     // End of variables declaration//GEN-END:variables
-
+    
+    //seta botão e sua ação
     void setController(ContaController controller) {
         this.bCriarConta.addActionListener(e -> controller.criarConta(2));
     }
@@ -119,6 +120,7 @@ public class PainelContaInvestimento extends javax.swing.JPanel {
         return campoMontanteMinimo;
     }
     
+    //limpa formulário de criação de conta
     public void limparFormulario(){
         campoDepositoInicial.setText("");
         campoDepositoMinimo.setText("");

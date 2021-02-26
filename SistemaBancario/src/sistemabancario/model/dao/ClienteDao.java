@@ -27,12 +27,13 @@ public class ClienteDao {
     public ClienteDao(ConnectionFactory conFactory) {
         this.connectionFactory = conFactory;
     }
-
-    public void inserir(Cliente cliente) {
+    
+    //insere novo cliente na base de dados
+    public void inserir(Cliente cliente) throws SQLException {
         Connection connection=connectionFactory.getConnection();
+        // prepared statement para inserção
+        PreparedStatement stmtAdiciona = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
         try {
-            // prepared statement para inserção
-            PreparedStatement stmtAdiciona = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
             // seta os valores
             stmtAdiciona.setString(1, cliente.getNome());
             stmtAdiciona.setString(2, cliente.getSobrenome());
@@ -42,24 +43,29 @@ public class ClienteDao {
             stmtAdiciona.setDouble(6, cliente.getSalario());
             // executa
             stmtAdiciona.execute();
-            //Seta o id do contato
+            //Seta o id do cliente
             ResultSet rs = stmtAdiciona.getGeneratedKeys();
             rs.next();
             long i = rs.getLong(1);
             cliente.setId(i);
-            
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } 
+        } finally{
+            stmtAdiciona.close();   //finaliza conexão com base de dados
+        }
     }
-
+    
+    //retorna lista de clientes cadastrados na base de dados
     public List<Cliente> getLista(int o) throws SQLException{
         Connection connection=connectionFactory.getConnection();
         ResultSet rs = null;
+        //prepare statement para select
         PreparedStatement stmtLista = connection.prepareStatement(select);
         try {
+            //executa query
             rs = stmtLista.executeQuery();
             List<Cliente> clientes = new ArrayList();
+            //percorre resultado instanciando clientes e inserindo na lista
             while (rs.next()) {
                 // criando o objeto Cliente
                 long idcliente = rs.getLong("idcliente");
@@ -70,88 +76,94 @@ public class ClienteDao {
                 String endereco = rs.getString("endereco");
                 Double salario = rs.getDouble("salario");
                 
-                // adicionando o objeto à lista
+                // instancia objeto cliente
                 Cliente c = new Cliente(idcliente, nome, sobrenome, rg, cpf, endereco, salario);
                 c.setOrdenar(o); //seta indice para ordenação (default 0 se não for chamada de ordenação)
-                clientes.add(c);
+                clientes.add(c); //adiciona cliente à lista
             }
-            
-            return clientes;
+           
+            return clientes; //retorna lista de clientes
             
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally{
+        } finally{  //finaliza conexão com base de dados
             rs.close();
             stmtLista.close();
         }
 
     }
-
+    
+    //atualiza cliente na base de dados
     public void atualizar(Cliente cliente) throws SQLException{
         Connection connection=connectionFactory.getConnection();
+        //prepared statmement de update
         PreparedStatement stmtAtualiza = connection.prepareStatement(update);
-        try {
+        try {   //seta os dados atualizados (sem cpf, pois cpf não muda)
             stmtAtualiza.setString(1, cliente.getNome());
             stmtAtualiza.setString(2, cliente.getSobrenome());
             stmtAtualiza.setString(3, cliente.getRg());
             stmtAtualiza.setString(4, cliente.getEndereco());
             stmtAtualiza.setDouble(5, cliente.getSalario());
             stmtAtualiza.setLong(6, cliente.getId());
+            //executa query
             stmtAtualiza.executeUpdate();
         } finally{
-            stmtAtualiza.close();
+            stmtAtualiza.close();   //finaliza conexão com base de dados
         }
-
     }
 
+    //exclusão de cliente da base de dados
     public void excluir(Cliente cliente) throws SQLException {
         Connection connection=connectionFactory.getConnection();
+        //prepared statement para delete
         PreparedStatement stmtExcluir;
         stmtExcluir = connection.prepareStatement(delete);
         try {
-            stmtExcluir.setLong(1, cliente.getId());
-            stmtExcluir.executeUpdate();
+            stmtExcluir.setLong(1, cliente.getId());    //seta cliente a ser excluído
+            stmtExcluir.executeUpdate();                //executa query
         } finally{
-            stmtExcluir.close();
+            stmtExcluir.close();    //finaliza conexão com base de dados
         }
     }
     
     //retorna exceção se o cliente NÃO for cadastrado
     public Cliente getCliente(String cpf) throws SQLException{
         Connection connection = connectionFactory.getConnection();
+        //prepared statement para busca de cliente por cpf
         PreparedStatement stmtBusca;
         ResultSet rs = null;
         stmtBusca = connection.prepareStatement(buscaCPF);
         try{
-            stmtBusca.setString(1, cpf);
-            rs = stmtBusca.executeQuery();
-            if (rs.next()){
+            stmtBusca.setString(1, cpf);    //seta cpf a ser buscado
+            rs = stmtBusca.executeQuery();  //executa query
+            if (rs.next()){                 //se cliente for econtrado, instancia novo objeto
                 Cliente cliente = new Cliente(rs.getInt("idcliente"),rs.getString("nome"),rs.getString("sobrenome"),rs.getString("rg"),rs.getString("cpf"),rs.getString("endereco"),rs.getDouble("salario"));
-                return cliente;
+                return cliente;     //retorna cliente instanciado
             }
-            else{
+            else{   //levanta exceção se não encontrar cliente
                 throw new RuntimeException("\nNão existe cliente cadastrado com o CPF: " + cpf);
             }
         }
         finally{
-            stmtBusca.close();
+            stmtBusca.close();  //finaliza conexão com base de dados
         }
     }
     
     //retorna exceção se o cliente JÁ for cadastrado
     public int buscaCliente(String cpf) throws SQLException{
         Connection connection = connectionFactory.getConnection();
+        //prepared statemente para busca de cliente por cpf
         PreparedStatement stmtBusca;
         ResultSet rs = null;
         stmtBusca = connection.prepareStatement(buscaCPF);
         try{
-            stmtBusca.setString(1, cpf);
-            rs = stmtBusca.executeQuery();
-            if (rs.next()){
+            stmtBusca.setString(1, cpf);        //seta o cpf a ser buscado
+            rs = stmtBusca.executeQuery();      //executa query
+            if (rs.next()){                     //se cliente existe na base de dados, levanta exceção
                 throw new RuntimeException("\nCliente com o CPF " + cpf + " já é cadastrado...");
             }
             else 
-                return 0;
+                return 0;   //se cliente não tem cadastro
         }
         finally{
             stmtBusca.close();
@@ -165,21 +177,22 @@ public class ClienteDao {
         PreparedStatement stmtLista = null;
         String query = null;
         if(i == 1) {
-            stmtLista = connection.prepareStatement(buscaNome);
+            stmtLista = connection.prepareStatement(buscaNome);         //seta query de busca por nome ou parte
             query = "%"+n+"%";
         }
         if(i == 2){
-            stmtLista = connection.prepareStatement(buscaSobrenome);
+            stmtLista = connection.prepareStatement(buscaSobrenome);    //seta query de busca por sobrenome ou parte
             query = "%"+n+"%";
         }
         if(i == 3){
             query = n;
-            stmtLista = connection.prepareStatement(buscaRG);
+            stmtLista = connection.prepareStatement(buscaRG);           //seta query de busca por rg
         }
         try {
-            stmtLista.setString(1, query);
-            rs = stmtLista.executeQuery();
+            stmtLista.setString(1, query);  //seta query a ser buscada
+            rs = stmtLista.executeQuery();  //executa query
             List<Cliente> clientes = new ArrayList();
+            //percorre resultado instanciando clientes encontrados
             while (rs.next()) {
                 // criando o objeto Cliente
                 long idcliente = rs.getLong("idcliente");
@@ -193,6 +206,7 @@ public class ClienteDao {
                 // adicionando o objeto à lista
                 clientes.add(new Cliente(idcliente, nome, sobrenome, rg, cpf, endereco, salario));
             }
+            //levanta exceções se não encontrou nenhum resultado com o filtro escolhido
             if(clientes.isEmpty()){
                 if(i == 1)
                     throw new RuntimeException("\nNão existem clientes cadastrados com o NOME ou parte dele ''" + n + "''");
@@ -201,14 +215,14 @@ public class ClienteDao {
                 if(i == 3)
                     throw new RuntimeException("\nNão existe cliente cadastrado com o RG: " + n);
             }
-            return clientes;
+            return clientes;    //retorna lista de clientes
             
             
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally{
             rs.close();
-            stmtLista.close();
+            stmtLista.close();  //finaliza conexão com base de dados
         }       
     }
 }

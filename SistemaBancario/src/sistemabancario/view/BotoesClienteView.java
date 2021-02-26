@@ -136,7 +136,8 @@ public class BotoesClienteView extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> comboboxOrdenar;
     private javax.swing.JLabel labelCPF;
     // End of variables declaration//GEN-END:variables
-
+    
+    //seta botoes da view com suas ações
     public void setController(ClienteController controller) {
         this.bAlterarCliente.addActionListener(e -> {
             controller.buscarCliente();
@@ -147,12 +148,12 @@ public class BotoesClienteView extends javax.swing.JPanel {
             campoCPF.setText("");
         });
         this.bListarClientes.addActionListener(e -> {
-            int index = comboboxLista.getSelectedIndex();
-            controller.listarFiltro(index);
+            int index = comboboxLista.getSelectedIndex();   //pega indice do combobox de listagem
+            controller.listarFiltro(index);                 
             this.campoListar.setText("");
             });
         this.bOrdenarClientes.addActionListener(e -> {
-            int ordenar = comboboxOrdenar.getSelectedIndex();
+            int ordenar = comboboxOrdenar.getSelectedIndex();   //pega indice do combobox de ordenação
             controller.ordenarClientes(ordenar);
         });
     }

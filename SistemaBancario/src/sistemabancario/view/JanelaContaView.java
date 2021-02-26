@@ -147,19 +147,20 @@ public class JanelaContaView extends javax.swing.JFrame {
     private void bPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPesquisarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bPesquisarActionPerformed
-
+    
+    //seta botoes e suas ações
     public void setController(ContaController controller) {
         this.bVoltar.addActionListener(e -> controller.visibilidade());
         this.bPesquisar.addActionListener(e -> controller.buscarCliente());
         this.bTipoConta.addActionListener((ActionEvent e) -> {
             
             if("".equals(this.labelResultado.getText())){
-                this.mostrarMensagem("Selecione primeiro um cliente...");
+                this.mostrarMensagem("Selecione primeiro um cliente...");   //mostra mensagem se usuário tenta criar conta sem selecionar cliente
             }
             else{
-                int x = controller.verificarCliente();
+                int x = controller.verificarCliente();                      //verifica se cliente buscado já possui conta vinculada
                 if (x == 0) {
-                    int indice = ComboBoxTipoConta.getSelectedIndex();
+                    int indice = ComboBoxTipoConta.getSelectedIndex();      //pega indice do combobox
       
                     if (indice == 0){ //conta corrente
                         painelContaCorrente.setVisible(true);
@@ -197,10 +198,11 @@ public class JanelaContaView extends javax.swing.JFrame {
     private sistemabancario.view.PainelContaCorrente painelContaCorrente;
     private sistemabancario.view.PainelContaInvestimento painelContaInvestimento;
     // End of variables declaration//GEN-END:variables
-
+    
+    //inicializa view e torna visível
     public void initView() {
         java.awt.EventQueue.invokeLater(() ->  this.setVisible(true));
-         painelContaCorrente.setVisible(false); painelContaInvestimento.setVisible(false);
+        painelContaCorrente.setVisible(false); painelContaInvestimento.setVisible(false);
     }
     
     public String getCPF(){
@@ -219,22 +221,27 @@ public class JanelaContaView extends javax.swing.JFrame {
         return painelContaInvestimento;
     }
     
+    //apresenta mensagem de erro passada por parametro
     public void apresentaErro(String erro) {
         JOptionPane.showMessageDialog(this, erro + "\n", "Erro", JOptionPane.ERROR_MESSAGE);
     }
     
+    //apresenta mensagem passada por parametro
     public void mostrarMensagem(String mensagem) {
         JOptionPane.showMessageDialog(this, mensagem + "\n", "Info", JOptionPane.INFORMATION_MESSAGE);
     }
-
+    
+    //preenche label com string passada por parametro
     public void resultadoCpf(String texto) {
         labelResultado.setText(texto);
     }
-
-    public void desabilitaMenu(ContaController aThis) {
+    
+    //destroi instancia de conta para voltar ao menu
+    public void desabilitaConta(ContaController aThis) {
         this.dispose();
     }
     
+    //pega dados inseridos na criação de conta corrente
     public ContaCorrente getContaCorrente(){
         Double l = 0.0;
         String limite = "";
@@ -254,6 +261,7 @@ public class JanelaContaView extends javax.swing.JFrame {
         return conta;
     }
     
+    //pega dados inseridos na criação de conta investimento
     public ContaInvestimento getContaInvestimento(){
         Double m = 0.1, d = 0.1;
         String montante = "", deposito = "";
@@ -291,6 +299,7 @@ public class JanelaContaView extends javax.swing.JFrame {
         return conta;
     }
     
+    //pega valor inserido no campo de deposito inicial CONTA CORRENTE
     public Double getDepositoCC(){
         Double d = 0.0;
         String deposito = "";
@@ -311,6 +320,7 @@ public class JanelaContaView extends javax.swing.JFrame {
         return d;
     }
     
+    //pega valor inseirod no campo de depósito inicial CONTA INVESTIMENTO
     public Double getDepositoCI(){
         Double d = 0.0;
         String deposito = "";
@@ -331,6 +341,7 @@ public class JanelaContaView extends javax.swing.JFrame {
         return d;
     }
     
+    //limpra formulário e seta visibilidade do painel
     public void limparFormulario(int tipo){
         if (tipo == 1) painelContaCorrente.limparFormulario();
         else painelContaInvestimento.limparFormulario();

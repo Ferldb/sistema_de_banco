@@ -6,8 +6,6 @@ import sistemabancario.controller.ClienteController;
 import sistemabancario.model.Cliente;
 
 public class FormularioClienteView extends javax.swing.JPanel {
-    
-    private Cliente clienteParaAtualizar;
 
     public FormularioClienteView() {
         initComponents();
@@ -147,18 +145,18 @@ public class FormularioClienteView extends javax.swing.JPanel {
         campoNome.setText("");
     }
     
-    
+    //seta dados do cliente nos campos do formulário
     void setCliente(Cliente cliente) {
-        this.clienteParaAtualizar = cliente;
-        campoNome.setText(clienteParaAtualizar.getNome());
-        campoSobrenome.setText(clienteParaAtualizar.getSobrenome());
-        campoRG.setText(clienteParaAtualizar.getRg());
-        campoCPF.setText(clienteParaAtualizar.getCpf());
+        campoNome.setText(cliente.getNome());
+        campoSobrenome.setText(cliente.getSobrenome());
+        campoRG.setText(cliente.getRg());
+        campoCPF.setText(cliente.getCpf());
         campoCPF.setEditable(false);
-        campoEndereco.setText(clienteParaAtualizar.getEndereco());
-        campoSalario.setText(Double.toString(clienteParaAtualizar.getSalario()));
+        campoEndereco.setText(cliente.getEndereco());
+        campoSalario.setText(Double.toString(cliente.getSalario()));
     }
-
+    
+    //limpa formulário
     void limparFormulario() {
         campoNome.setText("");
         campoSobrenome.setText("");

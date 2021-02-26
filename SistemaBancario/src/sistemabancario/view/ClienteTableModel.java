@@ -76,9 +76,6 @@ public class ClienteTableModel extends AbstractTableModel{
             case 3:
                 customer.setRg((String) value);
                 break;
-                /*LocalDate data = LocalDate.parse((String)value);
-                customer.setDataNascimento(data);
-                break;*/
             case 4:
                 customer.setCpf((String) value);
                 break;    
@@ -102,7 +99,6 @@ public class ClienteTableModel extends AbstractTableModel{
 
     public void adicionaCliente(Cliente customer) {
         this.lista.add(customer);
-        //this.fireTableDataChanged();
         this.fireTableRowsInserted(lista.size()-1,lista.size()-1);//update JTable
     }
 

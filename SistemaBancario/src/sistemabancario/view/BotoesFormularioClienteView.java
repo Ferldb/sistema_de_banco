@@ -64,12 +64,14 @@ public class BotoesFormularioClienteView extends javax.swing.JPanel {
     private javax.swing.JButton bInserir;
     private javax.swing.JButton bSalvar;
     // End of variables declaration//GEN-END:variables
-
+    
+    //seta botões com suas ações
     void setController(ClienteController controller) {
         this.bInserir.addActionListener(e -> controller.inserirCliente());
         this.bSalvar.addActionListener(e -> controller.atualizarCliente());
     }
     
+    //indice 0 inserir cliente visível, indice 1 saçvar alterações visível
     void initBotoes(int i){
         if (i == 0){
             bInserir.setVisible(true);

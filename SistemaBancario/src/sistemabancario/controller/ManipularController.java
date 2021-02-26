@@ -23,7 +23,8 @@ public class ManipularController {
         this.contaDao = new ContaDao(new ConnectionFactory());
         initController();
     }
-
+    
+    //inicializa elementos da view
     private void initController() {
         this.manipularView.setController(this);
         this.manipularView.initView();
@@ -32,15 +33,15 @@ public class ManipularController {
     //procura cliente por CPF e exibe nome na lacuna
     public void buscarCliente() {
         try {
-            String cpf = manipularView.getCPF();
-            if("".equals(cpf)){
+            String cpf = manipularView.getCPF();    //pega cpf digitado no campo de busca
+            if("".equals(cpf)){                     //se campo busca está vazio
                 String s = "";
                 manipularView.resultadoCpf(s);
                 manipularView.mostrarMensagem("Digite um CPF para busca...");
             }
             else{
-                Cliente cliente = modelDao.getCliente(cpf);
-                String nome = cliente.getNome() + " " + cliente.getSobrenome();
+                Cliente cliente = modelDao.getCliente(cpf);                     //pega cliente na base de dados
+                String nome = cliente.getNome() + " " + cliente.getSobrenome(); //gera string nome para exibir na janela
                 if (nome != null){
                     manipularView.resultadoCpf(nome);
                     if(manipularView.getlOperacao().isVisible())
@@ -64,9 +65,9 @@ public class ManipularController {
     //verifica se o cliente buscado já possui conta vinculada ou não
     public int verificarCliente(){
         try{
-            String cpf = manipularView.getCPF();
-            Cliente cliente = modelDao.getCliente(cpf);
-            contaDao.procuraCliente2(cliente.getId());
+            String cpf = manipularView.getCPF();        //pega cpf digitado no campo de busca
+            Cliente cliente = modelDao.getCliente(cpf); //busca cliente na base de dados cliente
+            contaDao.procuraCliente2(cliente.getId());  //busca cliente na tabela de contas
             return 0;
         }
         catch(Exception e){
@@ -74,35 +75,29 @@ public class ManipularController {
         }
         return 1;
     }
-
-    public void visibilidade() {
-        this.manipularView.desabilitaMenu(this);
-        JanelaMenuView view = new JanelaMenuView();
-        new MenuController(view);
-    }
     
+    //movimentação da conta
     public void movimentarConta(int index){
         try{
-            String cpf = manipularView.getCPF();
-            Cliente cliente = modelDao.getCliente(cpf);
-            Conta conta = contaDao.buscaConta(cliente);
+            String cpf = manipularView.getCPF();            //pega cpf digitado no campo de busca
+            Cliente cliente = modelDao.getCliente(cpf);     //pega cliente na base de dados
+            Conta conta = contaDao.buscaConta(cliente);     //pega conta do cliente selecionado
             double v = 0.0;
             String valor = "";
             boolean sucesso;
             
-            switch (index) {
-                //saque
-                case 0:
+            switch (index) {    //index 0 - saque 1 - deposito 2 - saldo 3 - remunera
+                case 0: //saque
                     try{
-                        valor = manipularView.getCampoValor().getText();
-                        v = Double.parseDouble(valor);
+                        valor = manipularView.getCampoValor().getText();            //pega valor digitado
+                        v = Double.parseDouble(valor);                              //transforma em double
                         try{
-                            sucesso = conta.saca(v);
-                            if (sucesso == true) {
-                                contaDao.atualizaSaldo(conta, conta.getSaldo());
-                                String s = String.format("%.2f", conta.getSaldo());
-                                manipularView.mostrarMensagem("SAQUE realizado com sucesso!\nNOVO SALDO: R$ " + s);
-                                this.movimentarConta(2);
+                            sucesso = conta.saca(v);                                //chama método saque da conta
+                            if (sucesso == true) {                                  //se retorno do saque é true
+                                contaDao.atualizaSaldo(conta, conta.getSaldo());    //atualiza saldo na base de dados
+                                String s = String.format("%.2f", conta.getSaldo()); //formata saldo com 2 casas decimais
+                                manipularView.mostrarMensagem("SAQUE realizado com sucesso!\nNOVO SALDO: R$ " + s); //exibe mensagem de sucesso
+                                this.movimentarConta(2);    //exibe saldo
                             } else {
                                 manipularView.apresentaErro("Não foi possível completar o SAQUE!\nO valor a ser sacado não pode ser negativo!");
                             }
@@ -117,17 +112,16 @@ public class ManipularController {
                         else
                             throw new RuntimeException("Valor de SAQUE inválido...");
                     }
-                //depósito
-                case 1:
+                case 1: //depósito
                     try{
-                        valor = manipularView.getCampoValor().getText();
-                        v = Double.parseDouble(valor);
+                        valor = manipularView.getCampoValor().getText();            //pega valor digitado
+                        v = Double.parseDouble(valor);                              //transforma valor em double
                         try{
-                            sucesso = conta.deposita(v);
-                            if (sucesso == true) {
-                                contaDao.atualizaSaldo(conta, conta.getSaldo());
-                                String s = String.format("%.2f", conta.getSaldo());
-                                manipularView.mostrarMensagem("DEPÓSITO realizado com sucesso!\nNOVO SALDO: R$ " + s);
+                            sucesso = conta.deposita(v);                            //chama método depósito da conta
+                            if (sucesso == true) {                                  //se método retornar true
+                                contaDao.atualizaSaldo(conta, conta.getSaldo());    //atualiza salto
+                                String s = String.format("%.2f", conta.getSaldo()); //formata saldo com 2 casas decimais
+                                manipularView.mostrarMensagem("DEPÓSITO realizado com sucesso!\nNOVO SALDO: R$ " + s);  //mostra mensagem de sucesso
                                 this.movimentarConta(2);
                             } else {
                                 manipularView.apresentaErro("Não foi possível completar o DEPÓSITO!\nO valor a ser depositado não pode ser negativo!");
@@ -143,17 +137,15 @@ public class ManipularController {
                         else
                             throw new RuntimeException("Valor de DEPÓSITO inválido...");
                     }
-                //saldo
-                case 2:
-                    double saldo = conta.getSaldo();
-                    manipularView.mostrarSaldo(saldo);
+                case 2: //ver saldo
+                    double saldo = conta.getSaldo();    //pega saldo da conta selecionada
+                    manipularView.mostrarSaldo(saldo);  //exibe saldo na tela
                     break;
-                //remuneração
-                case 3:
-                    conta.remunera();
-                    contaDao.atualizaSaldo(conta, conta.getSaldo());
-                    String s = String.format("%.2f", conta.getSaldo());
-                    manipularView.mostrarMensagem("Remuneração realiada com sucesso!\nNOVO SALDO: R$ " + s);
+                case 3: //remuneração
+                    conta.remunera();                                   //chama método de remuneração da conta
+                    contaDao.atualizaSaldo(conta, conta.getSaldo());    //atualiza saldo da conta na base de dados
+                    String s = String.format("%.2f", conta.getSaldo()); //formata saldo com 2 casas decimais
+                    manipularView.mostrarMensagem("Remuneração realiada com sucesso!\nNOVO SALDO: R$ " + s);    //apresenta mensagem de sucesso
                     this.movimentarConta(2);
                     break;
             }
@@ -163,4 +155,10 @@ public class ManipularController {
         }
     }
     
+    //troca visibilidade e volta ao menu
+    public void visibilidade() {
+        this.manipularView.desabilitaManipular(this);   //destroi view
+        JanelaMenuView view = new JanelaMenuView();     //instancia novo menu
+        new MenuController(view);                       //instancia novo controller menu
+    }
 }

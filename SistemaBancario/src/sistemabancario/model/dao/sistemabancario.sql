@@ -1,9 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 create table cliente (
     idcliente BIGINT NOT NULL AUTO_INCREMENT,
     nome VARCHAR(255),
@@ -37,5 +31,3 @@ create table conta (
 
 INSERT INTO tipoconta (descricao) VALUES ('Conta Corrente');
 INSERT INTO tipoconta (descricao) VALUES ('Conta Investimento');
-
-ALTER TABLE cliente MODIFY rg varchar(9);

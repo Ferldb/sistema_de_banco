@@ -99,6 +99,7 @@ public class PainelContaCorrente extends javax.swing.JPanel {
         return campoLimite;
     }
     
+    //limpa formulário 
     public void limparFormulario(){
         campoLimite.setText("");
         campoDepositoInicial.setText("");

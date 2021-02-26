@@ -5,7 +5,6 @@ public class Conta implements ContaI {
     private long numConta;
     private Cliente cliente;
     private double saldo;
-    private long tipoconta;
 
     public Conta(long idconta, Cliente cliente, double saldo) {
         this.numConta = idconta;
@@ -29,14 +28,6 @@ public class Conta implements ContaI {
         this.saldo = saldo;
     }
 
-    public long getTipoconta() {
-        return tipoconta;
-    }
-
-    public void setTipoconta(long tipoconta) {
-        this.tipoconta = tipoconta;
-    }
-
     @Override
     public Cliente getDono() {
         return cliente;
@@ -48,10 +39,12 @@ public class Conta implements ContaI {
     }
 
     @Override
+    //sem implementação na classe pai
     public void remunera() {
     }
 
     @Override
+    //valor a ser depositado deve ser maior que 0
     public boolean deposita(double valor) {
         if (valor <= 0){
             return false;
@@ -63,6 +56,7 @@ public class Conta implements ContaI {
     }
 
     @Override
+    //valor sacado deve ser maior que 0
     public boolean saca(double valor) {
         if (valor <= 0){
             return false;

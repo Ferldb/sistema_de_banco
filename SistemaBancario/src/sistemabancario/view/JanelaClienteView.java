@@ -8,8 +8,7 @@ import sistemabancario.controller.MenuController;
 import sistemabancario.model.Cliente;
 
 public class JanelaClienteView extends javax.swing.JFrame {
-    
-    private int linhaClicadaParaAtualizacao = -1;
+
     private ClienteTableModel modeloTabelaCliente = new ClienteTableModel();
 
     public JanelaClienteView() {
@@ -77,9 +76,9 @@ public class JanelaClienteView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-   
+   //seta botoes da janela com ações e seta tabela de clientes
     public void setController(ClienteController controller) {
-        this.bVoltar.addActionListener( e -> controller.visibilidade());
+        this.bVoltar.addActionListener( e -> controller.visibilidade());    
         botoesClienteView.setController(controller);
         botoesFormularioClienteView.setController(controller);
         tabelaClienteView.getTabelaCliente();
@@ -92,13 +91,15 @@ public class JanelaClienteView extends javax.swing.JFrame {
     private sistemabancario.view.FormularioClienteView formularioClienteView;
     private sistemabancario.view.TabelaClienteView tabelaClienteView;
     // End of variables declaration//GEN-END:variables
-
+    
+    //inicializa view
     public void initView() {
-        tabelaClienteView.getTabelaCliente().setModel(modeloTabelaCliente);
-        java.awt.EventQueue.invokeLater(() ->  this.setVisible(true));
-        this.initBotoes(0);
+        tabelaClienteView.getTabelaCliente().setModel(modeloTabelaCliente); //seta modelo da tabela
+        java.awt.EventQueue.invokeLater(() ->  this.setVisible(true));      //torna visível
+        this.initBotoes(0);                                                 //inicializa botoes rodapé
     }
-
+    
+    //instancia novo cliente a partir do formulário preenchido
     public Cliente getCliente() {
         try {
             String nome = formularioClienteView.getCampoNome().getText();
@@ -125,52 +126,59 @@ public class JanelaClienteView extends javax.swing.JFrame {
         }
     }
     
+    //pega cpf digitado no campo de busca
     public String getCPF(){
         String cpf = botoesClienteView.getCampoCPF().getText();
         return cpf;
     }
     
+    //pega conteúdo inserido no campo listar
     public String getCampoListar(){
         String listar = botoesClienteView.getCampoListar().getText();
         return listar;
     }
-
+    
+    //insere novo cliente na tabela
     public void inserirCliente(Cliente cliente) {
         modeloTabelaCliente.adicionaCliente(cliente);
     }
-
+    
+    //apresenta popuo com mensagem passada por parametro
     public void mostrarMensagem(String mensagem) {
         JOptionPane.showMessageDialog(this, mensagem + "\n", "Info", JOptionPane.INFORMATION_MESSAGE);
     }
-
+    
+    //exibe lista de clientes na tabela
     public void mostrarListaClientes(List<Cliente> lista) {
         modeloTabelaCliente.setListaClientes(lista);
     }
-
+    
+    //apresenta popup de erro com mensagem passada por parametro
     public void apresentaErro(String erro) {
         JOptionPane.showMessageDialog(this, erro + "\n", "Erro", JOptionPane.ERROR_MESSAGE);
     }
-
+    
+    //preenche formulário com dados do cliente passado por parametro
     public void preencherFormulario(Cliente cliente) {
         formularioClienteView.setCliente(cliente);
     }
-
-    public void atualizarCliente(Cliente cliente) {
-        modeloTabelaCliente.fireTableRowsUpdated(linhaClicadaParaAtualizacao, linhaClicadaParaAtualizacao);
-    }
     
+    //limpa formulário
     public void limparFormulario(){
         formularioClienteView.limparFormulario();
     }
     
+    //define visibilidade dos botoes do formulário a partir de indice passado por parametro
     public void initBotoes(int i){
         botoesFormularioClienteView.initBotoes(i);
     }
     
-    public void desabilitaMenu(ClienteController controller) {
+    //destroi instancia
+    public void desabilitaCliente(ClienteController controller) {
         this.dispose();
     }
-
+    
+    //exibe janela de confirmação de exclusão de cliente
     public int confirmacao(Cliente cliente) {
         return JOptionPane.showConfirmDialog(this, "ATENÇÃO!\nTodas as contas do cliente " + cliente.getNome() + " " + cliente.getSobrenome() + " também serão excluídas.\nDeseja prosseguir?", null, JOptionPane.YES_NO_OPTION);
     }
