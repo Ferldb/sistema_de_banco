@@ -1,6 +1,6 @@
 package sistemabancario.model;
 
-public class Conta implements ContaI {
+public abstract class Conta implements ContaI {
 
     private long numConta;
     private Cliente cliente;
@@ -40,8 +40,7 @@ public class Conta implements ContaI {
 
     @Override
     //sem implementação na classe pai
-    public void remunera() {
-    }
+    public abstract void remunera();
 
     @Override
     //valor a ser depositado deve ser maior que 0
